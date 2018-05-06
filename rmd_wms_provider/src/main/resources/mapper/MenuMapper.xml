@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.MenuMapper" >
+  <resultMap id="BaseResultMap" type="com.rmd.wms.bean.Menu" >
+    <id column="mid" property="mid" jdbcType="INTEGER" />
+    <result column="mname" property="mname" jdbcType="VARCHAR" />
+    <result column="parentid" property="parentid" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="createid" property="createid" jdbcType="INTEGER" />
+    <result column="createname" property="createname" jdbcType="VARCHAR" />
+    <result column="enterurl" property="enterurl" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    mid, mname, parentid, level, status, createtime, createid, createname, enterurl, 
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_menu
+    where mid = #{mid,jdbcType=INTEGER}
+  </select>
+   <select id="selectAllMenu" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_menu
+    where parentid = #{parentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_menu
+    where mid = #{mid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rmd.wms.bean.Menu" >
+    insert into t_menu (mid, mname, parentid, 
+      level, status, createtime, 
+      createid, createname, enterurl, 
+      remark)
+    values (#{mid,jdbcType=INTEGER}, #{mname,jdbcType=VARCHAR}, #{parentid,jdbcType=INTEGER}, 
+      #{level,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{createid,jdbcType=INTEGER}, #{createname,jdbcType=VARCHAR}, #{enterurl,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rmd.wms.bean.Menu" >
+    insert into t_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="mname != null" >
+        mname,
+      </if>
+      <if test="parentid != null" >
+        parentid,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="createid != null" >
+        createid,
+      </if>
+      <if test="createname != null" >
+        createname,
+      </if>
+      <if test="enterurl != null" >
+        enterurl,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="mname != null" >
+        #{mname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createid != null" >
+        #{createid,jdbcType=INTEGER},
+      </if>
+      <if test="createname != null" >
+        #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="enterurl != null" >
+        #{enterurl,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.Menu" >
+    update t_menu
+    <set >
+      <if test="mname != null" >
+        mname = #{mname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        parentid = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createid != null" >
+        createid = #{createid,jdbcType=INTEGER},
+      </if>
+      <if test="createname != null" >
+        createname = #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="enterurl != null" >
+        enterurl = #{enterurl,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.Menu" >
+    update t_menu
+    set mname = #{mname,jdbcType=VARCHAR},
+      parentid = #{parentid,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      createid = #{createid,jdbcType=INTEGER},
+      createname = #{createname,jdbcType=VARCHAR},
+      enterurl = #{enterurl,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
+</mapper>

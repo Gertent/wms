@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.rmd.wms.bean.Goods" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="gb_code" property="gbCode" jdbcType="VARCHAR" />
+    <result column="gb_code_url" property="gbCodeUrl" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="package_num" property="packageNum" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="sales_price" property="salesPrice" jdbcType="DECIMAL" />
+    <result column="purchase_price" property="purchasePrice" jdbcType="DECIMAL" />
+    <result column="validity_time" property="validityTime" jdbcType="TIMESTAMP" />
+    <result column="sort_num" property="sortNum" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, gb_code, gb_code_url, name, spec, package_num, unit, sales_price, purchase_price, 
+    validity_time, sort_num, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByGoodsCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_goods
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rmd.wms.bean.Goods" >
+    insert into t_goods (id, code, gb_code, 
+      gb_code_url, name, spec, 
+      package_num, unit, sales_price, 
+      purchase_price, validity_time, sort_num, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{gbCode,jdbcType=VARCHAR}, 
+      #{gbCodeUrl,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{spec,jdbcType=VARCHAR}, 
+      #{packageNum,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{salesPrice,jdbcType=DECIMAL}, 
+      #{purchasePrice,jdbcType=DECIMAL}, #{validityTime,jdbcType=TIMESTAMP}, #{sortNum,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rmd.wms.bean.Goods" >
+    insert into t_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="gbCode != null" >
+        gb_code,
+      </if>
+      <if test="gbCodeUrl != null" >
+        gb_code_url,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="packageNum != null" >
+        package_num,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="salesPrice != null" >
+        sales_price,
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price,
+      </if>
+      <if test="validityTime != null" >
+        validity_time,
+      </if>
+      <if test="sortNum != null" >
+        sort_num,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="gbCode != null" >
+        #{gbCode,jdbcType=VARCHAR},
+      </if>
+      <if test="gbCodeUrl != null" >
+        #{gbCodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="packageNum != null" >
+        #{packageNum,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="salesPrice != null" >
+        #{salesPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchasePrice != null" >
+        #{purchasePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="validityTime != null" >
+        #{validityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sortNum != null" >
+        #{sortNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.Goods" >
+    update t_goods
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="gbCode != null" >
+        gb_code = #{gbCode,jdbcType=VARCHAR},
+      </if>
+      <if test="gbCodeUrl != null" >
+        gb_code_url = #{gbCodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="packageNum != null" >
+        package_num = #{packageNum,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="salesPrice != null" >
+        sales_price = #{salesPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price = #{purchasePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="validityTime != null" >
+        validity_time = #{validityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sortNum != null" >
+        sort_num = #{sortNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.Goods" >
+    update t_goods
+    set code = #{code,jdbcType=VARCHAR},
+      gb_code = #{gbCode,jdbcType=VARCHAR},
+      gb_code_url = #{gbCodeUrl,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      spec = #{spec,jdbcType=VARCHAR},
+      package_num = #{packageNum,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      sales_price = #{salesPrice,jdbcType=DECIMAL},
+      purchase_price = #{purchasePrice,jdbcType=DECIMAL},
+      validity_time = #{validityTime,jdbcType=TIMESTAMP},
+      sort_num = #{sortNum,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

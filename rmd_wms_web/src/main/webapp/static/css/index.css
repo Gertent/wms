@@ -1,0 +1,68 @@
+/* ----------2016/09/26-----------*/
+.nav_row,
+.nav_row .prev,
+.nav_row .next,
+.nav_row .dropdown,
+.nav_row .dropdown buttom{
+    height: 44px;
+}
+.nav_row{
+    width: 100%;
+    position: relative;
+    background: #313643;
+}
+.nav_row .nav_list{
+
+}
+.nav_row .prev,
+.nav_row .next,
+.nav_row .dropdown{
+    top: 0;
+    z-index: 2;
+    width: 50px;
+    position: absolute;
+}
+.nav_row .next,
+.nav_row .dropdown{
+    border-left: 1px solid #747883;
+}
+.nav_row .prev{
+    left: 0;
+    border-right: 1px solid #747883;
+    background: url("../images/left.png") no-repeat center #3b414f;
+}
+.nav_row .next{
+    right: 90px;
+    background: url("../images/right.png") no-repeat center #3b414f;
+}
+.nav_row .dropdown{
+    right: 0;
+    width: 90px;
+    padding: 0;
+    background: #3b414f;
+}
+.nav_row .dropdown buttom{
+    border: 0;
+    width: 90px;
+    line-height: 44px;
+    color: #fff;
+    font-size: 14px;
+}
+.nav_row .dropdown buttom i{
+    width: 13px;
+    height: 6px;
+    background: url("../images/down.png") no-repeat center;
+}
+.content{
+    padding: 20px;
+}
+/*#bgBlock{*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*z-index: 2010;*/
+    /*display: none;*/
+    /*position: fixed;*/
+    /*background: rgba(0,0,0,0.7);*/
+/*}*/

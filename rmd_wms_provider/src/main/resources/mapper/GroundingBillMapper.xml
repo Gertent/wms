@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.GroundingBillMapper" >
+  <resultMap id="BaseResultMap" type="com.rmd.wms.bean.GroundingBill" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="grounding_no" property="groundingNo" jdbcType="VARCHAR" />
+    <result column="in_stock_no" property="inStockNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="grounding_amount" property="groundingAmount" jdbcType="INTEGER" />
+    <result column="ouser_id" property="ouserId" jdbcType="INTEGER" />
+    <result column="ouser_name" property="ouserName" jdbcType="VARCHAR" />
+    <result column="ware_id" property="wareId" jdbcType="INTEGER" />
+    <result column="ware_name" property="wareName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, grounding_no, in_stock_no, status, type, start_time, end_time, grounding_amount, 
+    ouser_id, ouser_name, ware_id, ware_name, create_time
+  </sql>
+  <select id="selectAllByWhere" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_grounding_bill
+    <include refid="Base_Where_Clause" />
+  </select>
+  	<sql id="Base_Where_Clause">
+		<where>
+			<trim prefixOverrides="and|or">
+				<if test="Id != null"> and id = #{Id}</if>
+				<if test="groundingNo != null"> and grounding_no = #{groundingNo}</if><!--上架单号-->
+				<if test="inStockNo != null"> and  in_stock_no = #{inStockNo}</if><!--入库单号-->
+				<if test="status != null"> and status = #{status}</if><!--上架单状态-->
+				<if test="type != null"> and type = #{type}</if><!--上架单类型-->
+				<if test="wareId != null"> and ware_id = #{wareId}</if><!--仓库Id-->
+				<if test="createTime != null"> and DATE_FORMAT(create_time,'%Y-%m-%d') = #{createTime}</if><!--入库时间-->
+
+				<if test="endTime_gt != null"> and end_time >= #{endTime_gt}</if><!-->=上架时间-->
+				<if test="endTime_lt != null"> and end_time &lt;= #{endTime_lt}</if><!--<=上架时间-->
+				<if test="twostatus_search != null"> and status!=3 </if><!--上架状态-->
+
+				<if test="searchWhere != null"> ${searchWhere}</if>
+			</trim>
+		</where>
+        <if test="name_sort != null"><!--排序字段-->
+          ORDER BY ${name_sort}
+          <if test="order_sort != null"><!--排序顺序asc/desc-->
+            ${order_sort}
+          </if>
+        </if>
+		<if test="page != null">
+			limit ${page.First}, ${page.Pagesize}
+		</if>
+	</sql>
+   <select id="selectByGroundingNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_grounding_bill
+    where grounding_no = #{groundingNo,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_grounding_bill
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByInStockNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_grounding_bill
+    where in_stock_no = #{inStockNo,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="selectAllByParmMap" resultType="java.util.Map" parameterType="java.util.Map">
+    select
+    g.id as Id,g.grounding_no as groundingNo, g.in_stock_no as inStockNo, g.status, g.type,  DATE_FORMAT(g.start_time,'%Y/%m/%d') as startTime, g.end_time as endTime, g.grounding_amount groundingAmount,
+    g.ouser_id as ouserId, g.ouser_name as ouserName, g.ware_id as wareId, g.ware_name as wareName, g.create_time as createTime,
+    o.grounding_no as groundingNo, o.goods_code as goodsCode, o.goods_bar_code as goodsBarCode, o.goods_name as goodsName,
+    o.spec, o.package_num as packageNum, o.unit, o.purchase_num as purchaseNum, o.purchase_wait_num as purchaseWaitNum, o.purchase_price as purchasePrice, o.goodsprice_sum as goodspriceSum,
+    DATE_FORMAT(o.validity_time,'%Y/%m/%d') as validityTime, o.in_stock_num as inStockNum, o.in_stock_be_num as inStockBeNum, o.in_stock_sum as inStockSum,
+    l.location_id as locationId,l.location_no as locationNo
+    from t_grounding_bill g left join t_purchase_in_info o on g.in_stock_no=o.in_stock_no
+    left join t_location_goods_bind_in l on g.id=l.ginfo_id
+    <include refid="Base_Where_ClauseEx"/>
+  </select>
+  <sql id="Base_Where_ClauseEx">
+    <where>
+      <trim prefixOverrides="and|or">
+        <if test="Id != null"> and g.id = #{Id}</if>
+        <if test="groundingNo != null"> and g.grounding_no = #{groundingNo}</if><!--上架单号-->
+        <if test="inStockNo != null"> and  g.in_stock_no = #{inStockNo}</if><!--入库单号-->
+        <if test="status != null"> and g.status = #{status}</if><!--上架单状态-->
+        <if test="type != null"> and g.type = #{type}</if><!--上架单类型-->
+        <if test="wareId != null"> and g.ware_id = #{wareId}</if><!--仓库Id-->
+        <if test="createTime != null"> and DATE_FORMAT(g.create_time,'%Y-%m-%d') = #{createTime}</if><!--入库时间-->
+        <if test="searchWhere != null"> ${searchWhere}</if>
+      </trim>
+    </where>
+    <if test="page != null">
+      limit ${page.First}, ${page.Pagesize}
+    </if>
+  </sql>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_grounding_bill
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rmd.wms.bean.GroundingBill" >
+    insert into t_grounding_bill (id, grounding_no, in_stock_no, 
+      status, type, start_time, 
+      end_time, grounding_amount, ouser_id, 
+      ouser_name, ware_id, ware_name, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{groundingNo,jdbcType=VARCHAR}, #{inStockNo,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{groundingAmount,jdbcType=INTEGER}, #{ouserId,jdbcType=INTEGER}, 
+      #{ouserName,jdbcType=VARCHAR}, #{wareId,jdbcType=INTEGER}, #{wareName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_grounding_bill (grounding_no, in_stock_no, 
+      status, type, start_time, 
+      end_time, grounding_amount, ouser_id, 
+      ouser_name, ware_id, ware_name, 
+      create_time)
+        values
+        <foreach collection="list" item="obj" separator=",">
+          ( #{obj.groundingNo}, #{obj.inStockNo}, 
+      #{obj.status}, #{obj.type}, #{obj.startTime}, 
+      #{obj.endTime}, #{obj.groundingAmount}, #{obj.ouserId}, 
+      #{obj.ouserName}, #{obj.wareId}, #{obj.wareName}, 
+      #{obj.createTime})
+        </foreach>
+    </insert>
+  <insert id="insertSelective" parameterType="com.rmd.wms.bean.GroundingBill" >
+    insert into t_grounding_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="groundingNo != null" >
+        grounding_no,
+      </if>
+      <if test="inStockNo != null" >
+        in_stock_no,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="groundingAmount != null" >
+        grounding_amount,
+      </if>
+      <if test="ouserId != null" >
+        ouser_id,
+      </if>
+      <if test="ouserName != null" >
+        ouser_name,
+      </if>
+      <if test="wareId != null" >
+        ware_id,
+      </if>
+      <if test="wareName != null" >
+        ware_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="groundingNo != null" >
+        #{groundingNo,jdbcType=VARCHAR},
+      </if>
+      <if test="inStockNo != null" >
+        #{inStockNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="groundingAmount != null" >
+        #{groundingAmount,jdbcType=INTEGER},
+      </if>
+      <if test="ouserId != null" >
+        #{ouserId,jdbcType=INTEGER},
+      </if>
+      <if test="ouserName != null" >
+        #{ouserName,jdbcType=VARCHAR},
+      </if>
+      <if test="wareId != null" >
+        #{wareId,jdbcType=INTEGER},
+      </if>
+      <if test="wareName != null" >
+        #{wareName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.GroundingBill" >
+    update t_grounding_bill
+    <set >
+      <if test="groundingNo != null" >
+        grounding_no = #{groundingNo,jdbcType=VARCHAR},
+      </if>
+      <if test="inStockNo != null" >
+        in_stock_no = #{inStockNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="groundingAmount != null" >
+        grounding_amount = #{groundingAmount,jdbcType=INTEGER},
+      </if>
+      <if test="ouserId != null" >
+        ouser_id = #{ouserId,jdbcType=INTEGER},
+      </if>
+      <if test="ouserName != null" >
+        ouser_name = #{ouserName,jdbcType=VARCHAR},
+      </if>
+      <if test="wareId != null" >
+        ware_id = #{wareId,jdbcType=INTEGER},
+      </if>
+      <if test="wareName != null" >
+        ware_name = #{wareName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.GroundingBill" >
+    update t_grounding_bill
+    set grounding_no = #{groundingNo,jdbcType=VARCHAR},
+      in_stock_no = #{inStockNo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      grounding_amount = #{groundingAmount,jdbcType=INTEGER},
+      ouser_id = #{ouserId,jdbcType=INTEGER},
+      ouser_name = #{ouserName,jdbcType=VARCHAR},
+      ware_id = #{wareId,jdbcType=INTEGER},
+      ware_name = #{wareName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

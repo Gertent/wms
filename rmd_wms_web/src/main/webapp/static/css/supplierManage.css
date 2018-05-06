@@ -1,0 +1,68 @@
+/*-------addsupplier2016/9/27--------*/
+.suppliermBox{
+    width: auto;
+    height: 640px;
+    background: #fff;
+}
+.suppliermBox .header{
+    width: 100%;
+    padding: 20px 0;
+    background: #edebeb;
+}
+.suppliermBox .header .navBar a{
+    margin-left: 30px;
+}
+.gList li{
+    float: left;
+    line-height: 36px;
+    margin-left: 30px;
+}
+.gList li label{
+    width: 75px;
+    color: #313643;
+    font-size: 15px;
+    padding-right: 15px;
+}
+.gList li input{
+    width: 184px;
+    height: 28px;
+    padding-left: 10px;
+    border-radius: 4px;
+}
+.cenList{
+    height: 36px;
+    margin: 12px 0;
+    line-height: 36px;
+    background: #edebeb;
+    border: 1px solid  #d2d2d2;
+}
+.cenList .list li{
+    float: left;
+    color: #313643;
+    padding: 0 20px;
+    cursor: pointer;
+    border-right: 1px  #d2d2d2;
+}
+.cenList .list li em{
+    height: 16px;
+    color: #fff;
+    font-size: 12px;
+    padding: 0px 5px;
+    margin-left: 5px;
+    line-height: 16px;
+    border-radius: 8px;
+    background: #aeabab;
+    display: inline-block;
+}
+.cenList .list li.active{
+    background: #fff;
+}
+.cenList .list li.active em{
+    background: #aeabab;
+}
+.textbox {
+	border-radius: 4px;
+}
+.inBoxBig{
+	margin-top: 30px !important;
+}

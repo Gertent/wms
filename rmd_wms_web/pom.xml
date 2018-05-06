@@ -1,0 +1,530 @@
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+        xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.rmd</groupId>
+        <artifactId>rmd_wms_parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <!--定义本项目-->
+    <groupId>com.rmd</groupId>
+    <artifactId>rmd_wms_web</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>rmd_wms_web Maven Webapp</name>
+    <url>http://maven.apache.org</url>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.version>4.0.0.RELEASE</spring.version>
+        <mysql-connector-java.version>5.1.14</mysql-connector-java.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+        </dependency>
+        <!--lygp back api jar-->
+        <dependency>
+            <groupId>com.rmd</groupId>
+            <artifactId>rmd_lygp_back_api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.rmd.bms</groupId>
+            <artifactId>rmd_bms_api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.rmd</groupId>
+            <artifactId>rmd_wms_api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.rmd.oms</groupId>
+            <artifactId>rmd_oms_api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>2.5.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.sgroschupf</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <!-- spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.6.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.6</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.8.3</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.2.8</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.0</version>
+        </dependency>
+        <!--分页-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+        <!-- iReport JasperReports 报表解析 BEGIN-->
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>5.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>2.4.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>2.1.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.olap4j</groupId>
+            <artifactId>olap4j</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.4.01</version>
+        </dependency>
+        <!-- iReport PDF中文支持 -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext-asian</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports-fonts</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itextasian</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!-- iReport JasperReports 报表解析 END-->
+        <!-- 条形码BEGIN -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <!-- 条形码 END -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-quartz</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.4.1</version>
+        </dependency>
+        <!-- aliyun BENGIN -->
+        <dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-core</artifactId>
+			<version>2.1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aliyun.oss</groupId>
+			<artifactId>aliyun-sdk-oss</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aliyun.openservices</groupId>
+			<artifactId>aliyun-openservices</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<!-- aliyun END -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3</version>
+		</dependency>
+		<!-- PDF view BEGIN -->
+		<dependency>
+		    <groupId>com.itextpdf.tool</groupId>
+		    <artifactId>xmlworker</artifactId>
+		    <version>5.5.7</version>
+		</dependency>
+        <dependency>
+		    <groupId>org.xhtmlrenderer</groupId>
+		    <artifactId>flying-saucer-pdf</artifactId>
+		    <version>9.1.4</version>
+		</dependency>
+        <!-- PDF view END -->
+        <!-- poi EXCEL BEGIN  -->
+	    <dependency>
+	    	<groupId>org.apache.poi</groupId>
+	    	<artifactId>poi</artifactId>
+	    	<version>3.10-FINAL</version>
+	    </dependency>
+	    <dependency>
+	    	<groupId>org.apache.poi</groupId>
+	    	<artifactId>poi-ooxml</artifactId>
+	    	<version>3.10-FINAL</version>
+	    </dependency>
+	    <dependency>
+	    	<groupId>org.apache.poi</groupId>
+	    	<artifactId>poi-scratchpad</artifactId>
+	    	<version>3.10-FINAL</version>
+	    </dependency>
+	    <!-- poi EXCEL END  -->
+	    <!-- zip BEGIN -->
+	    <dependency>
+		    <groupId>org.apache.ant</groupId>
+		    <artifactId>ant</artifactId>
+		    <version>1.8.2</version>
+		</dependency>
+		<!-- zip END -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>rmd_wms_web</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*.properties</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.plexus</groupId>
+                        <artifactId>plexus-compiler-javac</artifactId>
+                        <version>1.8.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.10</version>
+                <configuration>
+                    <skip>true</skip>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+
+
+    <profiles>
+        <!--  ************************************************************  -->
+        <!-- TODO 本地参数配置 -->
+        <!--  ************************************************************  -->
+        <profile>
+            <!-- 开发环境参数配置区域 -->
+            <id>web_dev</id>
+            <properties>
+
+                <!-- zookeeper配置中心 -->
+                <profile.zookeeper.registry>127.0.0.1:2181</profile.zookeeper.registry>
+                <profile.dubbo.protocol.port>20885</profile.dubbo.protocol.port>
+
+                <!-- shiro配置 -->
+                <profile.shiro.login.url>http://192.168.0.25:18080/auth/authorize?redirect_uri=http://192.168.0.94:18081/rmd_wms_web</profile.shiro.login.url>
+                <profile.shiro.logout.url>http://192.168.0.25:18080/auth/logout?redirect_uri=http://192.168.0.94:18081/rmd_wms_web</profile.shiro.logout.url>
+                <profile.shiro.accesstoken.url>http://192.168.0.25:18080/auth/accessToken</profile.shiro.accesstoken.url>
+                <profile.shiro.client.id>12</profile.shiro.client.id>
+                <profile.shiro.client.secret>788c2e5f621a5ff3a9c5fd188f1f5d64</profile.shiro.client.secret>
+
+                <!--log4j配置-->
+                <profile.log4j.appender.A.File>logs/rmd_wms_web.log</profile.log4j.appender.A.File>
+
+            </properties>
+        </profile>
+
+        <!--  ************************************************************  -->
+        <!-- TODO 测试参数配置 -->
+        <!--  ************************************************************  -->
+        <profile>
+            <!-- 测试环境参数配置区域 -->
+            <id>web_it</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+
+                <!-- zookeeper配置中心 -->
+                <profile.zookeeper.registry>192.168.0.20:2181</profile.zookeeper.registry>
+                <profile.dubbo.protocol.port>20885</profile.dubbo.protocol.port>
+
+                <!-- shiro配置 -->
+                <profile.shiro.login.url>http://192.168.0.25:18080/auth/authorize?redirect_uri=http://192.168.0.25:8076/rmd_wms_web</profile.shiro.login.url>
+                <profile.shiro.logout.url>http://192.168.0.25:18080/auth/logout?redirect_uri=http://192.168.0.25:8076/rmd_wms_web</profile.shiro.logout.url>
+                <profile.shiro.accesstoken.url>http://192.168.0.25:18080/auth/accessToken</profile.shiro.accesstoken.url>
+                <profile.shiro.client.id>12</profile.shiro.client.id>
+                <profile.shiro.client.secret>788c2e5f621a5ff3a9c5fd188f1f5d64</profile.shiro.client.secret>
+
+                <!--log4j配置-->
+                <profile.log4j.appender.A.File>logs/rmd_wms_web.log</profile.log4j.appender.A.File>
+
+            </properties>
+        </profile>
+
+        <!--  ************************************************************  -->
+        <!-- TODO 生产参数配置 -->
+        <!--  ************************************************************  -->
+        <profile>
+            <!--正式环境参数配置区域-->
+            <id>web_pro</id>
+            <properties>
+
+                <!-- zookeeper配置中心 -->
+                <profile.zookeeper.registry>127.0.0.1:2181</profile.zookeeper.registry>
+                <profile.dubbo.protocol.port>20885</profile.dubbo.protocol.port>
+
+                <!-- shiro配置 -->
+                <profile.shiro.login.url>http://192.168.0.25:18080/auth/authorize?redirect_uri=http://192.168.0.172:8081/rmd_wms_web</profile.shiro.login.url>
+                <profile.shiro.logout.url>http://192.168.0.25:18080/auth/logout?redirect_uri=http://192.168.0.172:8081/rmd_wms_web</profile.shiro.logout.url>
+                <profile.shiro.accesstoken.url>http://192.168.0.25:18080/auth/accessToken</profile.shiro.accesstoken.url>
+                <profile.shiro.client.id>12</profile.shiro.client.id>
+                <profile.shiro.client.secret>788c2e5f621a5ff3a9c5fd188f1f5d64</profile.shiro.client.secret>
+
+                <!--log4j配置-->
+                <profile.log4j.appender.A.File>logs/rmd_wms_web.log</profile.log4j.appender.A.File>
+            </properties>
+        </profile>
+    </profiles>
+</project>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+
+    <dubbo:registry address="${dubbo.registry.address}"/>
+
+    <!-- 组播注册 -->
+    <!-- <dubbo:registry address="multicast://224.5.6.7:1234" /> -->
+
+    <!-- wms本系统接口调用 -->
+    <dubbo:reference interface="com.rmd.wms.service.PurchaseBillService" id="purchaseBillService" check="false"/>
+    <dubbo:reference interface="com.rmd.wms.service.PurchaseInInfoService" id="purchaseInInfoService" check="false"/>
+    <dubbo:reference interface="com.rmd.wms.service.InStockBillService" id="inStockBillService" check="false">
+        <dubbo:method name="serverInStock" timeout="5000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference interface="com.rmd.wms.service.GroundingBillService" id="groundingBillService" check="false"/>
+    <dubbo:reference interface="com.rmd.wms.service.StockOutBillService" id="stockOutBillService" check="false"/>
+    <dubbo:reference interface="com.rmd.wms.service.LogisticsBillService" id="logisticsBillService" check="false"/>
+    <dubbo:reference interface="com.rmd.wms.service.OrderLogisticsInfoService" id="orderLogisticsInfoService" check="false"/>
+    <dubbo:reference interface="com.rmd.wms.service.StockOutInfoService" id="stockOutInfoService" check="false"/>
+    <dubbo:reference interface="com.rmd.wms.service.LocationGoodsBindOutService" id="locationGoodsBindOutService" check="false"/>
+    <dubbo:reference interface="com.rmd.wms.service.LocationGoodsBindInService" id="locationGoodsBindInService" check="false"/>
+    <dubbo:reference interface="com.rmd.wms.service.DeliveryBillService" id="deliveryBillService" check="false"/>
+    <dubbo:reference interface="com.rmd.wms.service.DictionaryService" id="dictionaryService" check="false"/>
+    <dubbo:reference interface="com.rmd.wms.service.LogisticsCompanyService" id="logisticsCompanyService" check="false">
+        <dubbo:method name="insert" timeout="1000" retry="0"/>
+        <dubbo:method name="insertSelective" timeout="1000" retry="0"/>
+        <dubbo:method name="updateByPrimaryKeySelective" timeout="1000" retry="0"/>
+        <dubbo:method name="updateByPrimaryKey" timeout="1000" retry="0"/>
+        <dubbo:method name="addLogisticsCompanyAdFreight" timeout="5000" retry="0"/>
+        <dubbo:method name="updateLogisticsCompany" timeout="2000" retry="0"/>
+        <dubbo:method name="updateFreightTemplate" timeout="2000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference interface="com.rmd.wms.service.DeliveryRangeService" id="deliveryRangeService" check="false">
+        <dubbo:method name="insertBatch" timeout="5000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference interface="com.rmd.wms.service.WarehouseService" id="warehouseService" check="false">
+        <dubbo:method name="insert" timeout="1000" retry="0"/>
+        <dubbo:method name="insertSelective" timeout="1000" retry="0"/>
+        <dubbo:method name="updateByPrimaryKeySelective" timeout="5000" retry="0"/>
+        <dubbo:method name="updateByPrimaryKey" timeout="1000" retry="0"/>
+        <dubbo:method name="updateByStatus" timeout="1000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference interface="com.rmd.wms.service.WarehouseAreaService" id="warehouseAreaService" check="false">
+        <dubbo:method name="insertSelective" timeout="1000" retry="0"/>
+        <dubbo:method name="updateByPrimaryKeySelective" timeout="1000" retry="0"/>
+        <dubbo:method name="updateByStatus" timeout="1000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference interface="com.rmd.wms.service.LocationService" id="locationService" check="false">
+        <dubbo:method name="updateByPrimaryKeySelective" timeout="1000" retry="0"/>
+        <dubbo:method name="insertSelective" timeout="1000" retry="0"/>
+        <dubbo:method name="updateByType" timeout="1000" retry="0"/>
+        <dubbo:method name="updateByStatus" timeout="1000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference interface="com.rmd.wms.service.MovementService" id="movementService" check="false"/>
+    <dubbo:reference interface="com.rmd.wms.service.LocationGoodsBindService" id="locationGoodsBindService" check="false"/>
+    <dubbo:reference interface="com.rmd.wms.service.WarehouseUserService" id="warehouseUserService" check="false">
+        <dubbo:method name="insertBatchSelective" timeout="5000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference interface="com.rmd.wms.service.WareDeliverRangeService" id="wareDeliverRangeService" check="false"/>
+    <dubbo:reference interface="com.rmd.wms.service.CheckBillService" id="checkBillService" check="false">
+        <dubbo:method name="createCheckBill" timeout="5000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference interface="com.rmd.wms.service.CheckUserService" id="checkUserService" check="false"/>
+    <dubbo:reference interface="com.rmd.wms.service.CheckInfoService" id="checkInfoService" check="false">
+        <dubbo:method name="updateCheckInfoStatus" timeout="5000" retry="0"/>
+        <dubbo:method name="submitChecksReport" timeout="5000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference interface="com.rmd.wms.service.LogisticsFreightBillService" id="logisticsFreightBillService" check="false">
+        <dubbo:method name="generateFreightBill" timeout="5000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference interface="com.rmd.wms.service.LogisticsFreightTemplateService" id="logisticsFreightTemplateService" check="false"/>
+    <dubbo:reference interface="com.rmd.wms.service.LogisticsFreightCityService" id="logisticsFreightCityService" check="false"/>
+    <!-- oms接口调用 -->
+    <dubbo:reference interface="com.rmd.oms.service.OrderBaseService" id="orderBaseService" check="false">
+        <dubbo:method name="saveDeliverInfo" timeout="5000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference interface="com.rmd.oms.service.PullOrderService" id="pullOrderService" check="false"/>
+    <dubbo:reference interface="com.rmd.oms.service.OrderBackService" id="orderBackService" check="false"/>
+    <dubbo:reference interface="com.rmd.oms.service.OrderGoodslistService" id="orderGoodslistService" check="false"/>
+    <!-- bms接口调用 单点登录对接-->
+    <!--<dubbo:reference interface="com.rmd.bms.service.WebApplicationService" id="webApplicationService" check="false"/>-->
+    <!--<dubbo:reference interface="com.rmd.bms.service.ApplicationMenuService" id="applicationMenuService" check="false"/>-->
+    <!--<dubbo:reference interface="com.rmd.bms.service.MenuOperationService" id="menuOperationService" check="false"/>-->
+    <!--<dubbo:reference interface="com.rmd.bms.service.BmsApiService" id="bmsApiService" check="false"/>-->
+    <!--<dubbo:reference interface="com.rmd.bms.service.AreaService" id="areaService" check="false"/>-->
+    <!--&lt;!&ndash; gms接口调用 &ndash;&gt;-->
+    <dubbo:reference interface="com.rmd.lygp.back.service.GoodsBaseService" id="goodsBaseService" check="false"/>
+
+    <!--单点登录对接 本地测试-->
+    <dubbo:reference interface="com.rmd.bms.service.WebApplicationService" id="webApplicationService" url="dubbo://192.168.0.25:20890" check="false"/>
+    <dubbo:reference interface="com.rmd.bms.service.ApplicationMenuService" id="applicationMenuService" url="dubbo://192.168.0.25:20890" check="false"/>
+    <dubbo:reference interface="com.rmd.bms.service.MenuOperationService" id="menuOperationService" url="dubbo://192.168.0.25:20890" check="false"/>
+    <dubbo:reference interface="com.rmd.bms.service.BmsApiService" id="bmsApiService" url="dubbo://192.168.0.25:20890" check="false"/>
+    <dubbo:reference interface="com.rmd.bms.service.AreaService" id="areaService" url="dubbo://192.168.0.25:20890" check="false"/>
+    <!--<dubbo:reference interface="com.rmd.lygp.back.service.GoodsBaseService" id="goodsBaseService" url="dubbo://192.168.0.25:20901" check="false"/>-->
+
+</beans>

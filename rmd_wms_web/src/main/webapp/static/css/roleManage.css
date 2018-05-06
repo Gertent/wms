@@ -1,0 +1,47 @@
+#roleEdit,#depaEdit{
+    padding: 0 95px;
+}
+#roleEdit .inBox,#depaEdit .inBox{
+    width: 610px;
+    margin-top: 14px;
+}
+#roleEdit .inBox>li>label,#depaEdit .inBox>li>label{
+    width: 17%;
+    font-size: 15px;
+    text-align: right;
+    line-height: 44px;
+    padding-right: 5px;
+    display: inline-block;
+}
+#roleEdit .inBox li>input[type="text"],#depaEdit .inBox li>input[type="text"]{
+    width: 80%;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 5px;
+    border: 1px solid #e5e5e5;
+}
+#roleEdit .inBox li a.check{
+    margin: 0 10px 0 0;
+    vertical-align: text-bottom;
+}
+.check i{
+    width: 13px;
+    height: 13px;
+    margin-right: 5px;
+    vertical-align: middle;
+    display: inline-block;
+    background: url(../images/check.png) no-repeat center left;
+}
+.check i.active{
+    background-position: right;
+}
+#roleEdit .btE5{
+    border-bottom: 1px solid #e5e5e5;
+}
+#roleEdit .lh{
+    line-height: 44px;
+    padding: 8px 3px 0 0;
+}
+#roleEdit .inBox>li>label.indent{
+	margin-left: -16px;
+}

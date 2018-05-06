@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.LocationGoodsBindOutMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.LocationGoodsBindOut">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="ginfo_id" property="ginfoId" jdbcType="INTEGER"/>
+        <result column="location_id" property="locationId" jdbcType="INTEGER"/>
+        <result column="location_no" property="locationNo" jdbcType="VARCHAR"/>
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="grounding_num" property="groundingNum" jdbcType="INTEGER"/>
+        <result column="picked_num" property="pickedNum" jdbcType="INTEGER"/>
+        <result column="locked_num" property="lockedNum" jdbcType="INTEGER"/>
+        <result column="goods_code" property="goodsCode" jdbcType="VARCHAR"/>
+        <result column="goods_bar_code" property="goodsBarCode" jdbcType="VARCHAR"/>
+        <result column="validity_time" property="validityTime" jdbcType="TIMESTAMP"/>
+        <result column="sort_num" property="sortNum" jdbcType="INTEGER"/>
+        <result column="ware_id" property="wareId" jdbcType="INTEGER"/>
+        <result column="ware_name" property="wareName" jdbcType="VARCHAR"/>
+        <result column="area_id" property="areaId" jdbcType="INTEGER"/>
+        <result column="area_name" property="areaName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, ginfo_id, location_id, location_no, order_no, grounding_num, picked_num, locked_num,
+        goods_code, goods_bar_code, validity_time, sort_num, ware_id, ware_name, area_id,
+        area_name, create_time
+    </sql>
+    <select id="selectByOrderNoCode" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_location_goods_bind_out
+        <include refid="Base_Where_Clause"/>
+    </select>
+    <sql id="Base_Where_Clause">
+        <where>
+            <trim prefixOverrides="and|or">
+                <if test="Id != null">and id = #{Id}</if>
+                <if test="orderNo != null">and order_no = #{orderNo}</if><!--出库单号-->
+                <if test="goodsCode != null">and goods_code = #{goodsCode}</if><!--出库单类型-->
+                <if test="wareId != null">and ware_id = #{wareId}</if><!--仓库Id-->
+                <if test="locationNo != null">and location_no = #{locationNo}</if><!--货位号-->
+                <if test="searchWhere != null">${searchWhere}</if>
+            </trim>
+        </where>
+    </sql>
+    <select id="selectValidOutByOrderNo" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_location_goods_bind_out
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="orderNo != null">and order_no = #{orderNo}</if><!--出库单号-->
+            <if test="goodsCode != null">and goods_code = #{goodsCode}</if><!--出库单类型-->
+            <if test="wareId != null">and ware_id = #{wareId}</if><!--仓库Id-->
+            and locked_num != 0
+        </trim>
+    </select>
+    <select id="selectValidOutByGinfoIds" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from t_location_goods_bind_out
+        where ginfo_id in
+        <foreach collection="list" open="(" close=")" separator="," index="index" item="obj">
+            #{obj}
+        </foreach>
+        and locked_num != 0
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_location_goods_bind_out
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_location_goods_bind_out
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteBatchOrderStockOut" parameterType="java.util.Map">
+        delete from t_location_goods_bind_out
+        <include refid="Base_Where_Clause"/>
+    </delete>
+    <insert id="insert" parameterType="com.rmd.wms.bean.LocationGoodsBindOut">
+        insert into t_location_goods_bind_out (id, ginfo_id, location_id,
+          location_no, order_no, grounding_num,
+          picked_num, locked_num, goods_code,
+          goods_bar_code, validity_time, sort_num,
+          ware_id, ware_name, area_id,
+          area_name, create_time)
+        values (#{id,jdbcType=INTEGER}, #{ginfoId,jdbcType=INTEGER}, #{locationId,jdbcType=INTEGER},
+          #{locationNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, #{groundingNum,jdbcType=INTEGER},
+          #{pickedNum,jdbcType=INTEGER}, #{lockedNum,jdbcType=INTEGER}, #{goodsCode,jdbcType=VARCHAR},
+          #{goodsBarCode,jdbcType=VARCHAR}, #{validityTime,jdbcType=TIMESTAMP}, #{sortNum,jdbcType=INTEGER},
+          #{wareId,jdbcType=INTEGER}, #{wareName,jdbcType=VARCHAR}, #{areaId,jdbcType=INTEGER},
+          #{areaName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_location_goods_bind_out (ginfo_id, location_id,
+          location_no, order_no, grounding_num,
+          picked_num, locked_num, goods_code,
+          goods_bar_code, validity_time, sort_num,
+          ware_id, ware_name, area_id,
+          area_name, create_time)
+        values
+        <foreach collection="list" item="obj" separator=",">
+            (#{obj.ginfoId},#{obj.locationId},#{obj.locationNo},#{obj.orderNo},#{obj.groundingNum},
+            #{obj.pickedNum},#{obj.lockedNum},#{obj.goodsCode},#{obj.goodsBarCode},#{obj.validityTime},#{obj.sortNum},
+            #{obj.wareId},#{obj.wareName},#{obj.areaId},#{obj.areaName},#{obj.createTime})
+        </foreach>
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.LocationGoodsBindOut">
+        insert into t_location_goods_bind_out
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="ginfoId != null">
+                ginfo_id,
+            </if>
+            <if test="locationId != null">
+                location_id,
+            </if>
+            <if test="locationNo != null">
+                location_no,
+            </if>
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="groundingNum != null">
+                grounding_num,
+            </if>
+            <if test="pickedNum != null">
+                picked_num,
+            </if>
+            <if test="lockedNum != null">
+                locked_num,
+            </if>
+            <if test="goodsCode != null">
+                goods_code,
+            </if>
+            <if test="goodsBarCode != null">
+                goods_bar_code,
+            </if>
+            <if test="validityTime != null">
+                validity_time,
+            </if>
+            <if test="sortNum != null">
+                sort_num,
+            </if>
+            <if test="wareId != null">
+                ware_id,
+            </if>
+            <if test="wareName != null">
+                ware_name,
+            </if>
+            <if test="areaId != null">
+                area_id,
+            </if>
+            <if test="areaName != null">
+                area_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="ginfoId != null">
+                #{ginfoId,jdbcType=INTEGER},
+            </if>
+            <if test="locationId != null">
+                #{locationId,jdbcType=INTEGER},
+            </if>
+            <if test="locationNo != null">
+                #{locationNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="groundingNum != null">
+                #{groundingNum,jdbcType=INTEGER},
+            </if>
+            <if test="pickedNum != null">
+                #{pickedNum,jdbcType=INTEGER},
+            </if>
+            <if test="lockedNum != null">
+                #{lockedNum,jdbcType=INTEGER},
+            </if>
+            <if test="goodsCode != null">
+                #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsBarCode != null">
+                #{goodsBarCode,jdbcType=VARCHAR},
+            </if>
+            <if test="validityTime != null">
+                #{validityTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sortNum != null">
+                #{sortNum,jdbcType=INTEGER},
+            </if>
+            <if test="wareId != null">
+                #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="areaId != null">
+                #{areaId,jdbcType=INTEGER},
+            </if>
+            <if test="areaName != null">
+                #{areaName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+        update t_location_goods_bind_out
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="picked_num = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.pickedNum != null">
+                        when id = #{i.id} then #{i.pickedNum}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="locked_num = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.lockedNum != null">
+                        when id = #{i.id} then #{i.lockedNum}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where
+        <foreach collection="list" separator="or" item="i" index="index">
+            id = #{i.id}
+        </foreach>
+    </update>
+    <update id="updateByOrderNo" parameterType="com.rmd.wms.bean.LocationGoodsBindOut">
+        update t_location_goods_bind_out
+        <set>
+            <if test="ginfoId != null">
+                ginfo_id = #{ginfoId,jdbcType=INTEGER},
+            </if>
+            <if test="locationId != null">
+                location_id = #{locationId,jdbcType=INTEGER},
+            </if>
+            <if test="locationNo != null">
+                location_no = #{locationNo,jdbcType=VARCHAR},
+            </if>
+            <if test="groundingNum != null">
+                grounding_num = #{groundingNum,jdbcType=INTEGER},
+            </if>
+            <if test="pickedNum != null">
+                picked_num = #{pickedNum,jdbcType=INTEGER},
+            </if>
+            <if test="lockedNum != null">
+                locked_num = #{lockedNum,jdbcType=INTEGER},
+            </if>
+            <if test="goodsCode != null">
+                goods_code = #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsBarCode != null">
+                goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR},
+            </if>
+            <if test="validityTime != null">
+                validity_time = #{validityTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sortNum != null">
+                sort_num = #{sortNum,jdbcType=INTEGER},
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="areaId != null">
+                area_id = #{areaId,jdbcType=INTEGER},
+            </if>
+            <if test="areaName != null">
+                area_name = #{areaName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where order_no = #{orderNo,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.LocationGoodsBindOut">
+        update t_location_goods_bind_out
+        <set>
+            <if test="ginfoId != null">
+                ginfo_id = #{ginfoId,jdbcType=INTEGER},
+            </if>
+            <if test="locationId != null">
+                location_id = #{locationId,jdbcType=INTEGER},
+            </if>
+            <if test="locationNo != null">
+                location_no = #{locationNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null">
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="groundingNum != null">
+                grounding_num = #{groundingNum,jdbcType=INTEGER},
+            </if>
+            <if test="pickedNum != null">
+                picked_num = #{pickedNum,jdbcType=INTEGER},
+            </if>
+            <if test="lockedNum != null">
+                locked_num = #{lockedNum,jdbcType=INTEGER},
+            </if>
+            <if test="goodsCode != null">
+                goods_code = #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsBarCode != null">
+                goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR},
+            </if>
+            <if test="validityTime != null">
+                validity_time = #{validityTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sortNum != null">
+                sort_num = #{sortNum,jdbcType=INTEGER},
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="areaId != null">
+                area_id = #{areaId,jdbcType=INTEGER},
+            </if>
+            <if test="areaName != null">
+                area_name = #{areaName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.LocationGoodsBindOut">
+        update t_location_goods_bind_out
+        set ginfo_id = #{ginfoId,jdbcType=INTEGER},
+          location_id = #{locationId,jdbcType=INTEGER},
+          location_no = #{locationNo,jdbcType=VARCHAR},
+          order_no = #{orderNo,jdbcType=VARCHAR},
+          grounding_num = #{groundingNum,jdbcType=INTEGER},
+          picked_num = #{pickedNum,jdbcType=INTEGER},
+          locked_num = #{lockedNum,jdbcType=INTEGER},
+          goods_code = #{goodsCode,jdbcType=VARCHAR},
+          goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR},
+          validity_time = #{validityTime,jdbcType=TIMESTAMP},
+          sort_num = #{sortNum,jdbcType=INTEGER},
+          ware_id = #{wareId,jdbcType=INTEGER},
+          ware_name = #{wareName,jdbcType=VARCHAR},
+          area_id = #{areaId,jdbcType=INTEGER},
+          area_name = #{areaName,jdbcType=VARCHAR},
+          create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,62 @@
+@charset "utf-8";
+html,body{padding:10px 0; margin:0;font-size:14px; height:auto;font-family:"Microsoft YaHei"; cursor:default;background:#edf4ff;}
+.carrier{width:910px;padding:10px;background:#fff;margin:auto;}
+i{font-style:normal}
+.cartitle{width:890px;height:40px;border-bottom:solid 1px #acacac;padding:0 20px;}
+.cartitle span{display:block;float:left;width:120px;height:40px;line-height:40px;text-align:center;border:solid 1px #acacac;border-bottom:none;background: #fff;
+    font-size:14px;color: #333; border-top-left-radius:4px;border-top-right-radius:4px;cursor:pointer; }
+.cartitle span.active{background: #acacac;color: #FFF;}
+.carcontext{width:890px; padding:20px;}
+.carcontop{width:850px;}
+.carcontop > div{ width:425px; float:left; margin-bottom: 20px;}
+.carcontop > div.widthhundred{width: 850px;float:left; margin-bottom: 20px;}
+.carcontop > div > span{display: block; width:90px;height:28px;line-height:28px;font-size:14px;text-align:right; float: left;}
+.carcontop > div > input{border-radius:4px;margin-left:20px;height:28px;line-height:28px; width:266px;padding-left:10px;float:left;}
+.carcontop > div > div{margin-left:20px;width:682px;padding:10px; min-height:30px;float:left;}
+.carcontop > div > div >a{color:#333; text-decoration: none;}
+.chkmodule{width:191px;padding:5px 18px; float:left; position:relative; }
+.chkmodule > span:nth-child(1){padding:5px; position: relative; }
+/*.searchallchk:after{content:"";position:absolute;top:13px;left:6px;display:block;width:10px;height:3px;background:#333;}*/
+.searchallchk:after{content:"";position:relative;top:4px;left:1px;display:block;width:10px;height:3px;background:#5f5f5f;}
+.carcontop .cityallnm{width:230px;font-size:14px;position:absolute;top:25px;left:18px; z-index:100; display:none;background: #fffbc9;
+    -webkit-box-shadow: 2px 2px 2px #a9a9a9;-moz-box-shadow:2px 2px 2px #a9a9a9; box-shadow:2px 2px 2px #a9a9a9;padding-left:5px;padding-bottom: 5px;}
+.carcontop .cityallnm > span {display:block; width:115px;float:left; background: #fffbc9; padding-top:5px;}
+.carcontop .cityallnm > p {display:block; width:210px;float:left; background: #fffbc9; text-align: right; padding:0 10px;cursor: pointer;}
+
+.carconbottom .cityallnm{width:230px;font-size:14px;position:absolute;top:23px;left:18px; z-index:100; display:none;background: #fffbc9;
+    -webkit-box-shadow: 2px 2px 2px #a9a9a9;-moz-box-shadow:2px 2px 2px #a9a9a9; box-shadow:2px 2px 2px #a9a9a9;padding-left:5px;padding-bottom: 5px;}
+.carconbottom .cityallnm > span {display:block; width:115px;float:left; background: #fffbc9; padding-top:5px;}
+.carconbottom .cityallnm > p {display:block; width:210px;float:left; background: #fffbc9; text-align: right; padding:0 10px;cursor: pointer;}
+
+.toparrow{ padding: 8px; background:url(../images/toparrow.png)no-repeat center center;cursor: pointer;}
+.bottomarrow{padding: 8px; background:url(../images/bottomarrow.png)no-repeat center center;cursor: pointer;}
+.leftarrow{background:url(../images/shejichk.png)no-repeat left center;cursor:pointer; }
+.countdistrict{ color: #cc0000; padding-left: 5px; }
+.clearboth{ clear: both; }
+.bgfffbc9{background-color: #fffbc9;}
+.borderac{ border: solid 1px #acacac; }
+.btncenter{ text-align: center;}
+.btntempl,.btncencle{margin-right:15px;}
+.btntempl{padding:10px 15px;border: none; border-radius:4px; font-size: 14px; color: #fff; background: #169bd5;}
+.btncencle{padding:10px 15px;border: none; border-radius:4px; font-size: 14px; color: #169bd5;background:#fff;border:solid 1px #acacac;}
+.chkmodule{moz-user-select:-moz-none;-moz-user-select: none;-o-user-select:none;-khtml-user-select:none;
+    -webkit-user-select:none;-ms-user-select:none;user-select:none;}
+.carconbottom{width:850px;display:none; position: relative;}
+.carconbottom > div.widthhundred{width:850px;float:left;margin-bottom:20px;font-size:14px;}
+.carconbottom > div > span{display:block;width:90px;height:28px;line-height:28px;font-size:14px;text-align:right;float:left;}
+.carconbottom > div > div{margin-left:20px;width:640px;float:left; }
+.carrierbottom{ min-height:60px;margin-top:10px;padding-bottom:10px;}
+.carrierbottom ul{width:618px;height:53px;line-height:53px; list-style:none;padding:0 10px;margin:0; background:#edf4ff;}
+.carrierbottom ul li{width:112px;list-style:none;margin:0;float:left;}
+.carrierbottom ul li:nth-child(1){width:56px;}
+.carrierbottom ul li input{width:50px;height:30px;line-height:30px}
+.carrierbottom table{ width:100%;padding-top:15px;}
+.carrierbottom table th,.carrierbottom table td{ text-align:center; padding:8px 0;}
+.carspancolor{color:dodgerblue; cursor: pointer;}
+.carrierbottom table tr td input{ width:60px !important;height:30px;line-height:30px;}
+.freighttemplate{padding-bottom:20px;display:none;position:absolute;top:55px;left:148px;background:#fff;z-index:100;}
+.freighttel{width:100%;padding: 10px;}
+.textalignright{text-align:right;}
+
+
+

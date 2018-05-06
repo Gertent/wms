@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.MovementInfoMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.MovementInfo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="move_id" property="moveId" jdbcType="INTEGER"/>
+        <result column="goods_code" property="goodsCode" jdbcType="VARCHAR"/>
+        <result column="goods_bar_code" property="goodsBarCode" jdbcType="VARCHAR"/>
+        <result column="in_stock_time" property="inStockTime" jdbcType="TIMESTAMP"/>
+        <result column="location_no_out" property="locationNoOut" jdbcType="VARCHAR"/>
+        <result column="out_num" property="outNum" jdbcType="INTEGER"/>
+        <result column="in_num" property="inNum" jdbcType="INTEGER"/>
+        <result column="validity_time" property="validityTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, move_id, goods_code, goods_bar_code, in_stock_time, location_no_out, out_num,
+        in_num, validity_time, create_time
+    </sql>
+     <select id="selectAllByWhere" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_movement_info
+        <include refid="Base_Where_Clause"/>
+          ORDER BY id DESC
+    </select>
+    <sql id="Base_Where_Clause">
+        <where>
+            <trim prefixOverrides="and|or">
+                <if test="Id != null"> and id = #{Id}</if>
+                <if test="moveId != null"> and move_id = #{moveId}</if>
+				<if test="goodsCode != null"> and goods_code = #{goodsCode}</if><!--商品编号-->	
+				<if test="locationNoOut != null">and location_no_out = #{locationNoOut}</if><!--移出货位号-->
+
+                <if test="moveId_in != null"> and move_id in ${moveId_in}</if>
+                <if test="id_in != null"> and id in ${id_in}</if>
+                <if test="noData_Search != null"> and 1=2</if>
+				<if test="searchWhere != null">${searchWhere}</if>
+            </trim>
+        </where>
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_movement_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.rmd.wms.bean.MovementInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_movement_info
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="moveId != null">
+                move_id = #{moveId,jdbcType=INTEGER} and
+            </if>
+            <if test="goodsCode != null">
+                goods_code = #{goodsCode,jdbcType=VARCHAR} and
+            </if>
+            <if test="goodsBarCode != null">
+                goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR} and
+            </if>
+            <if test="inStockTime != null">
+                in_stock_time = #{inStockTime,jdbcType=TIMESTAMP} and
+            </if>
+            <if test="locationNoOut != null">
+                location_no_out = #{locationNoOut,jdbcType=VARCHAR} and
+            </if>
+            <if test="outNum != null">
+                out_num = #{outNum,jdbcType=INTEGER} and
+            </if>
+            <if test="inNum != null">
+                in_num = #{inNum,jdbcType=INTEGER} and
+            </if>
+            <if test="validityTime != null">
+                validity_time = #{validityTime,jdbcType=TIMESTAMP} and
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP} and
+            </if>
+        </trim>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_movement_info
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.rmd.wms.bean.MovementInfo">
+        insert into t_movement_info (id, move_id, goods_code,
+          goods_bar_code, in_stock_time, location_no_out,
+          out_num, in_num,
+          validity_time, create_time)
+        values (#{id,jdbcType=INTEGER}, #{moveId,jdbcType=INTEGER}, #{goodsCode,jdbcType=VARCHAR},
+          #{goodsBarCode,jdbcType=VARCHAR}, #{inStockTime,jdbcType=TIMESTAMP}, #{locationNoOut,jdbcType=VARCHAR},
+          #{outNum,jdbcType=INTEGER}, #{inNum,jdbcType=INTEGER},
+          #{validityTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_movement_info
+            (move_id, goods_code,
+            goods_bar_code, in_stock_time, location_no_out,
+            out_num, in_num,
+            validity_time, create_time)
+        values
+        <foreach collection="list" item="obj" separator=",">
+            (#{obj.moveId},#{obj.goodsCode},#{obj.goodsBarCode},
+            #{obj.inStockTime},#{obj.locationNoOut},#{obj.outNum},
+            #{obj.inNum},#{obj.validityTime},#{obj.createTime})
+        </foreach>
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.MovementInfo">
+        insert into t_movement_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="moveId != null">
+                move_id,
+            </if>
+            <if test="goodsCode != null">
+                goods_code,
+            </if>
+            <if test="goodsBarCode != null">
+                goods_bar_code,
+            </if>
+            <if test="inStockTime != null">
+                in_stock_time,
+            </if>
+            <if test="locationNoOut != null">
+                location_no_out,
+            </if>
+            <if test="outNum != null">
+                out_num,
+            </if>
+            <if test="inNum != null">
+                in_num,
+            </if>
+            <if test="validityTime != null">
+                validity_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="moveId != null">
+                #{moveId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsCode != null">
+                #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsBarCode != null">
+                #{goodsBarCode,jdbcType=VARCHAR},
+            </if>
+            <if test="inStockTime != null">
+                #{inStockTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="locationNoOut != null">
+                #{locationNoOut,jdbcType=VARCHAR},
+            </if>
+            <if test="outNum != null">
+                #{outNum,jdbcType=INTEGER},
+            </if>
+            <if test="inNum != null">
+                #{inNum,jdbcType=INTEGER},
+            </if>
+            <if test="validityTime != null">
+                #{validityTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.MovementInfo">
+        update t_movement_info
+        <set>
+            <if test="moveId != null">
+                move_id = #{moveId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsCode != null">
+                goods_code = #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsBarCode != null">
+                goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR},
+            </if>
+            <if test="inStockTime != null">
+                in_stock_time = #{inStockTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="locationNoOut != null">
+                location_no_out = #{locationNoOut,jdbcType=VARCHAR},
+            </if>
+            <if test="outNum != null">
+                out_num = #{outNum,jdbcType=INTEGER},
+            </if>
+            <if test="inNum != null">
+                in_num = #{inNum,jdbcType=INTEGER},
+            </if>
+            <if test="validityTime != null">
+                validity_time = #{validityTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.MovementInfo">
+        update t_movement_info
+        set move_id = #{moveId,jdbcType=INTEGER},
+          goods_code = #{goodsCode,jdbcType=VARCHAR},
+          goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR},
+          in_stock_time = #{inStockTime,jdbcType=TIMESTAMP},
+          location_no_out = #{locationNoOut,jdbcType=VARCHAR},
+          out_num = #{outNum,jdbcType=INTEGER},
+          in_num = #{inNum,jdbcType=INTEGER},
+          validity_time = #{validityTime,jdbcType=TIMESTAMP},
+          create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+        update t_movement_info
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="in_stock_time = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.inStockTime != null">
+                        when id = #{i.id} then #{i.inStockTime}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="in_num = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.inNum != null">
+                        when id = #{i.id} then #{i.inNum}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where
+        <foreach collection="list" separator="or" item="i" index="index">
+            id = #{i.id}
+        </foreach>
+    </update>
+</mapper>

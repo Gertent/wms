@@ -1,0 +1,2 @@
+rmd_wms_provider
+rmd_wms_web

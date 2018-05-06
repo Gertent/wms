@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.LocationGoodsBindInMapper" >
+  <resultMap id="BaseResultMap" type="com.rmd.wms.bean.LocationGoodsBindIn" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ginfo_id" property="ginfoId" jdbcType="INTEGER" />
+    <result column="location_id" property="locationId" jdbcType="INTEGER" />
+    <result column="location_no" property="locationNo" jdbcType="VARCHAR" />
+    <result column="grounding_no" property="groundingNo" jdbcType="VARCHAR" />
+    <result column="grounding_num" property="groundingNum" jdbcType="INTEGER" />
+    <result column="goods_code" property="goodsCode" jdbcType="VARCHAR" />
+    <result column="goods_bar_code" property="goodsBarCode" jdbcType="VARCHAR" />
+    <result column="validity_time" property="validityTime" jdbcType="TIMESTAMP" />
+    <result column="sold_out" property="soldOut" jdbcType="TINYINT" />
+    <result column="sort_num" property="sortNum" jdbcType="INTEGER" />
+    <result column="ware_id" property="wareId" jdbcType="INTEGER" />
+    <result column="ware_name" property="wareName" jdbcType="VARCHAR" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ginfo_id, location_id, location_no, grounding_no, grounding_num, goods_code, 
+    goods_bar_code, validity_time, sold_out, sort_num, ware_id, ware_name, area_id, area_name, 
+    create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_location_goods_bind_in
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllByWhere" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_location_goods_bind_in
+        <include refid="Base_Where_Clause"/>
+    </select>
+    <!--动态条件-->
+    <sql id="Base_Where_Clause">
+        <where>
+            <trim prefixOverrides="and|or">
+                <if test="Id != null">and id = #{Id}</if>
+                <if test="ginfoId != null">and ginfo_id = #{ginfoId}</if><!--采购单-->
+                <if test="locationNo != null">and location_no = #{locationNo}</if><!--货位号-->
+                <if test="goodsCode != null">and goods_code = #{goodsCode}</if><!--采购单-->
+                <if test="groundingNo != null">and grounding_no = #{groundingNo}</if><!--上架单-->
+                <if test="wareId != null">and ware_id = #{wareId}</if><!--仓库Id-->
+                <if test="searchWhere != null">${searchWhere}</if>
+            </trim>
+        </where>
+        <if test="name_sort != null"><!--排序字段-->
+          ORDER BY ${name_sort}
+          <if test="order_sort != null"><!--排序顺序asc/desc-->
+            ${order_sort}
+          </if>
+        </if>
+        <if test="page != null">
+            limit ${page.First}, ${page.Pagesize}
+        </if>
+    </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_location_goods_bind_in
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rmd.wms.bean.LocationGoodsBindIn" >
+    insert into t_location_goods_bind_in (id, ginfo_id, location_id, 
+      location_no, grounding_no, grounding_num, 
+      goods_code, goods_bar_code, validity_time, 
+      sold_out, sort_num, ware_id, 
+      ware_name, area_id, area_name, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{ginfoId,jdbcType=INTEGER}, #{locationId,jdbcType=INTEGER}, 
+      #{locationNo,jdbcType=VARCHAR}, #{groundingNo,jdbcType=VARCHAR}, #{groundingNum,jdbcType=INTEGER}, 
+      #{goodsCode,jdbcType=VARCHAR}, #{goodsBarCode,jdbcType=VARCHAR}, #{validityTime,jdbcType=TIMESTAMP}, 
+      #{soldOut,jdbcType=TINYINT}, #{sortNum,jdbcType=INTEGER}, #{wareId,jdbcType=INTEGER}, 
+      #{wareName,jdbcType=VARCHAR}, #{areaId,jdbcType=INTEGER}, #{areaName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into t_location_goods_bind_in (ginfo_id, location_id,
+      location_no, grounding_no, grounding_num,
+      goods_code, goods_bar_code, validity_time,
+      sold_out, sort_num, ware_id,
+      ware_name, area_id, area_name,
+      create_time)
+    values
+    <foreach collection="list" item="obj" separator=",">
+      (#{obj.ginfoId},#{obj.locationId},#{obj.locationNo},#{obj.groundingNo},#{obj.groundingNum},
+      #{obj.goodsCode},#{obj.goodsBarCode},#{obj.validityTime},#{obj.soldOut},#{obj.sortNum},#{obj.wareId},
+      #{obj.wareName},#{obj.areaId},#{obj.areaName},#{obj.createTime})
+    </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.rmd.wms.bean.LocationGoodsBindIn" >
+    insert into t_location_goods_bind_in
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ginfoId != null" >
+        ginfo_id,
+      </if>
+      <if test="locationId != null" >
+        location_id,
+      </if>
+      <if test="locationNo != null" >
+        location_no,
+      </if>
+      <if test="groundingNo != null" >
+        grounding_no,
+      </if>
+      <if test="groundingNum != null" >
+        grounding_num,
+      </if>
+      <if test="goodsCode != null" >
+        goods_code,
+      </if>
+      <if test="goodsBarCode != null" >
+        goods_bar_code,
+      </if>
+      <if test="validityTime != null" >
+        validity_time,
+      </if>
+      <if test="soldOut != null" >
+        sold_out,
+      </if>
+      <if test="sortNum != null" >
+        sort_num,
+      </if>
+      <if test="wareId != null" >
+        ware_id,
+      </if>
+      <if test="wareName != null" >
+        ware_name,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="areaName != null" >
+        area_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="ginfoId != null" >
+        #{ginfoId,jdbcType=INTEGER},
+      </if>
+      <if test="locationId != null" >
+        #{locationId,jdbcType=INTEGER},
+      </if>
+      <if test="locationNo != null" >
+        #{locationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="groundingNo != null" >
+        #{groundingNo,jdbcType=VARCHAR},
+      </if>
+      <if test="groundingNum != null" >
+        #{groundingNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsCode != null" >
+        #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsBarCode != null" >
+        #{goodsBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="validityTime != null" >
+        #{validityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="soldOut != null" >
+        #{soldOut,jdbcType=TINYINT},
+      </if>
+      <if test="sortNum != null" >
+        #{sortNum,jdbcType=INTEGER},
+      </if>
+      <if test="wareId != null" >
+        #{wareId,jdbcType=INTEGER},
+      </if>
+      <if test="wareName != null" >
+        #{wareName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.LocationGoodsBindIn" >
+    update t_location_goods_bind_in
+    <set >
+      <if test="ginfoId != null" >
+        ginfo_id = #{ginfoId,jdbcType=INTEGER},
+      </if>
+      <if test="locationId != null" >
+        location_id = #{locationId,jdbcType=INTEGER},
+      </if>
+      <if test="locationNo != null" >
+        location_no = #{locationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="groundingNo != null" >
+        grounding_no = #{groundingNo,jdbcType=VARCHAR},
+      </if>
+      <if test="groundingNum != null" >
+        grounding_num = #{groundingNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsCode != null" >
+        goods_code = #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsBarCode != null" >
+        goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="validityTime != null" >
+        validity_time = #{validityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="soldOut != null" >
+        sold_out = #{soldOut,jdbcType=TINYINT},
+      </if>
+      <if test="sortNum != null" >
+        sort_num = #{sortNum,jdbcType=INTEGER},
+      </if>
+      <if test="wareId != null" >
+        ware_id = #{wareId,jdbcType=INTEGER},
+      </if>
+      <if test="wareName != null" >
+        ware_name = #{wareName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="areaName != null" >
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.LocationGoodsBindIn" >
+    update t_location_goods_bind_in
+    set ginfo_id = #{ginfoId,jdbcType=INTEGER},
+      location_id = #{locationId,jdbcType=INTEGER},
+      location_no = #{locationNo,jdbcType=VARCHAR},
+      grounding_no = #{groundingNo,jdbcType=VARCHAR},
+      grounding_num = #{groundingNum,jdbcType=INTEGER},
+      goods_code = #{goodsCode,jdbcType=VARCHAR},
+      goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR},
+      validity_time = #{validityTime,jdbcType=TIMESTAMP},
+      sold_out = #{soldOut,jdbcType=TINYINT},
+      sort_num = #{sortNum,jdbcType=INTEGER},
+      ware_id = #{wareId,jdbcType=INTEGER},
+      ware_name = #{wareName,jdbcType=VARCHAR},
+      area_id = #{areaId,jdbcType=INTEGER},
+      area_name = #{areaName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

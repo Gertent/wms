@@ -1,0 +1,85 @@
+.notBox{
+    padding: 0 33px;
+}
+.noTit{
+    line-height: 52px;
+}
+.gList td{
+    /* width: 27%; */
+}
+.gList td.nt{
+    width: 42%;
+}
+.gList td label.w90{
+    width: 90px;
+}
+.memEdit table{
+    margin-top: 14px;
+    width: 100%;
+}
+.memEdit table td.th{
+    width: 32%;
+}
+.memEdit td label,.memEdit td a{
+    font-size: 15px;
+
+}
+.memEdit td label{
+    text-align: right;
+    line-height: 44px;
+    padding-right: 5px;
+    display: inline-block;
+}
+.memEdit td>input{
+    width: 66%;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 5px;
+    border: 1px solid #e5e5e5;
+}
+.memEdit td input.code{
+    width: 10%;
+}
+.memEdit td input.code+input{
+    width: 55%;
+    border-left: 0;
+}
+.memEdit table td i.on{
+    background-position: right;
+}
+.memEdit table td i{
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: middle;
+    background: url("../images/radio.png") no-repeat left;
+}
+.remark{
+	color: #afafaf;
+	height: 30px;
+	line-height: 30px;
+}
+.pdT0{padding-top: 0;}
+.linkage{
+	width: 178px;
+    height: 28px;
+    line-height: 28px;
+}
+.selectBox-child{
+	float:left;
+}
+.memEdit td>input.tele{
+	width: 53.5%;
+}
+#countryId{
+	width: 100px;
+	height: 30px;
+	line-height: 30px;
+	float: left;
+	margin-right: 5px;
+	border-color: #c9c9c9;
+}
+#location{
+	width: 46%;
+}

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+    <!-- 启用注解 -->
+    <context:annotation-config/>
+    <!-- 启动组件扫描，排除@Controller组件，该组件由SpringMVC配置文件扫描 -->
+    <context:component-scan base-package="com.rmd.wms.service,com.rmd.wms.common.service"/>
+    <!--加载配置文件-->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:application.properties</value>
+                <value>classpath:resources.properties</value>
+                <value>classpath:dubbo.properties</value>
+                <value>classpath:log4j.properties</value>
+            </list>
+        </property>
+    </bean>
+    <bean class="org.springframework.jmx.export.MBeanExporter">  
+        <property name="autodetectModeName">  
+            <value>AUTODETECT_NONE</value>  
+        </property>  
+    </bean>
+
+    <import resource="classpath:wms-dubbo-provider.xml"/>
+    <import resource="classpath:wms-dubbo-consumer.xml"/>
+
+    <!-- 数据源配置, 使用 Druid 数据库连接池 -->
+    <bean id="master" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="${jdbc.pool.minIdle}"/>
+        <property name="minIdle" value="${jdbc.pool.minIdle}"/>
+        <property name="maxActive" value="${jdbc.pool.maxActive}"/>
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000"/>
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat,log4j"/>
+    </bean>
+
+    <!-- 配置数据源映射关系 可以配置多个 -->
+    <bean id="dataSource" class="com.rmd.wms.db.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="master" value-ref="master"></entry>
+            </map>
+        </property>
+        <!-- 默认目标数据源为主库数据源 -->
+        <property name="defaultTargetDataSource" ref="master"/>
+    </bean>
+
+    <!--配置mybatis-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"/>
+    </bean>
+
+    <!-- 配置SqlSession模板 -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>
+
+    <!-- 定义事务 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- 启用事务注解 配置 Annotation 驱动，扫描@Transactional注解的类定义事务-->
+    <tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager" />
+
+    <!--容器关闭时关闭线程池-->
+    <bean class="com.rmd.wms.util.AsyncExcutor" destroy-method="shutDown"/>
+
+    <!--配置消息队列-->
+    <!--<bean id="wmsProducer" class="com.rmd.wms.common.rocketmq.WmsProducer" init-method="init" destroy-method="destroy" scope="singleton">
+        <property name="producerGroup" value="${rocketmq.producerGroup}"/>
+        <property name="namesrvAddr" value="${rocketmq.namesrvAddr}"/>
+    </bean>
+    <bean class="com.rmd.wms.common.rocketmq.WmsConsumer" init-method="init" destroy-method="destroy" scope="singleton">
+        <property name="consumerGroup" value="${rocketmq.consumerGroup}"/>
+        <property name="namesrvAddr" value="${rocketmq.namesrvAddr}" />
+    </bean>-->
+
+    <!--配置新消息队列-->
+    <bean id="wmsProducer" class="com.rmd.bms.mq.producer.Producer" init-method="init" destroy-method="destroy" scope="singleton">
+        <property name="producerGroup" value="${rocketmq.producerGroup}"/>
+        <property name="namesrvAddr" value="${rocketmq.namesrvAddr}"/>
+        <property name="supportService" ref="supportService"/>
+    </bean>
+    <bean id="rocketmqConsumerFms2wms" class="com.rmd.bms.mq.consumer.Consumer" init-method="init" destroy-method="destroy">
+        <property name="consumerGroup" value="${rocketmq.consumerFms2WmsGroup}"/>
+        <property name="namesrvAddr" value="${rocketmq.namesrvAddr}"/>
+        <property name="topicTagServiceMap">
+            <map>
+                <entry key="${rocketmq.fms2wmsTopic}">
+                    <map>
+                        <entry key="${rocketmq.doChecksTags}" value-ref="checkInfoService"/>
+                    </map>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="rocketmqConsumerScm2wms" class="com.rmd.bms.mq.consumer.Consumer" init-method="init" destroy-method="destroy">
+        <property name="consumerGroup" value="${rocketmq.consumerScm2WmsGroup}"/>
+        <property name="namesrvAddr" value="${rocketmq.namesrvAddr}"/>
+        <property name="topicTagServiceMap">
+            <map>
+                <entry key="${rocketmq.scm2wmsTopic}">
+                    <map>
+                        <entry key="${rocketmq.purchaseTags}" value-ref="purchaseBillService"/>
+                    </map>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+</beans>

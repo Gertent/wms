@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.CheckInfoMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.CheckInfo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="bind_id" property="bindId" jdbcType="INTEGER"/>
+        <result column="check_no" property="checkNo" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="goods_code" property="goodsCode" jdbcType="VARCHAR"/>
+        <result column="goods_bar_code" property="goodsBarCode" jdbcType="VARCHAR"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="spec" property="spec" jdbcType="VARCHAR"/>
+        <result column="package_num" property="packageNum" jdbcType="VARCHAR"/>
+        <result column="unit" property="unit" jdbcType="VARCHAR"/>
+        <result column="validity_time" property="validityTime" jdbcType="TIMESTAMP"/>
+        <result column="location_no" property="locationNo" jdbcType="VARCHAR"/>
+        <result column="location_num" property="locationNum" jdbcType="INTEGER"/>
+        <result column="ware_id" property="wareId" jdbcType="INTEGER"/>
+        <result column="ware_name" property="wareName" jdbcType="VARCHAR"/>
+        <result column="submit_status" property="submitStatus" jdbcType="INTEGER"/>
+        <result column="do_checked" property="doChecked" jdbcType="INTEGER"/>
+        <result column="do_audit" property="doAudit" jdbcType="INTEGER"/>
+        <result column="first_check_num" property="firstCheckNum" jdbcType="INTEGER"/>
+        <result column="first_check_lock_diff" property="firstCheckLockDiff" jdbcType="INTEGER"/>
+        <result column="first_check_valid_diff" property="firstCheckValidDiff" jdbcType="INTEGER"/>
+        <result column="second_check_num" property="secondCheckNum" jdbcType="INTEGER"/>
+        <result column="second_check_lock_diff" property="secondCheckLockDiff" jdbcType="INTEGER"/>
+        <result column="second_check_valid_diff" property="secondCheckValidDiff" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="creater_id" property="createrId" jdbcType="INTEGER"/>
+        <result column="creater_name" property="createrName" jdbcType="VARCHAR"/>
+        <result column="sale_type" property="saleType" jdbcType="INTEGER"/>
+        <result column="validity_num" property="validityNum" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, bind_id, check_no,type, goods_code, goods_bar_code, goods_name, spec, package_num, unit, validity_time,
+        location_no, location_num, ware_id, ware_name, submit_status, do_checked,do_audit, first_check_num,
+        first_check_lock_diff, first_check_valid_diff,second_check_num, second_check_lock_diff,second_check_valid_diff, create_time, creater_id, creater_name,sale_type,validity_num
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_check_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCheckNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_check_info
+        where check_no = #{checkNo,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByIds" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_check_info
+        where id in
+        <foreach collection="list" open="(" close=")" separator="," index="index" item="obj">
+            #{obj}
+        </foreach>
+    </select>
+    <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_check_info
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="bindId != null">
+                bind_id = #{bindId,jdbcType=INTEGER} and
+            </if>
+            <if test="checkNo != null">
+                check_no = #{checkNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER} and
+            </if>
+            <if test="goodsCode != null">
+                goods_code = #{goodsCode,jdbcType=VARCHAR} and
+            </if>
+            <if test="goodsBarCode != null">
+                goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR} and
+            </if>
+            <if test="goodsName != null">
+                goods_name = #{goodsName,jdbcType=VARCHAR} and
+            </if>
+            <if test="spec != null">
+                spec = #{spec,jdbcType=VARCHAR} and
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER} and
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR} and
+            </if>
+            <if test="submitStatus != null">
+                submit_status = #{submitStatus,jdbcType=INTEGER} and
+            </if>
+            <if test="doChecked != null">
+                do_checked = #{doChecked,jdbcType=INTEGER} and
+            </if>
+            <if test="doAudit != null">
+                do_audit = #{doAudit,jdbcType=INTEGER} and
+            </if>
+            <if test="firstCheckNum != null">
+                first_check_num = #{firstCheckNum,jdbcType=INTEGER} and
+            </if>
+            <if test="firstCheckLockDiff != null">
+                first_check_lock_diff = #{firstCheckLockDiff,jdbcType=INTEGER} and
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP} and
+            </if>
+            <if test="createrId != null">
+                creater_id = #{createrId,jdbcType=INTEGER} and
+            </if>
+            <if test="createrName != null">
+                creater_name = #{createrName,jdbcType=VARCHAR} and
+            </if>
+
+            <if test="checkMore_search != null">
+                (first_check_num-location_num)>0 and
+            </if>
+            <if test="checkLess_search != null">
+                (first_check_num-location_num) &lt; 0 and
+            </if>
+            <if test="checkNo_in != null">
+                check_no in ${checkNo_in} and
+            </if>
+            <if test="noData_search != null">
+                1=2 and
+            </if>
+            <if test="searchWhere != null">${searchWhere}</if>
+        </trim>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_check_info
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.rmd.wms.bean.CheckInfo">
+        insert into t_check_info (bind_id, check_no,type, goods_code,
+          goods_bar_code, goods_name, spec,
+          package_num, unit, validity_time,
+          location_no, location_num, ware_id,
+          ware_name, submit_status, do_checked,do_audit,
+          first_check_num, first_check_lock_diff,first_check_valid_diff, second_check_num,
+          second_check_lock_diff, second_check_valid_diff,create_time, creater_id, creater_name,sale_type,validity_num)
+        values (
+          #{bindId,jdbcType=INTEGER},#{checkNo,jdbcType=VARCHAR},#{type,jdbcType=INTEGER}, #{goodsCode,jdbcType=VARCHAR},
+          #{goodsBarCode,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{spec,jdbcType=VARCHAR},
+          #{packageNum,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{validityTime,jdbcType=TIMESTAMP},
+          #{locationNo,jdbcType=VARCHAR}, #{locationNum,jdbcType=INTEGER}, #{wareId,jdbcType=INTEGER},doAudit
+          #{wareName,jdbcType=VARCHAR}, #{submitStatus,jdbcType=INTEGER}, #{doChecked,jdbcType=INTEGER}, #{doAudit,jdbcType=INTEGER},
+          #{firstCheckNum,jdbcType=INTEGER}, #{firstCheckLockDiff,jdbcType=INTEGER},#{firstCheckValidDiff,jdbcType=INTEGER}, #{secondCheckNum,jdbcType=INTEGER},
+          #{secondCheckLockDiff,jdbcType=INTEGER},#{secondCheckValidDiff,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createrId,jdbcType=INTEGER}, #{createrName,jdbcType=VARCHAR}, #{saleType,jdbcType=INTEGER}, #{validityNum,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_check_info (bind_id, check_no, type,goods_code,
+        goods_bar_code, goods_name, spec,
+        package_num, unit, validity_time,
+        location_no, location_num, ware_id,
+        ware_name, submit_status, do_checked,do_audit,
+        first_check_num, first_check_lock_diff, first_check_valid_diff,second_check_num,
+        second_check_lock_diff, second_check_valid_diff,create_time, creater_id, creater_name,sale_type,validity_num)
+        values
+        <foreach collection="list" item="obj" separator=",">
+            (#{obj.bindId},#{obj.checkNo},#{obj.type},#{obj.goodsCode},#{obj.goodsBarCode},
+            #{obj.goodsName},#{obj.spec}, #{obj.packageNum},
+            #{obj.unit},#{obj.validityTime},
+            #{obj.locationNo}, #{obj.locationNum}, #{obj.wareId},
+            #{obj.wareName}, #{obj.submitStatus}, #{obj.doChecked}, #{obj.doAudit},
+            #{obj.firstCheckNum}, #{obj.firstCheckLockDiff},#{obj.firstCheckValidDiff}, #{obj.secondCheckNum},
+            #{obj.secondCheckLockDiff},#{obj.secondCheckValidDiff},#{obj.createTime},#{obj.createrId},#{obj.createrName},#{obj.saleType},#{obj.validityNum})
+        </foreach>
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.CheckInfo">
+        insert into t_check_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bindId != null">
+                bind_id,
+            </if>
+            <if test="checkNo != null">
+                check_no,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="goodsCode != null">
+                goods_code,
+            </if>
+            <if test="goodsBarCode != null">
+                goods_bar_code,
+            </if>
+            <if test="goodsName != null">
+                goods_name,
+            </if>
+            <if test="spec != null">
+                spec,
+            </if>
+            <if test="packageNum != null">
+                package_num,
+            </if>
+            <if test="unit != null">
+                unit,
+            </if>
+            <if test="validityTime != null">
+                validity_time,
+            </if>
+            <if test="locationNo != null">
+                location_no,
+            </if>
+            <if test="locationNum != null">
+                location_num,
+            </if>
+            <if test="wareId != null">
+                ware_id,
+            </if>
+            <if test="wareName != null">
+                ware_name,
+            </if>
+            <if test="submitStatus != null">
+                submit_status,
+            </if>
+            <if test="doChecked != null">
+                do_checked,
+            </if>
+            <if test="doAudit != null">
+                do_audit,
+            </if>
+            <if test="firstCheckNum != null">
+                first_check_num,
+            </if>
+            <if test="firstCheckLockDiff != null">
+                first_check_lock_diff,
+            </if>
+            <if test="firstCheckValidDiff != null">
+                first_check_valid_diff,
+            </if>
+            <if test="secondCheckNum != null">
+                second_check_num,
+            </if>
+            <if test="secondCheckLockDiff != null">
+                second_check_lock_diff,
+            </if>
+            <if test="secondCheckValidDiff != null">
+                second_check_valid_diff,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createrId != null">
+                creater_id,
+            </if>
+            <if test="createrName != null">
+                creater_name,
+            </if>
+            <if test="saleType != null">
+                sale_type,
+            </if>
+            <if test="validityNum != null">
+                validity_num,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bindId != null">
+                #{bindId,jdbcType=INTEGER},
+            </if>
+            <if test="checkNo != null">
+                #{checkNo,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="goodsCode != null">
+                #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsBarCode != null">
+                #{goodsBarCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName != null">
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="spec != null">
+                #{spec,jdbcType=VARCHAR},
+            </if>
+            <if test="packageNum != null">
+                #{packageNum,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="validityTime != null">
+                #{validityTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="locationNo != null">
+                #{locationNo,jdbcType=VARCHAR},
+            </if>
+            <if test="locationNum != null">
+                #{locationNum,jdbcType=INTEGER},
+            </if>
+            <if test="wareId != null">
+                #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="submitStatus != null">
+                #{submitStatus,jdbcType=INTEGER},
+            </if>
+            <if test="doChecked != null">
+                #{doChecked,jdbcType=INTEGER},
+            </if>
+            <if test="doAudit != null">
+                #{doAudit,jdbcType=INTEGER},
+            </if>
+            <if test="firstCheckNum != null">
+                #{firstCheckNum,jdbcType=INTEGER},
+            </if>
+            <if test="firstCheckLockDiff != null">
+                #{firstCheckLockDiff,jdbcType=INTEGER},
+            </if>
+            <if test="firstCheckValidDiff != null">
+                #{firstCheckValidDiff,jdbcType=INTEGER},
+            </if>
+            <if test="secondCheckNum != null">
+                #{secondCheckNum,jdbcType=INTEGER},
+            </if>
+            <if test="secondCheckLockDiff != null">
+                #{secondCheckLockDiff,jdbcType=INTEGER},
+            </if>
+            <if test="secondCheckValidDiff != null">
+                #{secondCheckValidDiff,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createrId != null">
+                #{createrId,jdbcType=INTEGER},
+            </if>
+            <if test="createrName != null">
+                #{createrName,jdbcType=VARCHAR},
+            </if>
+            <if test="saleType != null">
+                #{saleType,jdbcType=INTEGER},
+            </if>
+            <if test="validityNum != null">
+                #{validityNum,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.CheckInfo">
+        update t_check_info
+        <set>
+            <if test="bindId != null">
+                bind_id = #{bindId,jdbcType=INTEGER},
+            </if>
+            <if test="checkNo != null">
+                check_no = #{checkNo,jdbcType=VARCHAR},
+            </if>
+             <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="goodsCode != null">
+                goods_code = #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsBarCode != null">
+                goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName != null">
+                goods_name = #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="spec != null">
+                spec = #{spec,jdbcType=VARCHAR},
+            </if>
+            <if test="packageNum != null">
+                package_num = #{packageNum,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                unit = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="validityTime != null">
+                validity_time = #{validityTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="locationNo != null">
+                location_no = #{locationNo,jdbcType=VARCHAR},
+            </if>
+            <if test="locationNum != null">
+                location_num = #{locationNum,jdbcType=INTEGER},
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="submitStatus != null">
+                submit_status = #{submitStatus,jdbcType=INTEGER},
+            </if>
+            <if test="doChecked != null">
+                do_checked = #{doChecked,jdbcType=INTEGER},
+            </if>
+            <if test="doAudit != null">
+                do_audit = #{doAudit,jdbcType=INTEGER},
+            </if>
+            <if test="firstCheckNum != null">
+                first_check_num = #{firstCheckNum,jdbcType=INTEGER},
+            </if>
+            <if test="firstCheckLockDiff != null">
+                first_check_lock_diff = #{firstCheckLockDiff,jdbcType=INTEGER},
+            </if>
+            <if test="firstCheckValidDiff != null">
+                first_check_valid_diff = #{firstCheckValidDiff,jdbcType=INTEGER},
+            </if>
+            <if test="secondCheckNum != null">
+                second_check_num = #{secondCheckNum,jdbcType=INTEGER},
+            </if>
+            <if test="secondCheckLockDiff != null">
+                second_check_lock_diff = #{secondCheckLockDiff,jdbcType=INTEGER},
+            </if>
+            <if test="secondCheckValidDiff != null">
+                second_check_valid_diff = #{secondCheckValidDiff,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createrId != null">
+                creater_id = #{createrId,jdbcType=INTEGER},
+            </if>
+            <if test="createrName != null">
+                creater_name = #{createrName,jdbcType=VARCHAR},
+            </if>
+            <if test="saleType != null">
+                sale_type = #{saleType,jdbcType=INTEGER},
+            </if>
+            <if test="validityNum != null">
+                validity_num = #{validityNum,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.CheckInfo">
+        update t_check_info
+        set bind_id = #{bindId,jdbcType=INTEGER},
+          check_no = #{checkNo,jdbcType=VARCHAR},
+          type = #{type,jdbcType=INTEGER},
+          goods_code = #{goodsCode,jdbcType=VARCHAR},
+          goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR},
+          goods_name = #{goodsName,jdbcType=VARCHAR},
+          spec = #{spec,jdbcType=VARCHAR},
+          package_num = #{packageNum,jdbcType=VARCHAR},
+          unit = #{unit,jdbcType=VARCHAR},
+          validity_time = #{validityTime,jdbcType=TIMESTAMP},
+          location_no = #{locationNo,jdbcType=VARCHAR},
+          location_num = #{locationNum,jdbcType=INTEGER},
+          ware_id = #{wareId,jdbcType=INTEGER},
+          ware_name = #{wareName,jdbcType=VARCHAR},
+          submit_status = #{submitStatus,jdbcType=INTEGER},
+          do_checked = #{doChecked,jdbcType=INTEGER},
+          do_audit = #{doAudit,jdbcType=INTEGER},
+          first_check_num = #{firstCheckNum,jdbcType=INTEGER},
+          first_check_lock_diff = #{firstCheckLockDiff,jdbcType=INTEGER},
+          first_check_valid_diff = #{firstCheckValidDiff,jdbcType=INTEGER},
+          second_check_num = #{secondCheckNum,jdbcType=INTEGER},
+          second_check_lock_diff = #{secondCheckLockDiff,jdbcType=INTEGER},
+          second_check_valid_diff = #{secondCheckValidDiff,jdbcType=INTEGER},
+          create_time = #{createTime,jdbcType=TIMESTAMP},
+          creater_id = #{createrId,jdbcType=INTEGER},
+          creater_name = #{createrName,jdbcType=VARCHAR},
+          sale_type = #{saleType,jdbcType=INTEGER},
+          validity_num = #{validityNum,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
+        update t_check_info
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="submit_status = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.submitStatus != null">
+                        when id = #{i.id} then #{i.submitStatus}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="do_checked = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.doChecked != null">
+                        when id = #{i.id} then #{i.doChecked}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="do_audit = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.doAudit != null">
+                        when id = #{i.id} then #{i.doAudit}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="first_check_num = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.firstCheckNum != null">
+                        when id = #{i.id} then #{i.firstCheckNum}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="first_check_lock_diff = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.firstCheckLockDiff != null">
+                        when id = #{i.id} then #{i.firstCheckLockDiff}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="first_check_valid_diff = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.firstCheckValidDiff != null">
+                        when id = #{i.id} then #{i.firstCheckValidDiff}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="second_check_num = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.secondCheckNum != null">
+                        when id = #{i.id} then #{i.secondCheckNum}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="second_check_lock_diff = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.secondCheckLockDiff != null">
+                        when id = #{i.id} then #{i.secondCheckLockDiff}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="second_check_valid_diff = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.secondCheckValidDiff != null">
+                        when id = #{i.id} then #{i.secondCheckValidDiff}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where
+        <foreach collection="list" separator="or" item="i" index="index">
+            id = #{i.id}
+        </foreach>
+    </update>
+
+
+</mapper>

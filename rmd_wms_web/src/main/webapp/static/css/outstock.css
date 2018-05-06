@@ -1,0 +1,25 @@
+@CHARSET "UTF-8";
+
+.tableCon {
+	border: 1px #dcdcdc solid;
+}
+
+.tableCon tr {
+	border-bottom: 1px #dcdcdc solid;
+}
+
+.tableCon td,.tableCon th {
+	text-align: center;
+	border-right: 1px #dcdcdc solid;
+}
+
+.gList td.std {
+	width: 36%;
+}
+
+.gList td label {
+	width: 62px;
+}
+.gList td input[type="checkbox"]+input[type="checkbox"] {
+	margin-left: 25px;
+}

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.LogisticsFreightTemplateMapper" >
+  <resultMap id="BaseResultMap" type="com.rmd.wms.bean.LogisticsFreightTemplate" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="logistics_id" property="logisticsId" jdbcType="INTEGER" />
+    <result column="logistics_name" property="logisticsName" jdbcType="VARCHAR" />
+    <result column="price_type" property="priceType" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="freight_type" property="freightType" jdbcType="INTEGER" />
+    <result column="first_weight" property="firstWeight" jdbcType="DECIMAL" />
+    <result column="first_price" property="firstPrice" jdbcType="DECIMAL" />
+    <result column="second_weight" property="secondWeight" jdbcType="DECIMAL" />
+    <result column="second_price" property="secondPrice" jdbcType="DECIMAL" />
+    <result column="delivery_price" property="deliveryPrice" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="update_user_id" property="updateUserId" jdbcType="INTEGER" />
+    <result column="update_user_name" property="updateUserName" jdbcType="VARCHAR" />
+    <result column="ware_id" property="wareId" jdbcType="INTEGER" />
+    <result column="ware_name" property="wareName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, logistics_id, logistics_name, price_type, NAME, code,freight_type, first_weight, first_price,
+    second_weight, second_price, delivery_price, create_time, update_time, create_user_id, 
+    create_user_name, update_user_id, update_user_name, ware_id, ware_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_logistics_freight_template
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List"/>
+    from t_logistics_freight_template
+    <trim prefix="where" suffixOverrides="and | or">
+      <if test="logisticsId != null">
+        logistics_id = #{logisticsId,jdbcType=INTEGER} and
+      </if>
+      <if test="freightType != null">
+        freight_type = #{freightType,jdbcType=INTEGER} and
+      </if>
+      <if test="wareId != null">
+        ware_id = #{wareId,jdbcType=INTEGER} and
+      </if>
+      <if test="searchWhere != null">${searchWhere}</if>
+    </trim>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_logistics_freight_template
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByCriteria" parameterType="com.rmd.wms.bean.LogisticsFreightTemplate" >
+    delete from t_logistics_freight_template
+    <trim prefix="where" suffixOverrides="and | or">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER} and
+      </if>
+      <if test="logisticsId != null">
+        logistics_id = #{logisticsId,jdbcType=INTEGER} and
+      </if>
+      <if test="freightType != null">
+        freight_type = #{freightType,jdbcType=INTEGER} and
+      </if>
+      <if test="wareId != null">
+        ware_id = #{wareId,jdbcType=INTEGER} and
+      </if>
+    </trim>
+  </delete>
+  <insert id="insert" parameterType="com.rmd.wms.bean.LogisticsFreightTemplate" keyProperty="id" useGeneratedKeys="true">
+    insert into t_logistics_freight_template (id, logistics_id, logistics_name, 
+      price_type, NAME, code,freight_type,
+      first_weight, first_price, second_weight, 
+      second_price, delivery_price, create_time, 
+      update_time, create_user_id, create_user_name, 
+      update_user_id, update_user_name, ware_id, 
+      ware_name)
+    values (#{id,jdbcType=INTEGER}, #{logisticsId,jdbcType=INTEGER}, #{logisticsName,jdbcType=VARCHAR}, 
+      #{priceType,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR}, #{freightType,jdbcType=INTEGER},
+      #{firstWeight,jdbcType=DECIMAL}, #{firstPrice,jdbcType=DECIMAL}, #{secondWeight,jdbcType=DECIMAL}, 
+      #{secondPrice,jdbcType=DECIMAL}, #{deliveryPrice,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=INTEGER}, #{createUserName,jdbcType=VARCHAR}, 
+      #{updateUserId,jdbcType=INTEGER}, #{updateUserName,jdbcType=VARCHAR}, #{wareId,jdbcType=INTEGER}, 
+      #{wareName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rmd.wms.bean.LogisticsFreightTemplate" keyProperty="id" useGeneratedKeys="true">
+    insert into t_logistics_freight_template
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="logisticsId != null" >
+        logistics_id,
+      </if>
+      <if test="logisticsName != null" >
+        logistics_name,
+      </if>
+      <if test="priceType != null" >
+        price_type,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="freightType != null" >
+        freight_type,
+      </if>
+      <if test="firstWeight != null" >
+        first_weight,
+      </if>
+      <if test="firstPrice != null" >
+        first_price,
+      </if>
+      <if test="secondWeight != null" >
+        second_weight,
+      </if>
+      <if test="secondPrice != null" >
+        second_price,
+      </if>
+      <if test="deliveryPrice != null" >
+        delivery_price,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createUserName != null" >
+        create_user_name,
+      </if>
+      <if test="updateUserId != null" >
+        update_user_id,
+      </if>
+      <if test="updateUserName != null" >
+        update_user_name,
+      </if>
+      <if test="wareId != null" >
+        ware_id,
+      </if>
+      <if test="wareName != null" >
+        ware_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsId != null" >
+        #{logisticsId,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsName != null" >
+        #{logisticsName,jdbcType=VARCHAR},
+      </if>
+      <if test="priceType != null" >
+        #{priceType,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="freightType != null" >
+        #{freightType,jdbcType=INTEGER},
+      </if>
+      <if test="firstWeight != null" >
+        #{firstWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="firstPrice != null" >
+        #{firstPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="secondWeight != null" >
+        #{secondWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="secondPrice != null" >
+        #{secondPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryPrice != null" >
+        #{deliveryPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updateUserName != null" >
+        #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="wareId != null" >
+        #{wareId,jdbcType=INTEGER},
+      </if>
+      <if test="wareName != null" >
+        #{wareName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.LogisticsFreightTemplate" >
+    update t_logistics_freight_template
+    <set >
+      <if test="logisticsId != null" >
+        logistics_id = #{logisticsId,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsName != null" >
+        logistics_name = #{logisticsName,jdbcType=VARCHAR},
+      </if>
+      <if test="priceType != null" >
+        price_type = #{priceType,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="freightType != null" >
+        freight_type = #{freightType,jdbcType=INTEGER},
+      </if>
+      <if test="firstWeight != null" >
+        first_weight = #{firstWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="firstPrice != null" >
+        first_price = #{firstPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="secondWeight != null" >
+        second_weight = #{secondWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="secondPrice != null" >
+        second_price = #{secondPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryPrice != null" >
+        delivery_price = #{deliveryPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserId != null" >
+        update_user_id = #{updateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updateUserName != null" >
+        update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="wareId != null" >
+        ware_id = #{wareId,jdbcType=INTEGER},
+      </if>
+      <if test="wareName != null" >
+        ware_name = #{wareName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.LogisticsFreightTemplate" >
+    update t_logistics_freight_template
+    set logistics_id = #{logisticsId,jdbcType=INTEGER},
+      logistics_name = #{logisticsName,jdbcType=VARCHAR},
+      price_type = #{priceType,jdbcType=INTEGER},
+      NAME = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      freight_type = #{freightType,jdbcType=INTEGER},
+      first_weight = #{firstWeight,jdbcType=DECIMAL},
+      first_price = #{firstPrice,jdbcType=DECIMAL},
+      second_weight = #{secondWeight,jdbcType=DECIMAL},
+      second_price = #{secondPrice,jdbcType=DECIMAL},
+      delivery_price = #{deliveryPrice,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      update_user_id = #{updateUserId,jdbcType=INTEGER},
+      update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      ware_id = #{wareId,jdbcType=INTEGER},
+      ware_name = #{wareName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

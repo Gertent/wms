@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.LocationMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.Location">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="location_no" property="locationNo" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="ware_id" property="wareId" jdbcType="INTEGER"/>
+        <result column="ware_name" property="wareName" jdbcType="VARCHAR"/>
+        <result column="area_id" property="areaId" jdbcType="INTEGER"/>
+        <result column="area_name" property="areaName" jdbcType="VARCHAR"/>
+        <result column="sort_num" property="sortNum" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, location_no, status, type, ware_id, ware_name, area_id, area_name, sort_num, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_location
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+	<!--验证货位号重复 -->
+    <select id="selectByLocationNo" resultType="java.lang.Integer" parameterType="com.rmd.wms.bean.Location">
+	   SELECT 
+		 COUNT(location_no) 
+	   FROM
+		 t_location 
+	   WHERE 1=1
+	  <if test="id != null">
+          AND id != #{id,jdbcType=INTEGER}
+      </if>
+        <if test="wareId != null">
+            AND ware_id = #{wareId,jdbcType=INTEGER}
+        </if>
+      AND location_no = #{locationNo,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="selectByLocaNoAndWareId" resultMap="BaseResultMap" parameterType="com.rmd.wms.bean.Location">
+        SELECT
+            l.id,
+            l.location_no,
+            l.status,
+            l.type,
+            l.area_id,
+            l.sort_num,
+            l.create_time,
+            a.area_name,
+            w.id ware_id,
+            w.ware_name
+        FROM
+            t_location l
+        LEFT JOIN t_warehouse_area a ON l.area_id = a.id
+        LEFT JOIN t_warehouse w ON a.ware_id = w.id
+        where l.location_no = #{locationNo,jdbcType=VARCHAR} AND l.ware_id = #{wareId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.rmd.wms.bean.Location">
+    SELECT 
+	  t1.id AS id,
+	  t1.location_no AS locationNo,
+	  t1.status AS STATUS,
+	  t1.type AS TYPE,
+      t1.ware_id,
+	  t1.ware_name AS wareName,
+      t1.area_id,
+	  t1.area_name AS areaName 
+	FROM
+	  t_location t1 
+    WHERE 1=1
+      <include refid="listWhere"></include>
+    </select>
+    <sql id="listWhere">
+      <if test="status != null">
+          AND t1.status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="areaId != null">
+          AND t1.area_id = #{areaId,jdbcType=INTEGER}
+      </if>
+      <if test="areaName != null">
+          AND t1.area_name = #{areaName,jdbcType=VARCHAR}
+      </if>
+      <if test="wareId != null">
+          AND t1.ware_id = #{wareId,jdbcType=INTEGER}
+      </if>
+      <if test="wareName != null">
+          AND t1.ware_name = #{wareName,jdbcType=VARCHAR}
+      </if>
+      <if test="locationNo != null">
+          AND t1.location_no = #{locationNo,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null">
+          AND t1.type = #{type,jdbcType=INTEGER}
+      </if>
+    </sql>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_location
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.rmd.wms.bean.Location">
+        insert into t_location (id, location_no, status,
+          type, ware_id, ware_name, area_id,
+          area_name, sort_num, create_time
+          )
+        values (#{id,jdbcType=INTEGER}, #{locationNo,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+          #{type,jdbcType=INTEGER}, #{wareId,jdbcType=INTEGER}, #{wareName,jdbcType=VARCHAR}, #{areaId,jdbcType=INTEGER},
+          #{areaName,jdbcType=VARCHAR}, #{sortNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+          )
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_location (location_no, status,
+            type, ware_id, ware_name, area_id,
+            area_name, sort_num, create_time)
+        values
+        <foreach collection="list" item="obj" separator=",">
+            (#{obj.locationNo},#{obj.status},#{obj.type},#{obj.wareId},#{obj.wareName},
+            #{obj.areaId},#{obj.areaName},#{obj.sortNum},#{obj.createTime})
+        </foreach>
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.Location">
+        insert into t_location
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="locationNo != null">
+                location_no,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="wareId != null">
+                ware_id,
+            </if>
+            <if test="wareName != null">
+                ware_name,
+            </if>
+            <if test="areaId != null">
+                area_id,
+            </if>
+            <if test="areaName != null">
+                area_name,
+            </if>
+            <if test="sortNum != null">
+                sort_num,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="locationNo != null">
+                #{locationNo,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="wareId != null">
+                #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="areaId != null">
+                #{areaId,jdbcType=INTEGER},
+            </if>
+            <if test="areaName != null">
+                #{areaName,jdbcType=VARCHAR},
+            </if>
+            <if test="sortNum != null">
+                #{sortNum,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.Location">
+        update t_location
+        <set>
+            <if test="locationNo != null">
+                location_no = #{locationNo,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="areaId != null">
+                area_id = #{areaId,jdbcType=INTEGER},
+            </if>
+            <if test="areaName != null">
+                area_name = #{areaName,jdbcType=VARCHAR},
+            </if>
+            <if test="sortNum != null">
+                sort_num = #{sortNum,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <!-- 修改库区对应货位的type类型的状态 -->
+    <update id="updateByType" parameterType="com.rmd.wms.bean.Location">
+   		 update t_location set type = #{type,jdbcType=VARCHAR} where  area_id = #{areaId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.Location">
+        update t_location
+        set location_no = #{locationNo,jdbcType=VARCHAR},
+          status = #{status,jdbcType=INTEGER},
+          type = #{type,jdbcType=INTEGER},
+          ware_id = #{wareId,jdbcType=INTEGER},
+          ware_name = #{wareName,jdbcType=VARCHAR},
+          area_id = #{areaId,jdbcType=INTEGER},
+          area_name = #{areaName,jdbcType=VARCHAR},
+          sort_num = #{sortNum,jdbcType=INTEGER},
+          create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateStatusByCriteria" parameterType="com.rmd.wms.bean.Location">
+        update t_location
+        set status = #{status,jdbcType=INTEGER}
+        <trim prefix="where" suffixOverrides="and">
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER} and
+            </if>
+            <if test="areaId != null">
+                area_id = #{areaId,jdbcType=INTEGER} and
+            </if>
+        </trim>
+    </update>
+</mapper>

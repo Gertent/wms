@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.PurchaseInInfoMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.PurchaseInInfo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="purchase_no" property="purchaseNo" jdbcType="VARCHAR"/>
+        <result column="in_stock_no" property="inStockNo" jdbcType="VARCHAR"/>
+        <result column="grounding_no" property="groundingNo" jdbcType="VARCHAR"/>
+        <result column="goods_code" property="goodsCode" jdbcType="VARCHAR"/>
+        <result column="goods_bar_code" property="goodsBarCode" jdbcType="VARCHAR"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="spec" property="spec" jdbcType="VARCHAR"/>
+        <result column="package_num" property="packageNum" jdbcType="VARCHAR"/>
+        <result column="unit" property="unit" jdbcType="VARCHAR"/>
+        <result column="purchase_num" property="purchaseNum" jdbcType="INTEGER"/>
+        <result column="purchase_wait_num" property="purchaseWaitNum" jdbcType="INTEGER"/>
+        <result column="purchase_price" property="purchasePrice" jdbcType="DECIMAL"/>
+        <result column="goodsprice_sum" property="goodspriceSum" jdbcType="DECIMAL"/>
+        <result column="validity_time" property="validityTime" jdbcType="TIMESTAMP"/>
+        <result column="in_stock_num" property="inStockNum" jdbcType="INTEGER"/>
+        <result column="in_stock_be_num" property="inStockBeNum" jdbcType="INTEGER"/>
+        <result column="in_stock_sum" property="inStockSum" jdbcType="DECIMAL"/>
+        <result column="ware_id" property="wareId" jdbcType="INTEGER"/>
+        <result column="ware_name" property="wareName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, purchase_no, in_stock_no, grounding_no, goods_code, goods_bar_code, goods_name,
+        spec, package_num, unit, purchase_num, purchase_wait_num, purchase_price, goodsprice_sum,
+        validity_time, in_stock_num, in_stock_be_num, in_stock_sum, ware_id, ware_name
+    </sql>
+    <select id="selectAllByWhere" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_purchase_in_info
+        <include refid="Base_Where_Clause"/>
+    </select>
+    <!--动态条件-->
+    <sql id="Base_Where_Clause">
+        <where>
+            <trim prefixOverrides="and|or">
+                <if test="Id != null">and id = #{Id}</if>
+                <if test="purchaseNo != null">and purchase_no = #{purchaseNo}</if><!--采购单-->
+                <if test="inStockNo != null">and in_stock_no = #{inStockNo}</if><!--入库单-->
+                <if test="groundingNo != null">and grounding_no = #{groundingNo}</if><!--上架单-->
+                <if test="wareId != null">and ware_id = #{wareId}</if><!--仓库Id-->
+                <if test="searchWhere != null">${searchWhere}</if>
+            </trim>
+        </where>
+        <if test="page != null">
+            limit ${page.First}, ${page.Pagesize}
+        </if>
+    </sql>
+
+    <!-- 采购入库详情及库位信息-->
+    <select id="selectAllByParmMap" resultType="java.util.Map" parameterType="java.util.Map">
+        select
+        p.id as Id,p.purchase_no as purchaseNo, p.in_stock_no as inStockNo, p.grounding_no as groundingNo, p.goods_code as goodsCode, p.goods_bar_code as goodsBarCode, p.goods_name as goodsName,
+        p.spec, p.package_num as purchaseNum, p.unit, p.purchase_num as purchaseNum, p.purchase_wait_num as purchaseWaitNum, p.purchase_price as purchasePrice, p.goodsprice_sum as goodspriceSum,
+        p.validity_time as validityTime, p.in_stock_num as inStockNum, p.in_stock_be_num as inStockBeNum, p.in_stock_sum as inStockSum, p.ware_id as wareId, p.ware_name as wareName,
+        b.location_id as locationId,b.location_no as locationNo,b.area_id as areaId,b.area_name as areaName
+        from t_purchase_in_info p
+        left join t_location_goods_bind_in b on p.in_stock_no=b.grounding_no and p.goods_code=b.goods_code
+        <include refid="Base_Where_ClauseEx"/>
+    </select>
+    <sql id="Base_Where_ClauseEx">
+        <where>
+            <trim prefixOverrides="and|or">
+                <if test="Id != null">and p.id = #{Id}</if>
+                <if test="purchaseNo != null">and p.purchase_no = #{purchaseNo}</if><!--采购单-->
+                <if test="inStockNo != null">and p.in_stock_no = #{inStockNo}</if><!--入库单-->
+                <if test="groundingNo != null">and p.grounding_no = #{groundingNo}</if><!--上架单-->
+                <if test="wareId != null">and p.ware_id = #{wareId}</if><!--仓库Id-->
+                <if test="searchWhere != null">${searchWhere}</if>
+            </trim>
+        </where>
+        <if test="page != null">
+            limit ${page.First}, ${page.Pagesize}
+        </if>
+    </sql>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_purchase_in_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectAllByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_purchase_in_info p left join t_in_stock_bill s
+        on p.in_stock_no=s.in_stock_no
+        <include refid="Base_Where_Clause"/>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_purchase_in_info
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.rmd.wms.bean.PurchaseInInfo">
+        insert into t_purchase_in_info (id, purchase_no, in_stock_no,
+          grounding_no, goods_code, goods_bar_code,
+          goods_name, spec, package_num,
+          unit, purchase_num, purchase_wait_num,
+          purchase_price, goodsprice_sum, validity_time,
+          in_stock_num, in_stock_be_num, in_stock_sum,
+          ware_id, ware_name)
+        values (#{id,jdbcType=INTEGER}, #{purchaseNo,jdbcType=VARCHAR}, #{inStockNo,jdbcType=VARCHAR},
+          #{groundingNo,jdbcType=VARCHAR}, #{goodsCode,jdbcType=VARCHAR}, #{goodsBarCode,jdbcType=VARCHAR},
+          #{goodsName,jdbcType=VARCHAR}, #{spec,jdbcType=VARCHAR}, #{packageNum,jdbcType=VARCHAR},
+          #{unit,jdbcType=VARCHAR}, #{purchaseNum,jdbcType=INTEGER}, #{purchaseWaitNum,jdbcType=INTEGER},
+          #{purchasePrice,jdbcType=DECIMAL}, #{goodspriceSum,jdbcType=DECIMAL}, #{validityTime,jdbcType=TIMESTAMP},
+          #{inStockNum,jdbcType=INTEGER}, #{inStockBeNum,jdbcType=INTEGER}, #{inStockSum,jdbcType=DECIMAL},
+          #{wareId,jdbcType=INTEGER}, #{wareName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_purchase_in_info
+            (purchase_no, in_stock_no,
+            grounding_no, goods_code, goods_bar_code,
+            goods_name, spec, package_num,
+            unit, purchase_num, purchase_wait_num,
+            purchase_price, goodsprice_sum, validity_time,
+            in_stock_num, in_stock_be_num, in_stock_sum,
+            ware_id, ware_name)
+        values
+        <foreach collection="list" item="obj" separator=",">
+            (#{obj.purchaseNo},#{obj.inStockNo},#{obj.groundingNo},#{obj.goodsCode},#{obj.goodsBarCode},
+            #{obj.goodsName},#{obj.spec},#{obj.packageNum},#{obj.unit},#{obj.purchaseNum},#{obj.purchaseWaitNum},
+            #{obj.purchasePrice},#{obj.goodspriceSum},#{obj.validityTime},#{obj.inStockNum},#{obj.inStockBeNum},#{obj.inStockSum},
+            #{obj.wareId},#{obj.wareName})
+        </foreach>
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.PurchaseInInfo">
+        insert into t_purchase_in_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="purchaseNo != null">
+                purchase_no,
+            </if>
+            <if test="inStockNo != null">
+                in_stock_no,
+            </if>
+            <if test="groundingNo != null">
+                grounding_no,
+            </if>
+            <if test="goodsCode != null">
+                goods_code,
+            </if>
+            <if test="goodsBarCode != null">
+                goods_bar_code,
+            </if>
+            <if test="goodsName != null">
+                goods_name,
+            </if>
+            <if test="spec != null">
+                spec,
+            </if>
+            <if test="packageNum != null">
+                package_num,
+            </if>
+            <if test="unit != null">
+                unit,
+            </if>
+            <if test="purchaseNum != null">
+                purchase_num,
+            </if>
+            <if test="purchaseWaitNum != null">
+                purchase_wait_num,
+            </if>
+            <if test="purchasePrice != null">
+                purchase_price,
+            </if>
+            <if test="goodspriceSum != null">
+                goodsprice_sum,
+            </if>
+            <if test="validityTime != null">
+                validity_time,
+            </if>
+            <if test="inStockNum != null">
+                in_stock_num,
+            </if>
+            <if test="inStockBeNum != null">
+                in_stock_be_num,
+            </if>
+            <if test="inStockSum != null">
+                in_stock_sum,
+            </if>
+            <if test="wareId != null">
+                ware_id,
+            </if>
+            <if test="wareName != null">
+                ware_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="purchaseNo != null">
+                #{purchaseNo,jdbcType=VARCHAR},
+            </if>
+            <if test="inStockNo != null">
+                #{inStockNo,jdbcType=VARCHAR},
+            </if>
+            <if test="groundingNo != null">
+                #{groundingNo,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsCode != null">
+                #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsBarCode != null">
+                #{goodsBarCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName != null">
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="spec != null">
+                #{spec,jdbcType=VARCHAR},
+            </if>
+            <if test="packageNum != null">
+                #{packageNum,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="purchaseNum != null">
+                #{purchaseNum,jdbcType=INTEGER},
+            </if>
+            <if test="purchaseWaitNum != null">
+                #{purchaseWaitNum,jdbcType=INTEGER},
+            </if>
+            <if test="purchasePrice != null">
+                #{purchasePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodspriceSum != null">
+                #{goodspriceSum,jdbcType=DECIMAL},
+            </if>
+            <if test="validityTime != null">
+                #{validityTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="inStockNum != null">
+                #{inStockNum,jdbcType=INTEGER},
+            </if>
+            <if test="inStockBeNum != null">
+                #{inStockBeNum,jdbcType=INTEGER},
+            </if>
+            <if test="inStockSum != null">
+                #{inStockSum,jdbcType=DECIMAL},
+            </if>
+            <if test="wareId != null">
+                #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                #{wareName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.PurchaseInInfo">
+        update t_purchase_in_info
+        <set>
+            <if test="purchaseNo != null">
+                purchase_no = #{purchaseNo,jdbcType=VARCHAR},
+            </if>
+            <if test="inStockNo != null">
+                in_stock_no = #{inStockNo,jdbcType=VARCHAR},
+            </if>
+            <if test="groundingNo != null">
+                grounding_no = #{groundingNo,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsCode != null">
+                goods_code = #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsBarCode != null">
+                goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName != null">
+                goods_name = #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="spec != null">
+                spec = #{spec,jdbcType=VARCHAR},
+            </if>
+            <if test="packageNum != null">
+                package_num = #{packageNum,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                unit = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="purchaseNum != null">
+                purchase_num = #{purchaseNum,jdbcType=INTEGER},
+            </if>
+            <if test="purchaseWaitNum != null">
+                purchase_wait_num = #{purchaseWaitNum,jdbcType=INTEGER},
+            </if>
+            <if test="purchasePrice != null">
+                purchase_price = #{purchasePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodspriceSum != null">
+                goodsprice_sum = #{goodspriceSum,jdbcType=DECIMAL},
+            </if>
+            <if test="validityTime != null">
+                validity_time = #{validityTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="inStockNum != null">
+                in_stock_num = #{inStockNum,jdbcType=INTEGER},
+            </if>
+            <if test="inStockBeNum != null">
+                in_stock_be_num = #{inStockBeNum,jdbcType=INTEGER},
+            </if>
+            <if test="inStockSum != null">
+                in_stock_sum = #{inStockSum,jdbcType=DECIMAL},
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <!--批量更新待入库数量-->
+    <update id="updateBatchByPrimaryKey" parameterType="list">
+        update t_purchase_in_info
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="purchase_wait_num = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.purchaseWaitNum != null">
+                        when id=#{i.id} then #{i.purchaseWaitNum}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="in_stock_be_num = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.inStockBeNum != null">
+                        when id=#{i.id} then #{i.inStockBeNum}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where
+        <foreach collection="list" separator="or" item="i" index="index">
+            id = #{i.id}
+        </foreach>
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.PurchaseInInfo">
+        update t_purchase_in_info
+        set purchase_no = #{purchaseNo,jdbcType=VARCHAR},
+          in_stock_no = #{inStockNo,jdbcType=VARCHAR},
+          grounding_no = #{groundingNo,jdbcType=VARCHAR},
+          goods_code = #{goodsCode,jdbcType=VARCHAR},
+          goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR},
+          goods_name = #{goodsName,jdbcType=VARCHAR},
+          spec = #{spec,jdbcType=VARCHAR},
+          package_num = #{packageNum,jdbcType=VARCHAR},
+          unit = #{unit,jdbcType=VARCHAR},
+          purchase_num = #{purchaseNum,jdbcType=INTEGER},
+          purchase_wait_num = #{purchaseWaitNum,jdbcType=INTEGER},
+          purchase_price = #{purchasePrice,jdbcType=DECIMAL},
+          goodsprice_sum = #{goodspriceSum,jdbcType=DECIMAL},
+          validity_time = #{validityTime,jdbcType=TIMESTAMP},
+          in_stock_num = #{inStockNum,jdbcType=INTEGER},
+          in_stock_be_num = #{inStockBeNum,jdbcType=INTEGER},
+          in_stock_sum = #{inStockSum,jdbcType=DECIMAL},
+          ware_id = #{wareId,jdbcType=INTEGER},
+          ware_name = #{wareName,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="selectCountByInStockNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(id) from t_purchase_in_info where in_stock_no = #{inStockNo}
+    </select>
+    <select id="selectWaitCountByPurchaseNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(id) from t_purchase_in_info where purchase_no = #{purchaseNo} and purchase_wait_num > 0
+    </select>
+</mapper>

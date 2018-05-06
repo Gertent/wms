@@ -1,0 +1,164 @@
+.rankBox{
+    width: 85%;
+    margin: 0 auto;
+}
+.tabBoxs{
+    width: 100%;
+}
+.alter{
+    width: 15px;
+    height: 15px;
+    margin: 0 10px 0 15px;
+    background: url(../images/alter.png) no-repeat center left;
+}
+.breadCru{
+    width: 638px;
+    height: 34px;
+    color: #ff8624;
+    font-size: 16px;
+    margin: 20px auto;
+    padding-left: 30px;
+    line-height: 34px;
+    border-radius: 17px;
+    -moz-border-radius: 17px;
+    -webkit-border-radius: 17px;
+    border: 1px dashed #e5e5e5;
+}
+.addGbox .btnBox a,.seachBox button{
+    color: #ffffff;
+    font-size: 15px;
+    text-align: center;
+    display: inline-block;
+}
+.addGbox .btnBox a{
+    width: 20%;
+    height: 30px;
+    margin-top: 32px;
+    line-height: 30px;
+    background: #c9c9c9;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+}
+.addGbox .btnBox a.btnOg{
+    background: #ff8624;
+}
+.addGbox .btnBox a+a{
+    margin-left: 20px;
+}
+.seachBox{
+    margin: 36px 0;
+
+}
+.seachBox label{
+    margin-right: 15px;
+}
+.seachBox input{
+    width: 385px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 4px;
+}
+.seachBox button{
+    width: 82px;
+    border: 0 none;
+    line-height: 30px;
+    margin-left: 10px;
+    border-radius: 4px;
+    vertical-align: middle;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+.classifiBox div{
+    width: 196px;
+    height: 451px;
+    text-align: left;
+	border-radius: 4px;
+	overflow-x: scroll;
+    display: inline-block;
+    border: 1px solid #e5e5e5;
+}
+.classifiBox div ul{
+    margin: 15px 0;
+}
+.classifiBox div ul li{
+    cursor: pointer;
+    white-space: nowrap;
+    line-height: 28px;
+    padding-left: 15px;
+}
+.classifiBox div ul li:hover,
+.classifiBox div ul li.active{
+    background: #eeeeee;
+}
+.classifiBox div+div{
+    visibility: hidden;
+    margin-left: 15px;
+}
+.addGbox .btnBox a.nextBtn{
+    font-size: 14px;
+    margin-bottom: 32px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+.addGbox .btnBox a.nextBtn:hover{
+    background: #ff7b11;
+}
+.solrBox{
+    width: 80%;
+    height: 460px;
+    margin: 0 auto;
+}
+.solrBox h3{
+    font-size: 15px;
+    font-weight: 400;
+}
+.solrBox h3 a{
+    color: #ff8624;
+}
+.resultBox p a{
+    font-size: 14px;
+    display: block;
+    line-height: 28px;
+}
+.resultBox p a i{
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: text-bottom;
+    background: url(../images/radio.png) no-repeat left;
+}
+.resultBox p a i.on{
+    background-position: right;
+}
+#packnumunitid{
+	width: 25.5%;
+    height: 30px;
+    line-height: 30px;
+}
+.w128{width: 128px;}
+.rankManageBox{
+    background: #fff;
+}
+.rankManageBox .title{
+	height: 40px;
+	line-height: 40px;
+	position: relative;
+	background: #8c909b;
+}
+.rankManageBox .title a{
+	top: 0;
+	right: 20px;
+	width: 13px;
+	height: 40px;
+	position: absolute;
+	display:inline-block;
+	background: url(../images/dele.png) no-repeat center;	
+}
+.cenBtnLast{
+	+position: absolute;
+	+right: 0;
+	+top: 0;
+}	    

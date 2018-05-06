@@ -1,0 +1,290 @@
+/* �����̵���*/
+.notBox,.editBox{
+    width: 700px;
+    padding: 0 33px;
+}
+.notBox{
+    height: 430px;
+}
+.noTit{
+    line-height: 60px;
+}
+.sub{
+    margin: 29px auto 0;
+}
+/* �༭��Ʒ*/
+.editBox{
+    width: 85%;
+    margin: 0 5%;
+}
+.editBox .navTit,#rankBox .navTit{
+    padding: 30px 0 15px;
+    border-bottom: 1px solid #dbdbdb;
+}
+.editBox .navTit i,#rankBox .navTit i{
+    width: 10px;
+    height: 10px;
+    margin: 0 12px;
+    display: inline-block;
+    background: url("../images/sportG.png") no-repeat center;
+}
+.inBox{
+    margin-top: 14px;
+}
+.inBox>li{padding:10px 0;}
+.inBox>li>label{
+    width: 20%;
+    font-size: 15px;
+    text-align: right;
+    line-height: 30px;
+    padding-right: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.inBox li label i{
+    color: red;
+    vertical-align: middle;
+}
+.inBox li>input,.marTit input{
+    height: 28px;
+    line-height: 28px;
+    padding-left: 5px;
+    border: 1px solid #e5e5e5;
+}
+.inBox li>input{
+    width: 56%;
+}
+.inBox li a{
+    margin-left: 10px;
+    vertical-align: middle;
+}
+.inBox .seleBox{
+    display: inline-block;
+}
+.inBox li a.selet,
+.inBox li a.check{
+    margin: 0 10px 0 0;
+}
+.imgBox{
+    width: 537px;
+    padding: 1%;
+    margin: 10px 0;
+    vertical-align: top;
+}
+.imgBox p a{
+    color: #999999;
+}
+.imgBox p a:hover{
+    color: #08ccdd;
+}
+.imgBox img{
+    width: 96px;
+    height: 96px;
+    display: inline-block;
+    background: url(../images/cliadd.png) no-repeat center left;
+}
+#imgPreview1:hover,
+#imgPreview2:hover,
+#imgPreview3:hover,
+#imgPreview4:hover,
+#imgPreview5:hover,
+#imgPreview6:hover{
+    background-position: right;
+}
+.file{
+    display: none;
+}
+.fileBox{
+    display: inline-block;
+}
+.fileBox+.fileBox{
+    margin-left: 10px;
+}
+.inBox>li>input[type="checkbox"]{
+    display: none;
+}
+.imgCheck{
+	height: 44px;
+    line-height: 44px;
+}
+.check i{
+    width: 13px;
+    height: 13px;
+    margin-right: 10px;
+    vertical-align: middle;
+    display: inline-block;
+    background: url(../images/check.png) no-repeat center right;
+}
+.check i.off{
+    background-position: left;
+}
+.areaBox{
+    width:70%;
+}
+#editorDetail{
+    width:100%;
+    *display:inline;
+    *zoom:1;
+    vertical-align: top;
+    display:inline-block;
+}
+.inBox li input.nuber{
+    width: 145px;
+}
+.inBoxNew li:first-child{
+    padding: 16px 0 20px;
+}
+.inBoxNew li label{
+    vertical-align: middle;
+    line-height: normal;
+}
+.inBoxNew li input{
+    color: #acacac;
+}
+.inBoxNew li label span{
+    margin-right: 16px;
+}
+#addBrandBox .inBox label,
+.addNoticBox .inBox label{
+    width: 25%;
+}
+.txtBox,
+#addBrandBox .inBox input,
+.addNoticBox .inBox input{
+    width: 280px;
+}
+.addNoticBox .inBox input[type='radio']{
+	width: initial;
+}
+.txtBox{
+    height: 140px;
+    vertical-align: text-top;
+    border:1px solid #e5e5e5;
+}
+.selectBox{
+    vertical-align: middle;
+}
+.selectBox select{
+    float: left;
+    width: 130px;
+    height: 28px;
+    line-height: 28px;
+    border: 1px solid #e5e5e5;
+}
+.selectBox select+select{
+    margin-left: 20px;
+}
+.inBox li input.wm{
+    width: 18.5%;
+    margin-right: 1%;
+}
+#rankBox .inBox{
+    margin-top: 20px;
+}
+.rankManageBox .title{
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    background: #8c909b;
+}
+.rankManageBox .title a{
+    top: 0;
+    right: 20px;
+    width: 13px;
+    height: 40px;
+    position: absolute;
+    display:inline-block;
+    background: url("../images/dele.png") no-repeat center;
+}
+.cenBtnLast{
++position: absolute;
++right: 0;
++top: 0;
+}
+.proBox table{
+    margin-top: 14px;
+    width: 100%;
+}
+.proBox table td.th{
+    width: 40%;
+}
+.proBox table td.ty{
+    width: 20%;
+}
+.proBox td label,.proBox td a{
+    font-size: 15px;
+
+}
+.proBox td label{
+    text-align: right;
+    line-height: 44px;
+    padding-right: 5px;
+    display: inline-block;
+}
+.proBox td input[type='text']{
+    width: 66%;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 5px;
+    border: 1px solid #e5e5e5;
+}
+.proBox table td i,.addMarket .inBox li ul li i,.addMarket .inBox li .radioBox a i{
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: text-bottom;
+    background: url("../images/radio.png") no-repeat left;
+}
+.proBox table td i{
+    vertical-align: middle;
+}
+.proBox table td i.on,.addMarket .inBox li ul li i.on,.addMarket .inBox li .radioBox a i.on{
+    background-position: right;
+}
+.btnSmall{
+    height: 22px;
+    line-height: 22px;
+}
+.addOptBox textarea{
+    width: 600px;
+    height: 140px;
+    color: #acacac;
+}
+#thediv{
+    top: 44%;
+    left:50.4%;
+    width: 26%;
+    height: 35px;
+    z-index: 1000;
+    display: none;
+    background: #fff;
+    padding-top:7px;
+    text-align: center;
+    position: absolute;
+}
+#amount{
+    width: 26%;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    border: 1px solid #c9c9c9;
+}
+.ndg{
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background: #000;
+    position: absolute;
+    opacity: 0.7;
+    -moz-opacity: 0.7;
+    filter: alpha(opacity=70);
+}
+.typeBox .inBox input{
+    width: 55%;
+}
+.rankManageBox{background: #fff;}
+.remark{color: #afafaf;}
+.radioBox{line-height: 44px;}

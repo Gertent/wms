@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rmd.wms.dao.DeliveryBillMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.DeliveryBill">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="delivery_no" property="deliveryNo" jdbcType="VARCHAR"/>
+        <result column="order_sum" property="orderSum" jdbcType="INTEGER"/>
+        <result column="dodelivery_print" property="dodeliveryPrint" jdbcType="INTEGER"/>
+        <result column="logis_com_id" property="logisComId" jdbcType="INTEGER"/>
+        <result column="logis_com_name" property="logisComName" jdbcType="VARCHAR"/>
+        <result column="delivery_start_time" property="deliveryStartTime" jdbcType="TIMESTAMP"/>
+        <result column="delivery_end_time" property="deliveryEndTime" jdbcType="TIMESTAMP"/>
+        <result column="delivery_user" property="deliveryUser" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="ware_id" property="wareId" jdbcType="INTEGER"/>
+        <result column="ware_name" property="wareName" jdbcType="VARCHAR"/>
+        <result column="delivery_user_name" property="deliveryUserName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, delivery_no, order_sum, dodelivery_print, logis_com_id, logis_com_name, delivery_start_time,
+        delivery_end_time, delivery_user, create_time, ware_id, ware_name,delivery_user_name
+    </sql>
+    <select id="selectAllByWhere" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_delivery_bill
+        <include refid="Base_Where_Clause"/>
+    </select>
+    <sql id="Base_Where_Clause">
+        <where>
+            <trim prefixOverrides="and|or">
+                <if test="id != null">and id = #{id}</if>
+                <if test="deliveryNo != null">and delivery_no = #{deliveryNo}</if>
+                <if test="logiscomId != null">and logis_com_id = #{logiscomId}</if>
+
+                <if test="deliveryNo_in != null"> and delivery_no in ${deliveryNo_in} </if>
+                <if test="dodeliveryPrint_search != null"> and (dodelivery_print is null or dodelivery_print=0) </if><!--交接单未打印-->
+                <if test="deliveryStartTime_gt != null"> and delivery_start_time >= #{deliveryStartTime_gt} </if>
+                <if test="deliveryStartTime_lt != null"> and delivery_start_time &lt;= #{deliveryStartTime_lt} </if>
+                <if test="deliveryEndTime_gt != null"> and delivery_end_time >= #{deliveryEndTime_gt} </if>
+                <if test="deliveryEndTime_lt != null"> and delivery_end_time &lt;= #{deliveryEndTime_lt} </if>
+                <if test="searchWhere != null">${searchWhere}</if>
+            </trim>
+        </where>
+        <if test="name_sort != null"><!--排序字段-->
+            ORDER BY ${name_sort}
+            <if test="order_sort != null"><!--排序顺序asc/desc-->
+                ${order_sort}
+            </if>
+        </if>
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_delivery_bill
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByPrimaryKeys" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from t_delivery_bill
+        where id in
+        <foreach collection="list" open="(" close=")" separator="," item="obj" index="i">
+            #{obj,jdbcType=INTEGER}
+        </foreach>
+    </select>
+    <select id="selectByDeliveryNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_delivery_bill
+        where delivery_no = #{deliveryNo,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByUser" resultMap="BaseResultMap" parameterType="com.rmd.wms.bean.DeliveryBill">
+        select
+        <include refid="Base_Column_List"/>
+        from t_delivery_bill
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="deliveryNo != null">
+                delivery_no = #{deliveryNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="dodeliveryPrint != null">
+                dodelivery_print = #{dodeliveryPrint,jdbcType=INTEGER} and
+            </if>
+            <if test="logisComId != null">
+                logis_com_id = #{logisComId,jdbcType=INTEGER} and
+            </if>
+            <if test="deliveryUser != null">
+                delivery_user = #{deliveryUser,jdbcType=INTEGER} and
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER} and
+            </if>
+            order_sum is null or order_sum = 0
+        </trim>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_delivery_bill
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.rmd.wms.bean.DeliveryBill">
+        insert into t_delivery_bill (id, delivery_no, order_sum,
+          dodelivery_print, logis_com_id, logis_com_name,
+          delivery_start_time, delivery_end_time,
+          delivery_user, create_time, ware_id, ware_name,delivery_user_name)
+        values (#{id,jdbcType=INTEGER}, #{deliveryNo,jdbcType=VARCHAR}, #{orderSum,jdbcType=INTEGER},
+          #{dodeliveryPrint,jdbcType=INTEGER}, #{logisComId,jdbcType=INTEGER}, #{logisComName,jdbcType=VARCHAR},
+          #{deliveryStartTime,jdbcType=TIMESTAMP}, #{deliveryEndTime,jdbcType=TIMESTAMP},
+          #{deliveryUser,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{wareId,jdbcType=INTEGER}, #{wareName,jdbcType=VARCHAR}, #{deliveryUserName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.DeliveryBill" useGeneratedKeys="true" keyProperty="id">
+        insert into t_delivery_bill
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="deliveryNo != null">
+                delivery_no,
+            </if>
+            <if test="orderSum != null">
+                order_sum,
+            </if>
+            <if test="dodeliveryPrint != null">
+                dodelivery_print,
+            </if>
+            <if test="logisComId != null">
+                logis_com_id,
+            </if>
+            <if test="logisComName != null">
+                logis_com_name,
+            </if>
+            <if test="deliveryStartTime != null">
+                delivery_start_time,
+            </if>
+            <if test="deliveryEndTime != null">
+                delivery_end_time,
+            </if>
+            <if test="deliveryUser != null">
+                delivery_user,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="wareId != null">
+                ware_id,
+            </if>
+            <if test="wareName != null">
+                ware_name,
+            </if>
+            <if test="deliveryUserName != null">
+                delivery_user_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="deliveryNo != null">
+                #{deliveryNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderSum != null">
+                #{orderSum,jdbcType=INTEGER},
+            </if>
+            <if test="dodeliveryPrint != null">
+                #{dodeliveryPrint,jdbcType=INTEGER},
+            </if>
+            <if test="logisComId != null">
+                #{logisComId,jdbcType=INTEGER},
+            </if>
+            <if test="logisComName != null">
+                #{logisComName,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryStartTime != null">
+                #{deliveryStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deliveryEndTime != null">
+                #{deliveryEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deliveryUser != null">
+                #{deliveryUser,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="wareId != null">
+                #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryUserName != null">
+                #{deliveryUserName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.DeliveryBill">
+        update t_delivery_bill
+        <set>
+            <if test="deliveryNo != null">
+                delivery_no = #{deliveryNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderSum != null">
+                order_sum = #{orderSum,jdbcType=INTEGER},
+            </if>
+            <if test="dodeliveryPrint != null">
+                dodelivery_print = #{dodeliveryPrint,jdbcType=INTEGER},
+            </if>
+            <if test="logisComId != null">
+                logis_com_id = #{logisComId,jdbcType=INTEGER},
+            </if>
+            <if test="logisComName != null">
+                logis_com_name = #{logisComName,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryStartTime != null">
+                delivery_start_time = #{deliveryStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deliveryEndTime != null">
+                delivery_end_time = #{deliveryEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deliveryUser != null">
+                delivery_user = #{deliveryUser,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryUserName != null">
+                delivery_user_name = #{deliveryUserName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.DeliveryBill">
+        update t_delivery_bill
+        set delivery_no = #{deliveryNo,jdbcType=VARCHAR},
+          order_sum = #{orderSum,jdbcType=INTEGER},
+          dodelivery_print = #{dodeliveryPrint,jdbcType=INTEGER},
+          logis_com_id = #{logisComId,jdbcType=INTEGER},
+          logis_com_name = #{logisComName,jdbcType=VARCHAR},
+          delivery_start_time = #{deliveryStartTime,jdbcType=TIMESTAMP},
+          delivery_end_time = #{deliveryEndTime,jdbcType=TIMESTAMP},
+          delivery_user = #{deliveryUser,jdbcType=INTEGER},
+          create_time = #{createTime,jdbcType=TIMESTAMP},
+          ware_id = #{wareId,jdbcType=INTEGER},
+          ware_name = #{wareName,jdbcType=VARCHAR},
+          delivery_user_name = #{deliveryUserName,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

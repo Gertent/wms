@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.MessageQueueMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.MessageQueue">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="business_type" property="businessType" jdbcType="VARCHAR"/>
+        <result column="business_id" property="businessId" jdbcType="VARCHAR"/>
+        <result column="operation" property="operation" jdbcType="VARCHAR"/>
+        <result column="param" property="param" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
+        <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+      id, business_type, business_id, operation, param, remark, state, createtime, updatetime
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_message_queue
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.rmd.wms.bean.MessageQueue">
+        select
+        <include refid="Base_Column_List"/>
+        from t_message_queue
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="businessType != null">
+                business_type = #{businessType,jdbcType=VARCHAR} and
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=VARCHAR} and
+            </if>
+            <if test="operation != null">
+                operation = #{operation,jdbcType=VARCHAR} and
+            </if>
+            <if test="param != null">
+                param = #{param,jdbcType=VARCHAR} and
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR} and
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER} and
+            </if>
+            <if test="createtime != null">
+                createtime = #{createtime,jdbcType=TIMESTAMP} and
+            </if>
+            <if test="updatetime != null">
+                updatetime = #{updatetime,jdbcType=TIMESTAMP} and
+            </if>
+        </trim>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_message_queue
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.rmd.wms.bean.MessageQueue">
+        insert into t_message_queue (id, business_type, business_id,
+          operation, param, remark, state, createtime,
+          updatetime)
+        values (#{id,jdbcType=INTEGER}, #{businessType,jdbcType=VARCHAR}, #{businessId,jdbcType=VARCHAR},
+          #{operation,jdbcType=VARCHAR}, #{param,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+           #{state,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP},
+          #{updatetime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.MessageQueue">
+        insert into t_message_queue
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="businessType != null">
+                business_type,
+            </if>
+            <if test="businessId != null">
+                business_id,
+            </if>
+            <if test="operation != null">
+                operation,
+            </if>
+            <if test="param != null">
+                param,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test="updatetime != null">
+                updatetime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="businessType != null">
+                #{businessType,jdbcType=VARCHAR},
+            </if>
+            <if test="businessId != null">
+                #{businessId,jdbcType=VARCHAR},
+            </if>
+            <if test="operation != null">
+                #{operation,jdbcType=VARCHAR},
+            </if>
+            <if test="param != null">
+                #{param,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetime != null">
+                #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.MessageQueue">
+        update t_message_queue
+        <set>
+            <if test="businessType != null">
+                business_type = #{businessType,jdbcType=VARCHAR},
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=VARCHAR},
+            </if>
+            <if test="operation != null">
+                operation = #{operation,jdbcType=VARCHAR},
+            </if>
+            <if test="param != null">
+                param = #{param,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="createtime != null">
+                createtime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetime != null">
+                updatetime = #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.MessageQueue">
+        update t_message_queue
+        set business_type = #{businessType,jdbcType=VARCHAR},
+          business_id = #{businessId,jdbcType=VARCHAR},
+          operation = #{operation,jdbcType=VARCHAR},
+          param = #{param,jdbcType=VARCHAR},
+          remark = #{remark,jdbcType=VARCHAR},
+          state = #{state,jdbcType=INTEGER},
+          createtime = #{createtime,jdbcType=TIMESTAMP},
+          updatetime = #{updatetime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

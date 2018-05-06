@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.StockOutInfoMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.StockOutInfo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="goods_code" property="goodsCode" jdbcType="VARCHAR"/>
+        <result column="goods_bar_code" property="goodsBarCode" jdbcType="VARCHAR"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="spec" property="spec" jdbcType="VARCHAR"/>
+        <result column="package_num" property="packageNum" jdbcType="VARCHAR"/>
+        <result column="unit" property="unit" jdbcType="VARCHAR"/>
+        <result column="validity_time" property="validityTime" jdbcType="TIMESTAMP"/>
+        <result column="sales_price" property="salesPrice" jdbcType="DECIMAL"/>
+        <result column="stock_out_num" property="stockOutNum" jdbcType="INTEGER"/>
+        <result column="stock_out_sum" property="stockOutSum" jdbcType="DECIMAL"/>
+        <result column="ware_id" property="wareId" jdbcType="INTEGER"/>
+        <result column="ware_name" property="wareName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, order_no, goods_code, goods_bar_code, goods_name, spec, package_num, unit, validity_time,
+        sales_price, stock_out_num, stock_out_sum, ware_id, ware_name
+    </sql>
+    <select id="selectAllByWhere" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_stock_out_info
+        <include refid="Base_Where_Clause"/>
+    </select>
+    <sql id="Base_Where_Clause">
+        <where>
+            <trim prefixOverrides="and|or">
+                <if test="Id != null">and id = #{Id}</if>
+                <if test="orderNo != null">and order_no = #{orderNo}</if><!--出库单号-->
+                <if test="wareId != null">and ware_id = #{wareId}</if><!--仓库Id-->
+                <if test="searchWhere != null">${searchWhere}</if>
+            </trim>
+        </where>
+        <if test="page != null">
+            limit ${page.First}, ${page.Pagesize}
+        </if>
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_stock_out_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_stock_out_info
+        where order_no = #{orderNo,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.rmd.wms.bean.StockOutInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_stock_out_info
+        <trim prefix="where" suffixOverrides="AND | OR">
+            <if test="orderNo != null">
+                order_no = #{orderNo,jdbcType=VARCHAR} AND
+            </if>
+            <if test="goodsCode != null">
+                goods_code = #{goodsCode,jdbcType=VARCHAR} AND
+            </if>
+            <if test="goodsBarCode != null">
+                goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR} AND
+            </if>
+            <if test="goodsName != null">
+                goods_name = #{goodsName,jdbcType=VARCHAR} AND
+            </if>
+            <if test="spec != null">
+                spec = #{spec,jdbcType=VARCHAR} AND
+            </if>
+            <if test="packageNum != null">
+                package_num = #{packageNum,jdbcType=VARCHAR} AND
+            </if>
+            <if test="unit != null">
+                unit = #{unit,jdbcType=VARCHAR} AND
+            </if>
+            <if test="validityTime != null">
+                validity_time = #{validityTime,jdbcType=TIMESTAMP} AND
+            </if>
+            <if test="salesPrice != null">
+                sales_price = #{salesPrice,jdbcType=DECIMAL} AND
+            </if>
+            <if test="stockOutNum != null">
+                stock_out_num = #{stockOutNum,jdbcType=INTEGER} AND
+            </if>
+            <if test="stockOutSum != null">
+                stock_out_sum = #{stockOutSum,jdbcType=DECIMAL} AND
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER} AND
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR} AND
+            </if>
+        </trim>
+    </select>
+    <select id="selectCountByOrderNo" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select count(id) from t_stock_out_info where order_no = #{orderNo,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_stock_out_info
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.rmd.wms.bean.StockOutInfo">
+        insert into t_stock_out_info (id, order_no, goods_code,
+          goods_bar_code, goods_name, spec,
+          package_num, unit, validity_time,
+          sales_price, stock_out_num, stock_out_sum,
+          ware_id, ware_name)
+        values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{goodsCode,jdbcType=VARCHAR},
+          #{goodsBarCode,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{spec,jdbcType=VARCHAR},
+          #{packageNum,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{validityTime,jdbcType=TIMESTAMP},
+          #{salesPrice,jdbcType=DECIMAL}, #{stockOutNum,jdbcType=INTEGER}, #{stockOutSum,jdbcType=DECIMAL},
+          #{wareId,jdbcType=INTEGER}, #{wareName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_stock_out_info (order_no, goods_code,
+          goods_bar_code, goods_name, spec,
+          package_num, unit, validity_time,
+          sales_price, stock_out_num, stock_out_sum,
+          ware_id, ware_name)
+        values
+        <foreach collection="list" item="obj" separator=",">
+            (#{obj.orderNo},#{obj.goodsCode},#{obj.goodsBarCode},#{obj.goodsName},#{obj.spec},
+            #{obj.packageNum},#{obj.unit},#{obj.validityTime},#{obj.salesPrice},#{obj.stockOutNum},#{obj.stockOutSum},
+            #{obj.wareId},#{obj.wareName})
+        </foreach>
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.StockOutInfo">
+        insert into t_stock_out_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="goodsCode != null">
+                goods_code,
+            </if>
+            <if test="goodsBarCode != null">
+                goods_bar_code,
+            </if>
+            <if test="goodsName != null">
+                goods_name,
+            </if>
+            <if test="spec != null">
+                spec,
+            </if>
+            <if test="packageNum != null">
+                package_num,
+            </if>
+            <if test="unit != null">
+                unit,
+            </if>
+            <if test="validityTime != null">
+                validity_time,
+            </if>
+            <if test="salesPrice != null">
+                sales_price,
+            </if>
+            <if test="stockOutNum != null">
+                stock_out_num,
+            </if>
+            <if test="stockOutSum != null">
+                stock_out_sum,
+            </if>
+            <if test="wareId != null">
+                ware_id,
+            </if>
+            <if test="wareName != null">
+                ware_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsCode != null">
+                #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsBarCode != null">
+                #{goodsBarCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName != null">
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="spec != null">
+                #{spec,jdbcType=VARCHAR},
+            </if>
+            <if test="packageNum != null">
+                #{packageNum,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="validityTime != null">
+                #{validityTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="salesPrice != null">
+                #{salesPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="stockOutNum != null">
+                #{stockOutNum,jdbcType=INTEGER},
+            </if>
+            <if test="stockOutSum != null">
+                #{stockOutSum,jdbcType=DECIMAL},
+            </if>
+            <if test="wareId != null">
+                #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                #{wareName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.StockOutInfo">
+        update t_stock_out_info
+        <set>
+            <if test="orderNo != null">
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsCode != null">
+                goods_code = #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsBarCode != null">
+                goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName != null">
+                goods_name = #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="spec != null">
+                spec = #{spec,jdbcType=VARCHAR},
+            </if>
+            <if test="packageNum != null">
+                package_num = #{packageNum,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                unit = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="validityTime != null">
+                validity_time = #{validityTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="salesPrice != null">
+                sales_price = #{salesPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="stockOutNum != null">
+                stock_out_num = #{stockOutNum,jdbcType=INTEGER},
+            </if>
+            <if test="stockOutSum != null">
+                stock_out_sum = #{stockOutSum,jdbcType=DECIMAL},
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.StockOutInfo">
+        update t_stock_out_info
+        set order_no = #{orderNo,jdbcType=VARCHAR},
+          goods_code = #{goodsCode,jdbcType=VARCHAR},
+          goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR},
+          goods_name = #{goodsName,jdbcType=VARCHAR},
+          spec = #{spec,jdbcType=VARCHAR},
+          package_num = #{packageNum,jdbcType=VARCHAR},
+          unit = #{unit,jdbcType=VARCHAR},
+          validity_time = #{validityTime,jdbcType=TIMESTAMP},
+          sales_price = #{salesPrice,jdbcType=DECIMAL},
+          stock_out_num = #{stockOutNum,jdbcType=INTEGER},
+          stock_out_sum = #{stockOutSum,jdbcType=DECIMAL},
+          ware_id = #{wareId,jdbcType=INTEGER},
+          ware_name = #{wareName,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

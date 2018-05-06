@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+    <dubbo:registry address="${dubbo.registry.address}"/>
+
+    <!-- 组播注册 -->
+    <!-- <dubbo:registry address="multicast://224.5.6.7:1234" /> -->
+
+    <!-- 生成远程服务代理，可以像使用本地bean一样使用demoService -->
+    <dubbo:reference id="purchaseInInfoService" interface="com.rmd.wms.service.PurchaseInInfoService" check="false"/>
+    <dubbo:reference id="purchaseBillService" interface="com.rmd.wms.service.PurchaseBillService" check="false">
+        <dubbo:method name="purInStock" timeout="5000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference id="inStockBillService" interface="com.rmd.wms.service.InStockBillService" check="false">
+        <dubbo:method name="putaway" timeout="5000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference id="groundingBillService" interface="com.rmd.wms.service.GroundingBillService" check="false"/>
+    <dubbo:reference id="stockOutBillService" interface="com.rmd.wms.service.StockOutBillService" check="false">
+        <dubbo:method name="getPinkingTask" timeout="5000" retry="0"/>
+        <dubbo:method name="doPicking" timeout="5000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference id="deliveryBillService" interface="com.rmd.wms.service.DeliveryBillService" check="false">
+        <dubbo:method name="goDelivery" timeout="5000" retry="0"/>
+        <dubbo:method name="delivery" timeout="5000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference id="movementService" interface="com.rmd.wms.service.MovementService" check="false">
+        <dubbo:method name="pickingBreakage" timeout="5000" retry="0"/>
+        <dubbo:method name="movingAndBreakage" timeout="5000" retry="0"/>
+        <dubbo:method name="movePutaway" timeout="5000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference id="checkBillService" interface="com.rmd.wms.service.CheckBillService" check="false">
+        <dubbo:method name="getCheckBillTask" timeout="5000" retry="0"/>
+        <dubbo:method name="doCheck" timeout="5000" retry="0"/>
+    </dubbo:reference>
+    <dubbo:reference id="warehouseService" interface="com.rmd.wms.service.WarehouseService" check="false"/>
+    <dubbo:reference id="warehouseUserService" interface="com.rmd.wms.service.WarehouseUserService" check="false"/>
+    <!--依赖oms-->
+    <dubbo:reference id="orderBaseService" interface="com.rmd.oms.service.OrderBaseService" check="false"/>
+    <!--依赖bms-->
+    <dubbo:reference id="bmsApiService" interface="com.rmd.bms.service.BmsApiService" check="false">
+        <dubbo:method name="updatePasswordByUserId" timeout="5000" retry="0" />
+    </dubbo:reference>
+
+</beans>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.WareDeliverRangeMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.WareDeliverRange">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="ware_id" property="wareId" jdbcType="INTEGER"/>
+        <result column="prov_code" property="provCode" jdbcType="VARCHAR"/>
+        <result column="city_code" property="cityCode" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, ware_id, prov_code, city_code, name, status
+    </sql>
+    <select id="selectAllByWhere" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_ware_deliver_range
+        <include refid="Base_Where_Clause"/>
+    </select>
+    <sql id="Base_Where_Clause">
+        <where>
+            <trim prefixOverrides="and|or">
+                <if test="Id != null">and id = #{Id}</if>
+                <if test="wareId != null">and ware_id = #{wareId}</if><!--仓库Id-->
+                <if test="searchWhere != null">${searchWhere}</if>
+            </trim>
+        </where>
+
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_ware_deliver_range
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.rmd.wms.bean.WareDeliverRange">
+        select
+        <include refid="Base_Column_List"/>
+        from t_ware_deliver_range
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER} and
+            </if>
+            <if test="provCode != null">
+                prov_code = #{provCode,jdbcType=VARCHAR} and
+            </if>
+            <if test="cityCode != null">
+                city_code = #{cityCode,jdbcType=VARCHAR} and
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR} and
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER} and
+            </if>
+        </trim>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_ware_deliver_range
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.rmd.wms.bean.WareDeliverRange">
+        insert into t_ware_deliver_range (id, ware_id, prov_code,
+          city_code, name, status
+          )
+        values (#{id,jdbcType=INTEGER}, #{wareId,jdbcType=INTEGER}, #{provCode,jdbcType=VARCHAR},
+          #{cityCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
+          )
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_ware_deliver_range ( prov_code, city_code,
+        name, status, ware_id )
+        values
+        <foreach collection="list" item="obj" separator=",">
+            (#{obj.provCode},#{obj.cityCode},#{obj.name},#{obj.status},#{obj.wareId})
+        </foreach>
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.WareDeliverRange">
+        insert into t_ware_deliver_range
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="wareId != null">
+                ware_id,
+            </if>
+            <if test="provCode != null">
+                prov_code,
+            </if>
+            <if test="cityCode != null">
+                city_code,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="wareId != null">
+                #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="provCode != null">
+                #{provCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cityCode != null">
+                #{cityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.WareDeliverRange">
+        update t_ware_deliver_range
+        <set>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="provCode != null">
+                prov_code = #{provCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cityCode != null">
+                city_code = #{cityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.WareDeliverRange">
+        update t_ware_deliver_range
+        set ware_id = #{wareId,jdbcType=INTEGER},
+          prov_code = #{provCode,jdbcType=VARCHAR},
+          city_code = #{cityCode,jdbcType=VARCHAR},
+          name = #{name,jdbcType=VARCHAR},
+          status = #{status,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

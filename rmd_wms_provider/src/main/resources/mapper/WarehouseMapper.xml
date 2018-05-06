@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.WarehouseMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.Warehouse">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="ware_name" property="wareName" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="contact_name" property="contactName" jdbcType="VARCHAR"/>
+        <result column="contact_tel" property="contactTel" jdbcType="VARCHAR"/>
+        <result column="contact_email" property="contactEmail" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, ware_name, status, code, address, contact_name, contact_tel, contact_email, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_warehouse
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByWareCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_warehouse
+        where code = #{code,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from t_warehouse
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                id = #{id,jdbcType=INTEGER} and
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR} and
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER} and
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR} and
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR} and
+            </if>
+            <if test="contactName != null">
+                contact_name = #{contactName,jdbcType=VARCHAR} and
+            </if>
+            <if test="contactTel != null">
+                contact_tel = #{contactTel,jdbcType=VARCHAR} and
+            </if>
+            <if test="contactEmail != null">
+                contact_email = #{contactEmail,jdbcType=VARCHAR} and
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP} and
+            </if>
+        </trim>
+    </select>
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_warehouse
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR} and
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER} and
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR} and
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR} and
+            </if>
+            <if test="contactName != null">
+                contact_name = #{contactName,jdbcType=VARCHAR} and
+            </if>
+            <if test="contactTel != null">
+                contact_tel = #{contactTel,jdbcType=VARCHAR} and
+            </if>
+            <if test="contactEmail != null">
+                contact_email = #{contactEmail,jdbcType=VARCHAR} and
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP} and
+            </if>
+            <if test="searchWhere != null">${searchWhere}</if>
+        </trim>
+    </select>
+    <!-- 查询仓库名称是否重复 -->
+    <select id="selectByName" resultType="java.lang.Integer" parameterType="com.rmd.wms.bean.Warehouse">
+        SELECT
+        count(ware_name)
+        FROM t_warehouse
+        WHERE 1=1
+        <if test="id !=null">
+            AND id != #{id,jdbcType=INTEGER}
+        </if>
+        AND ware_name = #{wareName,jdbcType=VARCHAR}
+    </select>
+    <!-- 查询仓库名称是否重复 -->
+    <select id="selectByCode" resultType="java.lang.Integer" parameterType="com.rmd.wms.bean.Warehouse">
+        SELECT
+        count(code)
+        FROM t_warehouse
+        WHERE 1=1
+        <if test="id !=null">
+            AND id != #{id,jdbcType=INTEGER}
+        </if>
+        AND code = #{code,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select w.id, w.ware_name, w.status, w.code, w.address, w.contact_name, w.contact_tel, w.contact_email, w.create_time
+        from t_warehouse w INNER JOIN t_warehouse_user wu on  w.id = wu.ware_id
+        where w.`status` != 0 and wu.user_id = #{userId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_warehouse
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.rmd.wms.bean.Warehouse" keyProperty="id" useGeneratedKeys="true">
+        insert into t_warehouse (ware_name, status,
+          code, address, contact_name,
+          contact_tel, contact_email, create_time
+          )
+        values ( #{wareName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+          #{code,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{contactName,jdbcType=VARCHAR},
+          #{contactTel,jdbcType=VARCHAR}, #{contactEmail,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+          )
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.Warehouse" keyProperty="id" useGeneratedKeys="true">
+        insert into t_warehouse
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wareName != null">
+                ware_name,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="contactName != null">
+                contact_name,
+            </if>
+            <if test="contactTel != null">
+                contact_tel,
+            </if>
+            <if test="contactEmail != null">
+                contact_email,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wareName != null">
+                #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="contactName != null">
+                #{contactName,jdbcType=VARCHAR},
+            </if>
+            <if test="contactTel != null">
+                #{contactTel,jdbcType=VARCHAR},
+            </if>
+            <if test="contactEmail != null">
+                #{contactEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.Warehouse">
+        update t_warehouse
+        <set>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="contactName != null">
+                contact_name = #{contactName,jdbcType=VARCHAR},
+            </if>
+            <if test="contactTel != null">
+                contact_tel = #{contactTel,jdbcType=VARCHAR},
+            </if>
+            <if test="contactEmail != null">
+                contact_email = #{contactEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.Warehouse">
+        update t_warehouse
+        set ware_name = #{wareName,jdbcType=VARCHAR},
+          status = #{status,jdbcType=INTEGER},
+          code = #{code,jdbcType=VARCHAR},
+          address = #{address,jdbcType=VARCHAR},
+          contact_name = #{contactName,jdbcType=VARCHAR},
+          contact_tel = #{contactTel,jdbcType=VARCHAR},
+          contact_email = #{contactEmail,jdbcType=VARCHAR},
+          create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

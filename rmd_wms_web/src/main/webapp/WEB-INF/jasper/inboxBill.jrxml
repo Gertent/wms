@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="packGoodsBill" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="adcbee30-7cc6-4966-844a-e0371435a57f">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zh_CN" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="22d605fe-c1d9-463f-b4ce-3ae1399be8ce">
+		<parameter name="GoodsList" class="net.sf.jasperreports.engine.JREmptyDataSource"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="goodsCode" class="java.lang.String"/>
+		<field name="goodsName" class="java.lang.String"/>
+		<field name="spec" class="java.lang.String"/>
+		<field name="unit" class="java.lang.String"/>
+		<field name="lockedNum" class="java.lang.String"/>
+		<field name="locationNo" class="java.lang.String"/>
+		<field name="salesPrice" class="java.lang.String"/>
+		<field name="stockOutNum" class="java.lang.String"/>
+		<field name="stockOutSum" class="java.lang.String"/>
+		<variable name="index" class="java.lang.Integer" calculation="Count">
+			<variableExpression><![CDATA[$V{index}.valueOf(1)]]></variableExpression>
+			<initialValueExpression><![CDATA[1]]></initialValueExpression>
+		</variable>
+	</subDataset>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="stockOutInfos" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource">
+		<fieldDescription><![CDATA[stockOutInfos]]></fieldDescription>
+	</field>
+	<field name="orderNo" class="java.lang.String"/>
+	<field name="orderDate" class="java.lang.String"/>
+	<field name="receiveName" class="java.lang.String"/>
+	<field name="receiveMobile" class="java.lang.String"/>
+	<field name="goodsSum" class="java.lang.String"/>
+	<field name="deliveryFee" class="java.lang.String"/>
+	<field name="discount" class="java.lang.String"/>
+	<field name="payFee" class="java.lang.String"/>
+	<field name="returnFee" class="java.lang.String"/>
+	<field name="totalFee" class="java.lang.String"/>
+	<field name="logoPth" class="java.lang.String"/>
+	<group name="orderNoGroup" isStartNewPage="true" isResetPageNumber="true">
+		<groupExpression><![CDATA[$F{orderNo}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="318" splitType="Immediate">
+			<staticText>
+				<reportElement style="zh_CN" x="38" y="95" width="33" height="20" uuid="95ec0a90-1612-4d22-bbd5-3e843f43fe97"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[订单号:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="76" y="95" width="100" height="20" uuid="6e017937-bacb-4512-88d2-29b094e767ad"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{orderNo}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement key="table 2" style="table 2" x="39" y="115" width="446" height="40" uuid="1b003985-db0e-4208-b99e-29632b6fd75e"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="Table Dataset 1" uuid="f7d37cd3-733f-487e-a1b7-9644825eaced">
+						<dataSourceExpression><![CDATA[$F{stockOutInfos}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="40" uuid="a98f849d-e46d-4803-ab31-55c281b7c30d">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="zh_CN" x="0" y="0" width="40" height="20" uuid="b67689a7-0b9c-41ab-a41f-3e6e19003d9c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[NO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement style="zh_CN" stretchType="RelativeToBandHeight" x="0" y="0" width="40" height="20" uuid="1fb9ab6e-acac-4ec4-b52a-12cc2cfec124"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{index}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="5039f0d5-4cc1-4118-9895-37afcef43d8e">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="zh_CN" x="0" y="0" width="60" height="20" uuid="91d4f601-759f-4fb3-b4c1-eb6dd9ce5bda"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[商品编码]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement style="zh_CN" stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="20" uuid="add1249d-07a0-47b1-bd17-4a2b4a99e4b0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{goodsCode}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="134" uuid="6946b722-88ac-4b28-987d-2320f9e22829">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="zh_CN" x="0" y="0" width="134" height="20" uuid="9f0f4f3a-6ed1-4ddf-81a4-e5bfbf8aa077"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[商品名称]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement style="zh_CN" stretchType="RelativeToBandHeight" x="0" y="0" width="134" height="20" uuid="9c3e722f-fed2-42ca-8d5e-0e6a19ecf0fa"/>
+								<box topPadding="1" bottomPadding="1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{goodsName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="68" uuid="2ede3bb8-b1ce-493f-8b23-8630791f21ea">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="zh_CN" x="0" y="0" width="68" height="20" uuid="4f2c61bf-63fd-4071-912e-9b76a2dbcff8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[规格型号]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement style="zh_CN" stretchType="RelativeToBandHeight" x="0" y="0" width="68" height="20" uuid="2564ab55-c502-4eec-9399-4e5b8395da88"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{spec}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="2ad54ad9-a94e-4b2d-87e0-496debbf255a">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="zh_CN" x="0" y="0" width="50" height="20" uuid="a0f66e53-4845-48b7-9b9b-e2fa75615296"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[单价(元)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement style="zh_CN" stretchType="RelativeToBandHeight" x="0" y="0" width="50" height="20" uuid="47e028ff-80f0-475a-a519-d2d3f7d188f8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{salesPrice}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="a41b7631-d5be-4b72-80ad-6d2f13d4d15b">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="zh_CN" x="0" y="0" width="50" height="20" uuid="7cd25b0b-fbf8-48f8-86b0-ce37685da7d6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[数量]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement style="zh_CN" stretchType="RelativeToBandHeight" x="0" y="0" width="50" height="20" uuid="7a09edf3-cb16-4cbc-9041-4001cc0baec9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{stockOutNum}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="65" uuid="368fc500-091b-4106-a1e9-7b8c90b11ccd">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="zh_CN" x="0" y="0" width="65" height="20" uuid="e959815b-3aa6-478a-8ef2-2bcacf85a78c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[小计(元)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement style="zh_CN" stretchType="RelativeToBandHeight" x="0" y="0" width="65" height="20" uuid="448c0c7f-916c-4032-be07-5bb19c4b5a48"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{stockOutSum}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="zh_CN" x="325" y="95" width="49" height="20" uuid="6943a8d4-6bd1-42ca-baba-e60c69140be1"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[订单日期:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="376" y="95" width="114" height="20" uuid="6dd670e5-fd89-4cc2-9468-c00fa0a6158e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{orderDate}==null?"":$F{orderDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="376" y="34" width="100" height="20" uuid="904a24ab-a824-413a-9967-3be69a857f13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{receiveName}==null?"":$F{receiveName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="376" y="56" width="100" height="20" uuid="ae75015b-2bee-41cd-aa45-62aadbeb7ed4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{receiveMobile}==null?"":$F{receiveMobile}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="zh_CN" x="342" y="34" width="33" height="20" uuid="450f8031-1dfe-4d30-ba74-8804051fd763"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[客户:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="zh_CN" x="343" y="56" width="33" height="20" uuid="23c91946-746a-4de1-8a0c-1c61b35fe661"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[电话:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="38" y="86" width="468" height="1" uuid="af98bc00-6a3e-49cc-b5bd-252596d6f2df"/>
+			</line>
+			<line>
+				<reportElement x="38" y="24" width="468" height="1" uuid="d7c6fbb7-f04e-4e91-9954-8c94c79dd598"/>
+			</line>
+			<staticText>
+				<reportElement style="zh_CN" x="41" y="3" width="61" height="20" uuid="69024cb1-1714-48a4-8abd-a8f22f849789"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[装箱单]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="zh_CN" positionType="Float" x="50" y="157" width="50" height="20" uuid="781367cd-af05-49f5-ba13-f75b1b1f853b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[订单附言:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="zh_CN" positionType="Float" x="387" y="157" width="50" height="20" uuid="ca0bcf4a-2e53-4bbd-8ab9-abaf705fed6a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[商品总价:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="445" y="157" width="100" height="20" uuid="9c8fb021-0ef3-4d73-b807-d887fa398bce"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{goodsSum}==null?0.00:$F{goodsSum}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="zh_CN" positionType="Float" x="387" y="180" width="50" height="20" uuid="1a494ef6-27d2-43cb-afb1-788c7a9b76b9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[配送费用:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="zh_CN" positionType="Float" x="387" y="200" width="50" height="20" uuid="0d15de61-5392-45c7-bdc7-450e3e45a24f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[订单优惠:]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="42" y="222" width="468" height="1" uuid="15eb33a1-3a80-424a-a285-23442b8f8ca8"/>
+			</line>
+			<staticText>
+				<reportElement style="zh_CN" positionType="Float" x="44" y="228" width="174" height="20" uuid="9e29b15c-bc25-4d5a-98c3-bdc95505fb7f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[电话: 400-138-5558]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="zh_CN" positionType="Float" x="65" y="268" width="174" height="20" uuid="22202f07-6ee4-43f6-a005-bf69d6c50aeb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="false" isUnderline="false" pdfFontName="STSong-Light" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[http://www.saharabuy.cn]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="zh_CN" positionType="Float" x="64" y="248" width="174" height="20" uuid="1eae462e-cf14-407a-aa09-86eb098d314f"/>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif" size="8" isItalic="false" isStrikeThrough="false" pdfFontName="STSong-Light" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Double" lineSpacingSize="8.0"/>
+				</textElement>
+				<text><![CDATA[ service@saharabuy.cn]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="zh_CN" positionType="Float" x="378" y="225" width="61" height="20" uuid="c4d7b066-8a52-40c7-85d7-cf117b235dc0"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[应付总金额:]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="42" y="294" width="468" height="1" uuid="34dec138-ee38-4b24-ad0d-17c4ca27199c"/>
+			</line>
+			<staticText>
+				<reportElement style="zh_CN" positionType="Float" x="42" y="297" width="71" height="20" uuid="ed78ee30-edac-4147-a428-c240d021d762"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[累计购物次数:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="zh_CN" positionType="Float" x="194" y="297" width="73" height="20" uuid="b982079b-2a4d-4f5d-9d81-d8cc299c9574"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[累计购物金额:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="443" y="225" width="100" height="20" uuid="ca03718a-161e-4bb7-abec-1cf0f57c3b7a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalFee}==null?0.00:$F{totalFee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="444" y="200" width="100" height="20" uuid="ad4a75e0-40c9-407c-be4e-2d3d9cab51d8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{discount}==null?0.00:$F{discount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="444" y="180" width="100" height="20" uuid="c1867de8-8146-4f03-a6d8-0f6203a03b39"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deliveryFee}==null?0.00:$F{deliveryFee}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="44" y="25" width="205" height="59" uuid="f0126266-0531-43ca-bf4b-cb0dc433279d"/>
+				<imageExpression><![CDATA[$F{logoPth}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="zh_CN" positionType="Float" x="44" y="248" width="20" height="20" uuid="11e79442-3da6-4bbc-baee-214085de1805"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[邮箱:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="zh_CN" positionType="Float" x="44" y="268" width="20" height="20" uuid="eae39fb3-a762-453f-883f-84ee155a97fb"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[网址:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20">
+			<textField>
+				<reportElement style="zh_CN" x="415" y="0" width="76" height="18" uuid="57de5c35-7afa-473b-bd9a-0617bf1b610a"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["第"+$V{PAGE_NUMBER}+"页,"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="orderNoGroup">
+				<reportElement x="492" y="0" width="39" height="18" uuid="a2d28627-ccbf-4cf3-ad7d-09fa5cc40474"/>
+				<textElement>
+					<font size="8" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["共"+$V{PAGE_NUMBER}+"页"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.InStockBillMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.InStockBill">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="in_stock_no" property="inStockNo" jdbcType="VARCHAR"/>
+        <result column="purchase_no" property="purchaseNo" jdbcType="VARCHAR"/>
+        <result column="ware_id" property="wareId" jdbcType="INTEGER"/>
+        <result column="ware_name" property="wareName" jdbcType="VARCHAR"/>
+        <result column="do_print" property="doPrint" jdbcType="INTEGER"/>
+        <result column="in_stock_time" property="inStockTime" jdbcType="TIMESTAMP"/>
+        <result column="ouser_id" property="ouserId" jdbcType="INTEGER"/>
+        <result column="ouser_name" property="ouserName" jdbcType="VARCHAR"/>
+        <result column="in_goods_amount" property="inGoodsAmount" jdbcType="INTEGER"/>
+        <result column="in_goods_sum" property="inGoodsSum" jdbcType="DECIMAL"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="server_no" property="serverNo" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="supplier_name" property="supplierName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, in_stock_no, purchase_no, ware_id, ware_name, do_print, in_stock_time, ouser_id,
+        ouser_name, in_goods_amount, in_goods_sum, type, order_no, server_no, status, remark,
+        create_time,supplier_name
+    </sql>
+    <select id="selectAllByWhere" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_in_stock_bill
+        <include refid="Base_Where_Clause"/>
+    </select>
+    <sql id="Base_Where_Clause">
+        <where>
+            <trim prefixOverrides="and|or">
+                <if test="Id != null">and id = #{Id}</if>
+                <if test="purchaseNo != null">and purchase_no = #{purchaseNo}</if><!--采购单-->
+                <if test="inStockNo != null">and in_stock_no = #{inStockNo}</if><!--入库单-->
+                <if test="orderNo != null">and order_no = #{orderNo}</if><!--订单号-->
+                <if test="serverNo != null">and server_no = #{serverNo}</if><!--服务单-->
+                <if test="instockTime != null">and DATE_FORMAT(in_stock_time,'%Y-%m-%d') = #{instockTime}</if><!--入库时间-->
+                <if test="doPrint != null and doPrint==0">and (do_print = #{doPrint} or do_print is Null)</if><!--未打印-->
+                <if test="doPrint != null and doPrint==1">and do_print = #{doPrint}</if><!--已打印-->
+                <if test="wareId != null">and ware_id = #{wareId}</if><!--仓库Id-->
+                <if test="status != null">and status = #{status}</if><!--仓库Id-->
+                <if test="supplierName != null">and supplier_name like CONCAT('%',#{supplierName},'%')</if><!--供应商-->
+                <if test="searchWhere != null">${searchWhere}</if>
+            </trim>
+        </where>
+        <if test="name_sort != null"><!--排序字段-->
+            ORDER BY ${name_sort}
+            <if test="order_sort != null"><!--排序顺序asc/desc-->
+                ${order_sort}
+            </if>
+        </if>
+        <if test="page != null">
+            limit ${page.First}, ${page.Pagesize}
+        </if>
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_in_stock_bill
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByInStockNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_in_stock_bill
+        where in_stock_no = #{inStockNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAllByParmMap" resultType="java.util.Map" parameterType="java.util.Map">
+        select
+        s.id as Id,s.in_stock_no as inStockNo,s.purchase_no as purchaseNo, s.ware_id as wareId, s.ware_name as wareName, s.do_print as doPrint, s.in_stock_time as inStockTime, s.ouser_id as ouserId,
+        s.ouser_name as ouserName, s.in_goods_amount as inGoodsAmount, s.in_goods_sum as inGoodsSum, s.type as type, s.order_no as orderNo, s.server_no as serverNo, s.status, s.remark,
+        s.create_time as createTime,s.supplier_name as supplierName,
+        o.grounding_no as groundingNo, o.goods_code as goodsCode, o.goods_bar_code as goodsBarCode, o.goods_name as goodsName,
+        o.spec, o.package_num as packageNum, o.unit, o.purchase_num as purchaseNum, o.purchase_wait_num as purchaseWaitNum, o.purchase_price as purchasePrice, o.goodsprice_sum as goodspriceSum,
+        DATE_FORMAT(o.validity_time,'%Y/%m/%d') as validityTime, o.in_stock_num as inStockNum, o.in_stock_be_num as inStockBeNum, o.in_stock_sum as inStockSum
+        from t_in_stock_bill s left join t_purchase_in_info o on s.in_stock_no=o.in_stock_no
+        <include refid="Base_Where_ClauseEx"/>
+    </select>
+    <sql id="Base_Where_ClauseEx">
+        <where>
+            <trim prefixOverrides="and|or">
+                <if test="Id != null">and s.id = #{Id}</if>
+                <if test="purchaseNo != null">and s.purchase_no = #{purchaseNo}</if><!--采购单-->
+                <if test="inStockNo != null">and s.in_stock_no = #{inStockNo}</if><!--入库单-->
+                <if test="orderNo != null">and s.order_no = #{orderNo}</if><!--订单号-->
+                <if test="serverNo != null">and s.server_no = #{serverNo}</if><!--服务单-->
+                <if test="instockTime != null">and DATE_FORMAT(s.in_stock_time,'%Y-%m-%d') = #{instockTime}</if><!--入库时间-->
+                <if test="doPrint != null and doPrint==0">and (s.do_print = #{doPrint} or s.do_print is Null)</if><!--未打印-->
+                <if test="doPrint != null and doPrint==1">and s.do_print = #{doPrint}</if><!--已打印-->
+                <if test="wareId != null">and s.ware_id = #{wareId}</if><!--仓库Id-->
+                <if test="status != null">and s.status = #{status}</if><!--仓库Id-->
+                <if test="supplierName != null">and s.supplier_name like CONCAT('%',#{supplierName},'%')</if><!--供应商-->
+                <if test="searchWhere != null">${searchWhere}</if>
+            </trim>
+        </where>
+        <if test="page != null">
+            limit ${page.First}, ${page.Pagesize}
+        </if>
+    </sql>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_in_stock_bill
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.rmd.wms.bean.InStockBill">
+        insert into t_in_stock_bill (id, in_stock_no, purchase_no,
+          ware_id, ware_name, do_print,
+          in_stock_time, ouser_id, ouser_name,
+          in_goods_amount, in_goods_sum, type,
+          order_no, server_no, status,
+          remark, create_time,supplier_name)
+        values (#{id,jdbcType=INTEGER}, #{inStockNo,jdbcType=VARCHAR}, #{purchaseNo,jdbcType=VARCHAR},
+          #{wareId,jdbcType=INTEGER}, #{wareName,jdbcType=VARCHAR}, #{doPrint,jdbcType=INTEGER},
+          #{inStockTime,jdbcType=TIMESTAMP}, #{ouserId,jdbcType=INTEGER}, #{ouserName,jdbcType=VARCHAR},
+          #{inGoodsAmount,jdbcType=INTEGER}, #{inGoodsSum,jdbcType=DECIMAL}, #{type,jdbcType=INTEGER},
+          #{orderNo,jdbcType=VARCHAR}, #{serverNo,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+          #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{supplierName,jdbcType=VARCHAR})
+    </insert>
+        <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_in_stock_bill (in_stock_no, purchase_no,
+          ware_id, ware_name, do_print,
+          in_stock_time, ouser_id, ouser_name,
+          in_goods_amount, in_goods_sum, type,
+          order_no, server_no, status,
+          remark, create_time,supplier_name)
+        values
+        <foreach collection="list" item="obj" separator=",">
+          (#{obj.inStockNo}, #{obj.purchaseNo},
+          #{obj.wareId}, #{obj.wareName}, #{obj.doPrint},
+          #{obj.inStockTime}, #{obj.ouserId}, #{obj.ouserName},
+          #{obj.inGoodsAmount}, #{obj.inGoodsSum}, #{obj.type},
+          #{obj.orderNo}, #{obj.serverNo}, #{obj.status},
+          #{obj.remark}, #{obj.createTime},#{obj.supplierName})
+        </foreach>
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.InStockBill">
+        insert into t_in_stock_bill
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="inStockNo != null">
+                in_stock_no,
+            </if>
+            <if test="purchaseNo != null">
+                purchase_no,
+            </if>
+            <if test="wareId != null">
+                ware_id,
+            </if>
+            <if test="wareName != null">
+                ware_name,
+            </if>
+            <if test="doPrint != null">
+                do_print,
+            </if>
+            <if test="inStockTime != null">
+                in_stock_time,
+            </if>
+            <if test="ouserId != null">
+                ouser_id,
+            </if>
+            <if test="ouserName != null">
+                ouser_name,
+            </if>
+            <if test="inGoodsAmount != null">
+                in_goods_amount,
+            </if>
+            <if test="inGoodsSum != null">
+                in_goods_sum,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="serverNo != null">
+                server_no,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="supplierName != null">
+                supplier_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="inStockNo != null">
+                #{inStockNo,jdbcType=VARCHAR},
+            </if>
+            <if test="purchaseNo != null">
+                #{purchaseNo,jdbcType=VARCHAR},
+            </if>
+            <if test="wareId != null">
+                #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="doPrint != null">
+                #{doPrint,jdbcType=INTEGER},
+            </if>
+            <if test="inStockTime != null">
+                #{inStockTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ouserId != null">
+                #{ouserId,jdbcType=INTEGER},
+            </if>
+            <if test="ouserName != null">
+                #{ouserName,jdbcType=VARCHAR},
+            </if>
+            <if test="inGoodsAmount != null">
+                #{inGoodsAmount,jdbcType=INTEGER},
+            </if>
+            <if test="inGoodsSum != null">
+                #{inGoodsSum,jdbcType=DECIMAL},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="serverNo != null">
+                #{serverNo,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="supplierName != null">
+                #{supplierName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.InStockBill">
+        update t_in_stock_bill
+        <set>
+            <if test="inStockNo != null">
+                in_stock_no = #{inStockNo,jdbcType=VARCHAR},
+            </if>
+            <if test="purchaseNo != null">
+                purchase_no = #{purchaseNo,jdbcType=VARCHAR},
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="doPrint != null">
+                do_print = #{doPrint,jdbcType=INTEGER},
+            </if>
+            <if test="inStockTime != null">
+                in_stock_time = #{inStockTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ouserId != null">
+                ouser_id = #{ouserId,jdbcType=INTEGER},
+            </if>
+            <if test="ouserName != null">
+                ouser_name = #{ouserName,jdbcType=VARCHAR},
+            </if>
+            <if test="inGoodsAmount != null">
+                in_goods_amount = #{inGoodsAmount,jdbcType=INTEGER},
+            </if>
+            <if test="inGoodsSum != null">
+                in_goods_sum = #{inGoodsSum,jdbcType=DECIMAL},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="orderNo != null">
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="serverNo != null">
+                server_no = #{serverNo,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="supplierName != null">
+                supplier_name = #{supplierName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.InStockBill">
+        update t_in_stock_bill
+        set in_stock_no = #{inStockNo,jdbcType=VARCHAR},
+          purchase_no = #{purchaseNo,jdbcType=VARCHAR},
+          ware_id = #{wareId,jdbcType=INTEGER},
+          ware_name = #{wareName,jdbcType=VARCHAR},
+          do_print = #{doPrint,jdbcType=INTEGER},
+          in_stock_time = #{inStockTime,jdbcType=TIMESTAMP},
+          ouser_id = #{ouserId,jdbcType=INTEGER},
+          ouser_name = #{ouserName,jdbcType=VARCHAR},
+          in_goods_amount = #{inGoodsAmount,jdbcType=INTEGER},
+          in_goods_sum = #{inGoodsSum,jdbcType=DECIMAL},
+          type = #{type,jdbcType=INTEGER},
+          order_no = #{orderNo,jdbcType=VARCHAR},
+          server_no = #{serverNo,jdbcType=VARCHAR},
+          status = #{status,jdbcType=INTEGER},
+          remark = #{remark,jdbcType=VARCHAR},
+          create_time = #{createTime,jdbcType=TIMESTAMP},
+          supplier_name = #{supplierName,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

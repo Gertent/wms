@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report5" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0c599e72-1a28-49a5-8463-817665d12b8d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zh_CN" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+	<field name="toName" class="java.lang.String"/>
+	<field name="toDestination" class="java.lang.String"/>
+	<field name="toCompanyName" class="java.lang.String"/>
+	<field name="toAddr" class="java.lang.String"/>
+	<field name="toProvince" class="java.lang.String"/>
+	<field name="toCity" class="java.lang.String"/>
+	<field name="toDistrict" class="java.lang.String"/>
+	<field name="toTown" class="java.lang.String"/>
+	<field name="toMobile" class="java.lang.String"/>
+	<field name="toTel" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="360" splitType="Stretch">
+			<textField>
+				<reportElement style="zh_CN" x="426" y="16" width="100" height="20" uuid="579e0870-d882-42af-bb35-40a2d5df4ac9"/>
+				<textFieldExpression><![CDATA[$F{toName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zh_CN" x="601" y="16" width="118" height="20" uuid="4c32b13c-8a2f-4b76-a63f-5e62c234077a"/>
+				<textFieldExpression><![CDATA[$F{toDestination}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zh_CN" x="426" y="36" width="264" height="20" uuid="fb973a93-008a-4a9b-bf3c-457560db7005"/>
+				<textFieldExpression><![CDATA[$F{toCompanyName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zh_CN" x="426" y="56" width="87" height="20" uuid="a3da6de9-8661-4389-a365-0e527d8cc1a7"/>
+				<textFieldExpression><![CDATA[$F{toProvince}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zh_CN" x="526" y="56" width="62" height="20" uuid="084d51f6-0330-4d9c-9703-dd6941554671"/>
+				<textFieldExpression><![CDATA[$F{toCity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zh_CN" x="590" y="56" width="100" height="20" uuid="18911cb7-e773-4cba-808f-73f1052c3a4c"/>
+				<textFieldExpression><![CDATA[$F{toDistrict}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zh_CN" x="426" y="80" width="264" height="20" uuid="de42da89-878a-4166-845c-880c709b88d1"/>
+				<textFieldExpression><![CDATA[$F{toAddr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zh_CN" x="426" y="100" width="100" height="20" uuid="f048047e-2dad-45ce-9944-1506dfa10c0e"/>
+				<textFieldExpression><![CDATA[$F{toMobile}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zh_CN" x="556" y="100" width="100" height="20" uuid="cf2925ca-08eb-4e19-ae51-e43305acea8f"/>
+				<textFieldExpression><![CDATA[$F{toTel}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

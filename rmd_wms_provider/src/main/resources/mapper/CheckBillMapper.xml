@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.CheckBillMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.CheckBill">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="check_no" property="checkNo" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="check_times" property="checkTimes" jdbcType="INTEGER"/>
+        <result column="first_start_time" property="firstStartTime" jdbcType="TIMESTAMP"/>
+        <result column="first_end_time" property="firstEndTime" jdbcType="TIMESTAMP"/>
+        <result column="second_start_time" property="secondStartTime" jdbcType="TIMESTAMP"/>
+        <result column="second_end_time" property="secondEndTime" jdbcType="TIMESTAMP"/>
+        <result column="last_checker" property="lastChecker" jdbcType="INTEGER"/>
+        <result column="creater_id" property="createrId" jdbcType="INTEGER"/>
+        <result column="creater_name" property="createrName" jdbcType="VARCHAR"/>
+        <result column="approver_id" property="approverId" jdbcType="INTEGER"/>
+        <result column="approver_name" property="approverName" jdbcType="VARCHAR"/>
+        <result column="ware_id" property="wareId" jdbcType="INTEGER"/>
+        <result column="ware_name" property="wareName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, check_no, type, status, check_times, first_start_time, first_end_time, second_start_time,
+        second_end_time, last_checker, creater_id, creater_name, approver_id, approver_name, ware_id, ware_name,
+        create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_check_bill
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCheckNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_check_bill
+        where check_no = #{checkNo,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_check_bill
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="checkNo != null">
+                check_no = #{checkNo,jdbcType=VARCHAR} and
+            </if>
+
+            <if test="firstStartTime_gt != null">
+                first_start_time >= #{firstStartTime_gt} and
+            </if>
+            <if test="firstStartTime_lt != null">
+                first_start_time &lt;= #{firstStartTime_lt} and
+            </if>
+            <if test="searchWhere != null">${searchWhere}</if>
+        </trim>
+    </select>
+    <select id="selectByParmMap" resultType="java.util.Map" parameterType="java.util.Map">
+        select
+        c.id, c.check_noa as checkNo, c.type, c.status, c.check_times as checkTimes, c.first_start_time as firstStartTime, c.first_end_time as firstEndTime, c.second_start_time as secondStartTime,
+        c.second_end_time as secondEndTime, c.last_checker as lastChecker, c.creater_id as createrId, c.creater_name as createrName, c.approver_id as approverId, c.approver_name as approverName, c.ware_id as wareId, c.ware_name as wareName,
+        create_time as createTime
+        from t_check_bill c left join t_check_info o on c.check_no=o.check_no
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="checkNo != null">
+                check_no = #{checkNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="searchWhere != null">${searchWhere}</if>
+        </trim>
+    </select>
+    <select id="selectByCriteriaAndPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_check_bill
+        <trim prefix="where" suffixOverrides="AND | OR">
+            <if test="checkNo != null">
+                check_no like CONCAT('%',#{checkNo},'%') AND
+            </if>
+            <if test="status != null">
+                status = #{status} AND
+            </if>
+            <if test="type != null">
+                type = #{type} AND
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId} AND
+            </if>
+            <if test="starTime != null">
+                create_time > #{starTime} AND
+            </if>
+            <if test="endTime != null">
+                create_time &lt; #{endTime} AND
+            </if>
+
+            <if test="createTime_gt != null">
+                create_time >= #{createTime_gt} AND
+            </if>
+            <if test="createTime_lt != null">
+                create_time &lt;= #{createTime_lt} AND
+            </if>
+            <if test="searchWhere != null"> ${searchWhere}</if>
+        </trim>
+        <if test="page != null">
+            limit ${page.First}, ${page.Pagesize}
+        </if>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_check_bill
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.rmd.wms.bean.CheckBill">
+        insert into t_check_bill (id, check_no, type,
+          status, check_times, first_start_time,
+          first_end_time, second_start_time, second_end_time,last_checker,
+          creater_id, creater_name, approver_id,
+          approver_name, ware_id, ware_name,
+          create_time)
+        values (#{id,jdbcType=INTEGER}, #{checkNo,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER},
+          #{status,jdbcType=INTEGER}, #{checkTimes,jdbcType=INTEGER}, #{firstStartTime,jdbcType=TIMESTAMP},
+          #{firstEndTime,jdbcType=TIMESTAMP}, #{secondStartTime,jdbcType=TIMESTAMP}, #{secondEndTime,jdbcType=TIMESTAMP},#{lastChecker,jdbcType=INTEGER},
+          #{createrId,jdbcType=INTEGER}, #{createrName,jdbcType=VARCHAR}, #{approverId,jdbcType=INTEGER},
+          #{approverName,jdbcType=VARCHAR}, #{wareId,jdbcType=INTEGER}, #{wareName,jdbcType=VARCHAR},
+          #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.CheckBill">
+        insert into t_check_bill
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="checkNo != null">
+                check_no,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="checkTimes != null">
+                check_times,
+            </if>
+            <if test="firstStartTime != null">
+                first_start_time,
+            </if>
+            <if test="firstEndTime != null">
+                first_end_time,
+            </if>
+            <if test="secondStartTime != null">
+                second_start_time,
+            </if>
+            <if test="secondEndTime != null">
+                second_end_time,
+            </if>
+            <if test="lastChecker != null">
+                last_checker,
+            </if>
+            <if test="createrId != null">
+                creater_id,
+            </if>
+            <if test="createrName != null">
+                creater_name,
+            </if>
+            <if test="approverId != null">
+                approver_id,
+            </if>
+            <if test="approverName != null">
+                approver_name,
+            </if>
+            <if test="wareId != null">
+                ware_id,
+            </if>
+            <if test="wareName != null">
+                ware_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="checkNo != null">
+                #{checkNo,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="checkTimes != null">
+                #{checkTimes,jdbcType=INTEGER},
+            </if>
+            <if test="firstStartTime != null">
+                #{firstStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="firstEndTime != null">
+                #{firstEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="secondStartTime != null">
+                #{secondStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="secondEndTime != null">
+                #{secondEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastChecker != null">
+                #{lastChecker,jdbcType=INTEGER},
+            </if>
+            <if test="createrId != null">
+                #{createrId,jdbcType=INTEGER},
+            </if>
+            <if test="createrName != null">
+                #{createrName,jdbcType=VARCHAR},
+            </if>
+            <if test="approverId != null">
+                #{approverId,jdbcType=INTEGER},
+            </if>
+            <if test="approverName != null">
+                #{approverName,jdbcType=VARCHAR},
+            </if>
+            <if test="wareId != null">
+                #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.CheckBill">
+        update t_check_bill
+        <set>
+            <if test="checkNo != null">
+                check_no = #{checkNo,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="checkTimes != null">
+                check_times = #{checkTimes,jdbcType=INTEGER},
+            </if>
+            <if test="firstStartTime != null">
+                first_start_time = #{firstStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="firstEndTime != null">
+                first_end_time = #{firstEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="secondStartTime != null">
+                second_start_time = #{secondStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="secondEndTime != null">
+                second_end_time = #{secondEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastChecker != null">
+                last_checker = #{lastChecker,jdbcType=INTEGER},
+            </if>
+            <if test="createrId != null">
+                creater_id = #{createrId,jdbcType=INTEGER},
+            </if>
+            <if test="createrName != null">
+                creater_name = #{createrName,jdbcType=VARCHAR},
+            </if>
+            <if test="approverId != null">
+                approver_id = #{approverId,jdbcType=INTEGER},
+            </if>
+            <if test="approverName != null">
+                approver_name = #{approverName,jdbcType=VARCHAR},
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.CheckBill">
+        update t_check_bill
+        set check_no = #{checkNo,jdbcType=VARCHAR},
+          type = #{type,jdbcType=INTEGER},
+          status = #{status,jdbcType=INTEGER},
+          check_times = #{checkTimes,jdbcType=INTEGER},
+          first_start_time = #{firstStartTime,jdbcType=TIMESTAMP},
+          first_end_time = #{firstEndTime,jdbcType=TIMESTAMP},
+          second_start_time = #{secondStartTime,jdbcType=TIMESTAMP},
+          second_end_time = #{secondEndTime,jdbcType=TIMESTAMP},
+          last_checker = #{lastChecker,jdbcType=INTEGER},
+          creater_id = #{createrId,jdbcType=INTEGER},
+          creater_name = #{createrName,jdbcType=VARCHAR},
+          approver_id = #{approverId,jdbcType=INTEGER},
+          approver_name = #{approverName,jdbcType=VARCHAR},
+          ware_id = #{wareId,jdbcType=INTEGER},
+          ware_name = #{wareName,jdbcType=VARCHAR},
+          create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

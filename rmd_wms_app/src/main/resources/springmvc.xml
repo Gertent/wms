@@ -1,0 +1,83 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 启用springmvc 注解
+    <mvc:annotation-driven />-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <context:annotation-config/>
+    <!-- 自动扫描且只扫描@Controller -->
+    <context:component-scan base-package="com.rmd.wms.app.controller">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <!-- json解析 -->
+    <bean id="contentNegotiation" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="mediaTypes">
+            <props>
+                <prop key="json">application/json;charset=UTF-8</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="utf8Char" class="java.nio.charset.Charset" factory-method="forName">
+        <constructor-arg value="UTF-8"/>
+    </bean>
+    <bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+        <property name="charset" ref="utf8Char"/>
+        <property name="supportedMediaTypes">
+            <list>
+                <value>application/json;charset=utf-8</value>
+            </list>
+        </property>
+    </bean>
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiation">
+        <mvc:message-converters>
+            <ref bean="fastJsonHttpMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+
+    <!-- 控制器异常处理-->
+    <!--<bean id="exceptionHandlerExceptionResolver"
+          class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+    </bean>-->
+
+    <bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+        <property name="alwaysUseFullPath" value="true"/>
+    </bean>
+
+    <!--- StringHttpMessageConverter bean -->
+    <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter"/>
+
+    <!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="alwaysUseFullPath" value="true"/>
+        <property name="messageConverters">
+            <list>
+                <!-- 新增的StringMessageConverter bean-->
+                <ref bean="stringHttpMessageConverter"/>
+                <ref bean="fastJsonHttpMessageConverter"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 对所有的请求拦截使用 -->
+    <mvc:interceptors>
+        <bean class="com.rmd.wms.app.interceptor.GlobalInterceptor"/>
+    </mvc:interceptors>
+
+
+</beans>

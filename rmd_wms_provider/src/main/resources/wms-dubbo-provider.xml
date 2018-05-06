@@ -1,0 +1,48 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://code.alibabatech.com/schema/dubbo
+	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="rmd_wms_provider" />
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	<dubbo:registry address="${dubbo.registry.address}"/>
+	<!-- <dubbo:registry address="multicast://224.5.6.7:1234" /> -->
+	<!-- 用dubbo协议在20880端口暴露服务 -->
+	<dubbo:protocol name="${dubbo.protocol.name}" port="${dubbo.protocol.port}" />
+	<!-- 声明需要暴露的服务接口 -->
+	<dubbo:service interface="com.rmd.wms.service.PurchaseBillService" ref="purchaseBillService" />
+	<dubbo:service interface="com.rmd.wms.service.PurchaseInInfoService" ref="purchaseInInfoService" />
+	<dubbo:service interface="com.rmd.wms.service.InStockBillService" ref="inStockBillService" />
+	<dubbo:service interface="com.rmd.wms.service.GroundingBillService" ref="groundingBillService" />
+	<dubbo:service interface="com.rmd.wms.service.DictionaryService" ref="dictionaryService" />
+	<dubbo:service interface="com.rmd.wms.service.StockOutBillService" ref="stockOutBillService" />
+	<dubbo:service interface="com.rmd.wms.service.OrderLogisticsInfoService" ref="orderLogisticsInfoService" />
+	<dubbo:service interface="com.rmd.wms.service.LogisticsBillService" ref="logisticsBillService" />
+	<dubbo:service interface="com.rmd.wms.service.StockOutInfoService" ref="stockOutInfoService" />
+	<dubbo:service interface="com.rmd.wms.service.LocationGoodsBindOutService" ref="locationGoodsBindOutService" />
+	<dubbo:service interface="com.rmd.wms.service.LocationGoodsBindInService" ref="locationGoodsBindInService" />
+	<dubbo:service interface="com.rmd.wms.service.DeliveryBillService" ref="deliveryBillService" />
+	<dubbo:service interface="com.rmd.wms.service.WarehouseService" ref="warehouseService" />
+	<dubbo:service interface="com.rmd.wms.service.LocationGoodsBindService" ref="locationGoodsBindService" />
+	<dubbo:service interface="com.rmd.wms.service.MovementService" ref="movementService" />
+	<dubbo:service interface="com.rmd.wms.service.StockService" ref="stockService" />
+	<dubbo:service interface="com.rmd.wms.service.WarehouseAreaService" ref="warehouseAreaService" />
+	<dubbo:service interface="com.rmd.wms.service.LocationService" ref="locationService" />
+	<dubbo:service interface="com.rmd.wms.service.DeliveryRangeService" ref="deliveryRangeService" />
+	<dubbo:service interface="com.rmd.wms.service.LogisticsCompanyService" ref="logisticsCompanyService" />
+	<dubbo:service interface="com.rmd.wms.service.RepositoryDeliverrangeService" ref="repositoryDeliverrangeService" />
+	<dubbo:service interface="com.rmd.wms.service.WarehouseUserService" ref="warehouseUserService" />
+	<dubbo:service interface="com.rmd.wms.common.service.TaskService" ref="taskService" />
+	<dubbo:service interface="com.rmd.wms.service.WareDeliverRangeService" ref="wareDeliverRangeService" />
+	<dubbo:service interface="com.rmd.wms.service.CheckBillService" ref="checkBillService" />
+	<dubbo:service interface="com.rmd.wms.service.CheckUserService" ref="checkUserService" />
+	<dubbo:service interface="com.rmd.wms.service.CheckInfoService" ref="checkInfoService" />
+	<dubbo:service interface="com.rmd.wms.service.LogisticsFreightBillService" ref="logisticsFreightBillService" />
+	<dubbo:service interface="com.rmd.wms.service.LogisticsFreightTemplateService" ref="logisticsFreightTemplateService" />
+	<dubbo:service interface="com.rmd.wms.service.LogisticsFreightCityService" ref="logisticsFreightCityService" />
+
+</beans>

@@ -1,0 +1,207 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.rmd</groupId>
+        <artifactId>rmd_wms_parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <!--定义本项目-->
+    <groupId>com.rmd</groupId>
+    <artifactId>rmd_wms_task</artifactId>
+    <packaging>war</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>rmd_wms_task Maven Webapp</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <elastic-job.version>2.0.5</elastic-job.version>
+        <springframework.version>3.2.4.RELEASE</springframework.version>
+        <slf4j.version>1.7.7</slf4j.version>
+        <!--<logback.version>1.1.2</logback.version>-->
+        <dubbo.version>2.5.3</dubbo.version>
+        <zkclient.version>0.1</zkclient.version>
+        <zookeeper.version>3.4.6</zookeeper.version>
+        <mail.version>1.4.7</mail.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.rmd</groupId>
+            <artifactId>rmd_wms_api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>elastic-job-lite-core</artifactId>
+            <version>${elastic-job.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>elastic-job-lite-spring</artifactId>
+            <version>${elastic-job.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <!--<dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>${dubbo.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.github.sgroschupf</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>${zkclient.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>zookeeper</artifactId>
+                    <groupId>org.apache.zookeeper</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>${mail.version}</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>rmd_wms_task</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <version>6.1.26</version>
+                <configuration>
+                    <contextPath>/rmd_wms_task</contextPath>
+                    <scanIntervalSeconds>2</scanIntervalSeconds>
+                    <connectors>
+                        <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+                            <port>8083</port>
+                            <maxIdleTime>60000</maxIdleTime>
+                        </connector>
+                    </connectors>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!--  ************************************************************  -->
+        <!-- TODO 本地参数配置 -->
+        <!--  ************************************************************  -->
+        <profile>
+            <!-- 开发环境参数配置区域 -->
+            <id>app_dev</id>
+            <properties>
+
+                <!-- zookeeper配置中心 -->
+                <profile.zookeeper.registry>127.0.0.1:2181</profile.zookeeper.registry>
+                <profile.dubbo.protocol.port>20885</profile.dubbo.protocol.port>
+
+                <!--log4j配置-->
+                <profile.log4j.appender.A.File>logs/rmd_wms_app.log</profile.log4j.appender.A.File>
+
+            </properties>
+        </profile>
+
+        <!--  ************************************************************  -->
+        <!-- TODO 测试参数配置 -->
+        <!--  ************************************************************  -->
+        <profile>
+            <!-- 测试环境参数配置区域 -->
+            <id>app_it</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+
+                <!-- zookeeper配置中心 -->
+                <profile.zookeeper.registry>192.168.0.20:2181</profile.zookeeper.registry>
+                <profile.dubbo.protocol.port>20885</profile.dubbo.protocol.port>
+
+                <!--log4j配置-->
+                <profile.log4j.appender.A.File>logs/rmd_wms_.log</profile.log4j.appender.A.File>
+
+            </properties>
+        </profile>
+
+        <!--  ************************************************************  -->
+        <!-- TODO 生产参数配置 -->
+        <!--  ************************************************************  -->
+        <profile>
+            <!--正式环境参数配置区域-->
+            <id>app_pro</id>
+            <properties>
+
+                <!-- zookeeper配置中心 -->
+                <profile.zookeeper.registry>127.0.0.1:2181</profile.zookeeper.registry>
+                <profile.dubbo.protocol.port>20885</profile.dubbo.protocol.port>
+
+                <!--log4j配置-->
+                <profile.log4j.appender.A.File>logs/rmd_wms_web.log</profile.log4j.appender.A.File>
+
+            </properties>
+        </profile>
+    </profiles>
+</project>

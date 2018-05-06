@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.StockMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.Stock">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="goods_code" property="goodsCode" jdbcType="VARCHAR"/>
+        <result column="stock_num" property="stockNum" jdbcType="INTEGER"/>
+        <result column="validity_num" property="validityNum" jdbcType="INTEGER"/>
+        <result column="locked_num" property="lockedNum" jdbcType="INTEGER"/>
+        <result column="ware_id" property="wareId" jdbcType="INTEGER"/>
+        <result column="ware_name" property="wareName" jdbcType="VARCHAR"/>
+        <result column="sale_type" property="saleType" jdbcType="INTEGER"/>
+        <result column="alter_time" property="alterTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, goods_code, stock_num, validity_num, locked_num, ware_id, ware_name, sale_type,
+        alter_time, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_stock
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectUnionPrimaryKey" resultMap="BaseResultMap" parameterType="com.rmd.wms.bean.Stock">
+        select
+        <include refid="Base_Column_List"/>
+        from t_stock
+        where ware_id = #{wareId} and goods_code = #{goodsCode} and sale_type = #{saleType}
+    </select>
+    <select id="selectWareStockByCriteria" resultType="com.rmd.wms.bean.vo.StockInfoVo" parameterType="com.rmd.wms.bean.vo.StockInfoVo">
+        SELECT
+            s.goods_code AS goodsCode,
+            s.stock_num AS stockNum,
+            s.validity_num AS validityNum,
+            s.ware_id AS wareId,
+            s.ware_name AS wareName,
+            w.`code` AS wareCode
+        FROM
+            t_stock s
+        INNER JOIN t_warehouse w ON s.ware_id = w.id
+        <trim prefix="where" suffixOverrides="and">
+            <if test="wareId != null">
+                s.ware_id = #{wareId} and
+            </if>
+            <if test="wareCode != null">
+                w.`code` = #{wareCode} and
+            </if>
+            <if test="goodsCode != null">
+                s.goods_code = #{goodsCode} and
+            </if>
+            <if test="saleType != null">
+                s.sale_type = #{saleType} and
+            </if>
+        </trim>
+    </select>
+    
+    <select id="selectWareStockByParmMap" resultType="com.rmd.wms.bean.vo.StockInfoVo" parameterType="java.util.Map">
+        SELECT
+            s.goods_code AS goodsCode,
+            s.stock_num AS stockNum,
+            s.validity_num AS validityNum,
+            s.ware_id AS wareId,
+            s.ware_name AS wareName,
+            w.code AS wareCode
+        FROM
+            t_stock s
+        INNER JOIN t_warehouse w ON s.ware_id = w.id        
+        <trim prefix="where" suffixOverrides="and">
+            s.sale_type=1 and
+            <if test="wareId != 0">
+                s.ware_id = #{wareId} and
+            </if>
+            <if test="wareCode != null">
+                w.code = #{wareCode} and
+            </if>
+            <if test="goodsCode != null">
+                s.goods_code like CONCAT('%',#{goodsCode},'%') and
+            </if>
+            <if test="goodsCodes != null">
+                s.goods_code in ${goodsCodes} and
+            </if>
+        </trim>
+
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_stock
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.rmd.wms.bean.Stock">
+        insert into t_stock (id, goods_code, stock_num,
+          validity_num, locked_num, ware_id,
+          ware_name, sale_type, alter_time,
+          create_time)
+        values (#{id,jdbcType=INTEGER}, #{goodsCode,jdbcType=VARCHAR}, #{stockNum,jdbcType=INTEGER},
+          #{validityNum,jdbcType=INTEGER}, #{lockedNum,jdbcType=INTEGER}, #{wareId,jdbcType=INTEGER},
+          #{wareName,jdbcType=VARCHAR}, #{saleType,jdbcType=INTEGER}, #{alterTime,jdbcType=TIMESTAMP},
+          #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.Stock">
+        insert into t_stock
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="goodsCode != null">
+                goods_code,
+            </if>
+            <if test="stockNum != null">
+                stock_num,
+            </if>
+            <if test="validityNum != null">
+                validity_num,
+            </if>
+            <if test="lockedNum != null">
+                locked_num,
+            </if>
+            <if test="wareId != null">
+                ware_id,
+            </if>
+            <if test="wareName != null">
+                ware_name,
+            </if>
+            <if test="saleType != null">
+                sale_type,
+            </if>
+            <if test="alterTime != null">
+                alter_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="goodsCode != null">
+                #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="stockNum != null">
+                #{stockNum,jdbcType=INTEGER},
+            </if>
+            <if test="validityNum != null">
+                #{validityNum,jdbcType=INTEGER},
+            </if>
+            <if test="lockedNum != null">
+                #{lockedNum,jdbcType=INTEGER},
+            </if>
+            <if test="wareId != null">
+                #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="saleType != null">
+                #{saleType,jdbcType=INTEGER},
+            </if>
+            <if test="alterTime != null">
+                #{alterTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_stock (id, goods_code, stock_num,
+        validity_num, locked_num, ware_id,
+        ware_name, sale_type, alter_time,
+        create_time)
+        values
+        <foreach collection="list" item="obj" separator=",">
+            (#{obj.id},#{obj.goodsCode},#{obj.stockNum},#{obj.validityNum},#{obj.lockedNum},
+            #{obj.wareId},#{obj.wareName},#{obj.saleType},#{obj.alterTime},#{obj.createTime})
+        </foreach>
+
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.Stock">
+        update t_stock
+        <set>
+            <if test="goodsCode != null">
+                goods_code = #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="stockNum != null">
+                stock_num = #{stockNum,jdbcType=INTEGER},
+            </if>
+            <if test="validityNum != null">
+                validity_num = #{validityNum,jdbcType=INTEGER},
+            </if>
+            <if test="lockedNum != null">
+                locked_num = #{lockedNum,jdbcType=INTEGER},
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="saleType != null">
+                sale_type = #{saleType,jdbcType=INTEGER},
+            </if>
+            <if test="alterTime != null">
+                alter_time = #{alterTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateBatchByPrimaryKey" parameterType="java.util.List">
+        update t_stock
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="stock_num = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.stockNum != null">
+                        when id = #{i.id} then #{i.stockNum}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="validity_num = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.validityNum != null">
+                        when id = #{i.id} then #{i.validityNum}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where
+        <foreach collection="list" separator="or" item="i" index="index">
+            id = #{i.id}
+        </foreach>
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.Stock">
+        update t_stock
+        set goods_code = #{goodsCode,jdbcType=VARCHAR},
+          stock_num = #{stockNum,jdbcType=INTEGER},
+          validity_num = #{validityNum,jdbcType=INTEGER},
+          locked_num = #{lockedNum,jdbcType=INTEGER},
+          ware_id = #{wareId,jdbcType=INTEGER},
+          ware_name = #{wareName,jdbcType=VARCHAR},
+          sale_type = #{saleType,jdbcType=INTEGER},
+          alter_time = #{alterTime,jdbcType=TIMESTAMP},
+          create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

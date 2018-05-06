@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.LogisticsFreightBillMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.LogisticsFreightBill">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="logistics_no" property="logisticsNo" jdbcType="VARCHAR"/>
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="logis_com_id" property="logisComId" jdbcType="INTEGER"/>
+        <result column="logis_com_name" property="logisComName" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="receive_address" property="receiveAddress" jdbcType="VARCHAR"/>
+        <result column="base_price" property="basePrice" jdbcType="DECIMAL"/>
+        <result column="extra_charges" property="extraCharges" jdbcType="DECIMAL"/>
+        <result column="do_change" property="doChange" jdbcType="INTEGER"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="INTEGER"/>
+        <result column="update_user_name" property="updateUserName" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="ware_id" property="wareId" jdbcType="INTEGER"/>
+        <result column="ware_name" property="wareName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, logistics_no, order_no, logis_com_id, logis_com_name, code, receive_address,
+        base_price, extra_charges, do_change, remark, update_user_id, update_user_name, update_time,
+        create_time, ware_id, ware_name
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_logistics_freight_bill
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.rmd.wms.bean.vo.web.LogisFreiBillVo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_logistics_freight_bill
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="logisticsNo != null">
+                logistics_no = #{logisticsNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="orderNo != null">
+                order_no = #{orderNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="logisComId != null">
+                logis_com_id = #{logisComId,jdbcType=INTEGER} and
+            </if>
+            <if test="logisComName != null">
+                logis_com_name like CONCAT('%',#{logisComName,jdbcType=VARCHAR},'%') and
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR} and
+            </if>
+            <if test="receiveAddress != null">
+                receive_address = #{receiveAddress,jdbcType=VARCHAR} and
+            </if>
+            <if test="basePrice != null">
+                base_price = #{basePrice,jdbcType=DECIMAL} and
+            </if>
+            <if test="extraCharges != null">
+                extra_charges = #{extraCharges,jdbcType=DECIMAL} and
+            </if>
+            <if test="doChange != null">
+                do_change = #{doChange,jdbcType=INTEGER} and
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR} and
+            </if>
+            <if test="updateUserId != null">
+                update_user_id = #{updateUserId,jdbcType=INTEGER} and
+            </if>
+            <if test="updateUserName != null">
+                update_user_name = #{updateUserName,jdbcType=VARCHAR} and
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP} and
+            </if>
+            <if test="starTime != null">
+                DATE_FORMAT(create_time,'%Y-%m-%d %H:%i') >= DATE_FORMAT(#{starTime,jdbcType=VARCHAR},'%Y-%m-%d %H:%i') and
+            </if>
+            <if test="endTime != null">
+                DATE_FORMAT(create_time,'%Y-%m-%d %H:%i') &lt;= DATE_FORMAT(#{endTime,jdbcType=VARCHAR},'%Y-%m-%d %H:%i') and
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER} and
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR} and
+            </if>
+        </trim>
+        order by create_time desc
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_logistics_freight_bill
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.rmd.wms.bean.LogisticsFreightBill">
+        insert into t_logistics_freight_bill (id, logistics_no, order_no,
+          logis_com_id, logis_com_name, code,
+          receive_address, base_price, extra_charges,
+          do_change, remark, update_user_id,
+          update_user_name, update_time, create_time,
+          ware_id, ware_name)
+        values (#{id,jdbcType=INTEGER}, #{logisticsNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR},
+          #{logisComId,jdbcType=INTEGER}, #{logisComName,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+          #{receiveAddress,jdbcType=VARCHAR}, #{basePrice,jdbcType=DECIMAL}, #{extraCharges,jdbcType=DECIMAL},
+          #{doChange,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{updateUserId,jdbcType=INTEGER},
+          #{updateUserName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
+          #{wareId,jdbcType=INTEGER}, #{wareName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_logistics_freight_bill (logistics_no, order_no,
+        logis_com_id, logis_com_name, code,
+        receive_address, base_price, extra_charges,
+        do_change, remark, update_user_id,
+        update_user_name, update_time, create_time,
+        ware_id, ware_name)
+        values
+        <foreach collection="list" item="obj" separator=",">
+            (#{obj.logisticsNo},#{obj.orderNo},#{obj.logisComId},
+            #{obj.logisComName},#{obj.code},#{obj.receiveAddress},
+            #{obj.basePrice},#{obj.extraCharges},#{obj.doChange},
+            #{obj.remark},#{obj.updateUserId},#{obj.updateUserName},
+            #{obj.updateTime},#{obj.createTime},#{obj.wareId},#{obj.wareName})
+        </foreach>
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.LogisticsFreightBill">
+        insert into t_logistics_freight_bill
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="logisticsNo != null">
+                logistics_no,
+            </if>
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="logisComId != null">
+                logis_com_id,
+            </if>
+            <if test="logisComName != null">
+                logis_com_name,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="receiveAddress != null">
+                receive_address,
+            </if>
+            <if test="basePrice != null">
+                base_price,
+            </if>
+            <if test="extraCharges != null">
+                extra_charges,
+            </if>
+            <if test="doChange != null">
+                do_change,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="updateUserId != null">
+                update_user_id,
+            </if>
+            <if test="updateUserName != null">
+                update_user_name,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="wareId != null">
+                ware_id,
+            </if>
+            <if test="wareName != null">
+                ware_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="logisticsNo != null">
+                #{logisticsNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="logisComId != null">
+                #{logisComId,jdbcType=INTEGER},
+            </if>
+            <if test="logisComName != null">
+                #{logisComName,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveAddress != null">
+                #{receiveAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="basePrice != null">
+                #{basePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="extraCharges != null">
+                #{extraCharges,jdbcType=DECIMAL},
+            </if>
+            <if test="doChange != null">
+                #{doChange,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="updateUserId != null">
+                #{updateUserId,jdbcType=INTEGER},
+            </if>
+            <if test="updateUserName != null">
+                #{updateUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="wareId != null">
+                #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                #{wareName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.LogisticsFreightBill">
+        update t_logistics_freight_bill
+        <set>
+            <if test="logisticsNo != null">
+                logistics_no = #{logisticsNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null">
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="logisComId != null">
+                logis_com_id = #{logisComId,jdbcType=INTEGER},
+            </if>
+            <if test="logisComName != null">
+                logis_com_name = #{logisComName,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveAddress != null">
+                receive_address = #{receiveAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="basePrice != null">
+                base_price = #{basePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="extraCharges != null">
+                extra_charges = #{extraCharges,jdbcType=DECIMAL},
+            </if>
+            <if test="doChange != null">
+                do_change = #{doChange,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="updateUserId != null">
+                update_user_id = #{updateUserId,jdbcType=INTEGER},
+            </if>
+            <if test="updateUserName != null">
+                update_user_name = #{updateUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.LogisticsFreightBill">
+        update t_logistics_freight_bill
+        set logistics_no = #{logisticsNo,jdbcType=VARCHAR},
+          order_no = #{orderNo,jdbcType=VARCHAR},
+          logis_com_id = #{logisComId,jdbcType=INTEGER},
+          logis_com_name = #{logisComName,jdbcType=VARCHAR},
+          code = #{code,jdbcType=VARCHAR},
+          receive_address = #{receiveAddress,jdbcType=VARCHAR},
+          base_price = #{basePrice,jdbcType=DECIMAL},
+          extra_charges = #{extraCharges,jdbcType=DECIMAL},
+          do_change = #{doChange,jdbcType=INTEGER},
+          remark = #{remark,jdbcType=VARCHAR},
+          update_user_id = #{updateUserId,jdbcType=INTEGER},
+          update_user_name = #{updateUserName,jdbcType=VARCHAR},
+          update_time = #{updateTime,jdbcType=TIMESTAMP},
+          create_time = #{createTime,jdbcType=TIMESTAMP},
+          ware_id = #{wareId,jdbcType=INTEGER},
+          ware_name = #{wareName,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

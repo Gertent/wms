@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.rmd.wms.bean.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="loginname" property="loginname" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="realname" property="realname" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="tel_code" property="telCode" jdbcType="INTEGER" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="indbtime" property="indbtime" jdbcType="TIMESTAMP" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="deptid" property="deptid" jdbcType="INTEGER" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="modify_name" property="modifyName" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, loginname, password, realname, sex, birthday, tel_code, tel, mobile, address, 
+    company, position, email, status, indbtime, note, deptid, image, modify_date, modify_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rmd.wms.bean.User" >
+    insert into t_user (id, loginname, password, 
+      realname, sex, birthday, 
+      tel_code, tel, mobile, 
+      address, company, position, 
+      email, status, indbtime, 
+      note, deptid, image, 
+      modify_date, modify_name)
+    values (#{id,jdbcType=INTEGER}, #{loginname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{realname,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, 
+      #{telCode,jdbcType=INTEGER}, #{tel,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{position,jdbcType=INTEGER}, 
+      #{email,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{indbtime,jdbcType=TIMESTAMP}, 
+      #{note,jdbcType=VARCHAR}, #{deptid,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR}, 
+      #{modifyDate,jdbcType=TIMESTAMP}, #{modifyName,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rmd.wms.bean.User" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loginname != null" >
+        loginname,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="realname != null" >
+        realname,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="telCode != null" >
+        tel_code,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="indbtime != null" >
+        indbtime,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="deptid != null" >
+        deptid,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+      <if test="modifyName != null" >
+        modify_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="loginname != null" >
+        #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="telCode != null" >
+        #{telCode,jdbcType=INTEGER},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="indbtime != null" >
+        #{indbtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="deptid != null" >
+        #{deptid,jdbcType=INTEGER},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyName != null" >
+        #{modifyName,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.User" >
+    update t_user
+    <set >
+      <if test="loginname != null" >
+        loginname = #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="telCode != null" >
+        tel_code = #{telCode,jdbcType=INTEGER},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="indbtime != null" >
+        indbtime = #{indbtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="deptid != null" >
+        deptid = #{deptid,jdbcType=INTEGER},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyName != null" >
+        modify_name = #{modifyName,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.User" >
+    update t_user
+    set loginname = #{loginname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      tel_code = #{telCode,jdbcType=INTEGER},
+      tel = #{tel,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      position = #{position,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      indbtime = #{indbtime,jdbcType=TIMESTAMP},
+      note = #{note,jdbcType=VARCHAR},
+      deptid = #{deptid,jdbcType=INTEGER},
+      image = #{image,jdbcType=VARCHAR},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      modify_name = #{modifyName,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectBySelective" resultMap="BaseResultMap" parameterType="com.rmd.wms.bean.User">
+    select
+    <include refid="Base_Column_List" />
+    from t_user
+    <trim prefix="WHERE" prefixOverrides="AND | OR">
+      <if test="loginname != null">
+        AND loginname = #{loginname,jdbcType=VARCHAR}
+      </if>
+      <if test="password != null">
+        AND password = #{password,jdbcType=VARCHAR}
+      </if>
+      <if test="realname != null">
+        AND realname = #{realname,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null">
+        AND status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="tel != null">
+        AND tel = #{tel,jdbcType=VARCHAR}
+      </if>
+      <if test="mobile != null">
+        AND mobile = #{mobile,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+</mapper>

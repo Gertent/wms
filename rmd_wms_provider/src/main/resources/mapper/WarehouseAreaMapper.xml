@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.WarehouseAreaMapper" >
+  <resultMap id="BaseResultMap" type="com.rmd.wms.bean.WarehouseArea" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="ware_id" property="wareId" jdbcType="INTEGER" />
+    <result column="ware_name" property="wareName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, area_name, ware_id, ware_name, status, code, type, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_warehouse_area
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!-- 验证库区名称是否重复 -->
+  <select id="selectByName" resultType="java.lang.Integer" parameterType="com.rmd.wms.bean.WarehouseArea">
+	 SELECT 
+	 		count(t1.area_name)
+	 FROM t_warehouse_area t1
+	 WHERE 1=1
+	 <if test="id !=null">
+	  	 AND t1.id != #{id,jdbcType=INTEGER}
+	 </if>
+	  AND t1.area_name = #{areaName,jdbcType=VARCHAR}
+  </select>
+  <!-- 验证库区编号是否重复 -->
+  <select id="selectByCode" resultType="java.lang.Integer" parameterType="com.rmd.wms.bean.WarehouseArea">
+	 SELECT 
+	 		count(t1.code)
+	 FROM t_warehouse_area t1
+	 WHERE 1=1
+	 <if test="id !=null">
+	  	 AND t1.id != #{id,jdbcType=INTEGER}
+	 </if>
+	  AND t1.code = #{code,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.rmd.wms.bean.WarehouseArea">
+  SELECT 
+	  t1.id AS id,
+	  t1.ware_id AS wareId,
+	  t1.area_name AS areaName,
+	  t1.status AS status,
+	  t1.code AS code,
+	  t1.type AS type,
+	  t1.ware_name AS wareName 
+	FROM
+	  t_warehouse_area t1 
+	  LEFT JOIN t_warehouse t2 ON t1.ware_id = t2.id 	
+	WHERE 1=1
+	<include refid="listWhere"></include>
+  </select>
+  <sql id="listWhere">
+  	  <if test="id != null" >
+        AND t1.id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="areaName != null" >
+        AND t1.area_name = #{areaName,jdbcType=VARCHAR}
+      </if>
+      <if test="wareId != null" >
+        AND t1.ware_id = #{wareId,jdbcType=INTEGER}
+      </if>
+      <if test="wareName != null" >
+        AND t1.ware_name = #{wareName,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null" >
+        AND t1.status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="code != null" >
+        AND t1.code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null" >
+        AND t1.type =  #{type,jdbcType=INTEGER}
+      </if>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_warehouse_area
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rmd.wms.bean.WarehouseArea" >
+    insert into t_warehouse_area (id, area_name, ware_id, 
+      ware_name, status, code, 
+      type, create_time)
+    values (#{id,jdbcType=INTEGER}, #{areaName,jdbcType=VARCHAR}, #{wareId,jdbcType=INTEGER}, 
+      #{wareName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rmd.wms.bean.WarehouseArea" >
+    insert into t_warehouse_area
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="areaName != null" >
+        area_name,
+      </if>
+      <if test="wareId != null" >
+        ware_id,
+      </if>
+      <if test="wareName != null" >
+        ware_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="wareId != null" >
+        #{wareId,jdbcType=INTEGER},
+      </if>
+      <if test="wareName != null" >
+        #{wareName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.WarehouseArea" >
+    update t_warehouse_area
+    <set >
+      <if test="areaName != null" >
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="wareId != null" >
+        ware_id = #{wareId,jdbcType=INTEGER},
+      </if>
+      <if test="wareName != null" >
+        ware_name = #{wareName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.WarehouseArea" >
+    update t_warehouse_area
+    set area_name = #{areaName,jdbcType=VARCHAR},
+      ware_id = #{wareId,jdbcType=INTEGER},
+      ware_name = #{wareName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

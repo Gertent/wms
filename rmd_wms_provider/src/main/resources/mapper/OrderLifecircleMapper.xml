@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.OrderLifecircleMapper" >
+  <resultMap id="BaseResultMap" type="com.rmd.wms.bean.OrderLifecircle" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ordernumber" property="ordernumber" jdbcType="VARCHAR" />
+    <result column="statusid" property="statusid" jdbcType="INTEGER" />
+    <result column="statusname" property="statusname" jdbcType="VARCHAR" />
+    <result column="prestatus" property="prestatus" jdbcType="INTEGER" />
+    <result column="updateuser" property="updateuser" jdbcType="INTEGER" />
+    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="column1" property="column1" jdbcType="VARCHAR" />
+    <result column="column2" property="column2" jdbcType="VARCHAR" />
+    <result column="column3" property="column3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ordernumber, statusid, statusname, prestatus, updateuser, updatetime, remark, 
+    column1, column2, column3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_lifecircle
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_order_lifecircle
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rmd.wms.bean.OrderLifecircle" >
+    insert into t_order_lifecircle (id, ordernumber, statusid, 
+      statusname, prestatus, updateuser, 
+      updatetime, remark, column1, 
+      column2, column3)
+    values (#{id,jdbcType=INTEGER}, #{ordernumber,jdbcType=VARCHAR}, #{statusid,jdbcType=INTEGER}, 
+      #{statusname,jdbcType=VARCHAR}, #{prestatus,jdbcType=INTEGER}, #{updateuser,jdbcType=INTEGER}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{column1,jdbcType=VARCHAR}, 
+      #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rmd.wms.bean.OrderLifecircle" >
+    insert into t_order_lifecircle
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ordernumber != null" >
+        ordernumber,
+      </if>
+      <if test="statusid != null" >
+        statusid,
+      </if>
+      <if test="statusname != null" >
+        statusname,
+      </if>
+      <if test="prestatus != null" >
+        prestatus,
+      </if>
+      <if test="updateuser != null" >
+        updateuser,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="column1 != null" >
+        column1,
+      </if>
+      <if test="column2 != null" >
+        column2,
+      </if>
+      <if test="column3 != null" >
+        column3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="ordernumber != null" >
+        #{ordernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="statusid != null" >
+        #{statusid,jdbcType=INTEGER},
+      </if>
+      <if test="statusname != null" >
+        #{statusname,jdbcType=VARCHAR},
+      </if>
+      <if test="prestatus != null" >
+        #{prestatus,jdbcType=INTEGER},
+      </if>
+      <if test="updateuser != null" >
+        #{updateuser,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="column1 != null" >
+        #{column1,jdbcType=VARCHAR},
+      </if>
+      <if test="column2 != null" >
+        #{column2,jdbcType=VARCHAR},
+      </if>
+      <if test="column3 != null" >
+        #{column3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.OrderLifecircle" >
+    update t_order_lifecircle
+    <set >
+      <if test="ordernumber != null" >
+        ordernumber = #{ordernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="statusid != null" >
+        statusid = #{statusid,jdbcType=INTEGER},
+      </if>
+      <if test="statusname != null" >
+        statusname = #{statusname,jdbcType=VARCHAR},
+      </if>
+      <if test="prestatus != null" >
+        prestatus = #{prestatus,jdbcType=INTEGER},
+      </if>
+      <if test="updateuser != null" >
+        updateuser = #{updateuser,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="column1 != null" >
+        column1 = #{column1,jdbcType=VARCHAR},
+      </if>
+      <if test="column2 != null" >
+        column2 = #{column2,jdbcType=VARCHAR},
+      </if>
+      <if test="column3 != null" >
+        column3 = #{column3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.OrderLifecircle" >
+    update t_order_lifecircle
+    set ordernumber = #{ordernumber,jdbcType=VARCHAR},
+      statusid = #{statusid,jdbcType=INTEGER},
+      statusname = #{statusname,jdbcType=VARCHAR},
+      prestatus = #{prestatus,jdbcType=INTEGER},
+      updateuser = #{updateuser,jdbcType=INTEGER},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      column1 = #{column1,jdbcType=VARCHAR},
+      column2 = #{column2,jdbcType=VARCHAR},
+      column3 = #{column3,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

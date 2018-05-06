@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.MovementMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.Movement">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="in_user" property="inUser" jdbcType="INTEGER"/>
+        <result column="out_user" property="outUser" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="break_type" property="breakType" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="move_amount" property="moveAmount" jdbcType="INTEGER"/>
+        <result column="move_out_time" property="moveOutTime" jdbcType="TIMESTAMP"/>
+        <result column="move_in_time" property="moveInTime" jdbcType="TIMESTAMP"/>
+        <result column="ware_id" property="wareId" jdbcType="INTEGER"/>
+        <result column="ware_name" property="wareName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="in_user_name" property="inUserName" jdbcType="VARCHAR"/>
+        <result column="out_user_name" property="outUserName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, order_no, in_user, out_user, type, break_type, status, move_amount, move_out_time, move_in_time, ware_id,
+        ware_name, create_time,in_user_name,out_user_name
+    </sql>
+     <select id="selectAllByWhere" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_movement
+        <include refid="Base_Where_Clause"/>
+    </select>
+    <sql id="Base_Where_Clause">
+        <where>
+            <trim prefixOverrides="and|or">
+                <if test="Id != null"> and id = #{Id}</if>
+                <if test="status != null"> and status = #{status}</if>
+				<if test="wareId != null"> and ware_id = #{wareId}</if><!--仓库Id-->	
+				<if test="type != null"> and type = #{type}</if><!--移库类型-->	
+				<if test="breakType != null"> and break_type = #{breakType}</if><!--报损类型-->	
+				<if test="inUser != null"> and in_user = #{inUser}</if><!--移入人员-->	
+				<if test="outUser != null"> and out_user = #{outUser}</if><!--移除人员-->
+				<if test="inUserName != null"> and in_user_name = #{inUserName}</if><!--移入人员-->	
+				<if test="outUserName != null"> and out_user_name = #{outUserName}</if><!--移除人员-->	
+				<if test="moveInTime != null"> and move_in_time = #{moveInTime}</if><!--移入时间-->	
+				<if test="moveOutTime != null"> and move_out_time = #{moveOutTime}</if><!--移除时间-->
+
+                <if test="wareGoodBad_search != null"> and break_type is not null and type!=3 </if><!--报损-->
+                <if test="wareGoodMove_search != null"> and break_type is null </if><!--移库-->
+                <if test="moveOutTime_gt != null"> and move_out_time >= #{moveOutTime_gt}</if><!-->=移除时间-->
+                <if test="moveOutTime_lt != null"> and move_out_time &lt;= #{moveOutTime_lt}</if><!--<=移除时间-->
+                <if test="moveInTime_gt != null"> and move_in_time >= #{moveInTime_gt}</if><!-->=移入时间-->
+                <if test="moveInTime_lt != null"> and move_in_time &lt;= #{moveInTime_lt}</if><!--<=移入时间-->
+
+				<if test="searchWhere != null">${searchWhere}</if>
+            </trim>
+        </where>
+        <if test="name_sort != null"><!--排序字段-->
+            ORDER BY ${name_sort}
+            <if test="order_sort != null"><!--排序顺序asc/desc-->
+                ${order_sort}
+            </if>
+        </if>
+        <if test="page != null">
+            limit ${page.First}, ${page.Pagesize}
+        </if>
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_movement
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.rmd.wms.bean.Movement">
+        select
+        <include refid="Base_Column_List"/>
+        from t_movement
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="orderNo != null">
+                order_no = #{orderNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="inUser != null">
+                in_user = #{inUser,jdbcType=INTEGER} and
+            </if>
+            <if test="outUser != null">
+                out_user = #{outUser,jdbcType=INTEGER} and
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER} and
+            </if>
+            <if test="breakType != null">
+                break_type = #{breakType,jdbcType=INTEGER} and
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER} and
+            </if>
+            <if test="moveAmount != null">
+                move_amount = #{moveAmount,jdbcType=INTEGER} and
+            </if>
+            <if test="moveOutTime != null">
+                move_out_time = #{moveOutTime,jdbcType=TIMESTAMP} and
+            </if>
+            <if test="moveInTime != null">
+                move_in_time = #{moveInTime,jdbcType=TIMESTAMP} and
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER} and
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR} and
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP} and
+            </if>
+            <if test="inUserName != null">
+                in_user_name = #{inUserName,jdbcType=VARCHAR} and
+            </if>
+            <if test="outUserName != null">
+                out_user_name = #{outUserName,jdbcType=VARCHAR} and
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectAllByParmMap" resultType="java.util.Map" parameterType="java.util.Map">
+        select
+        s.id as Id,s.order_no as orderNo, s.in_user as inUser, s.out_user as outUser, s.type, s.break_type as breakType, s.status, s.move_amount as moveAmount, s.move_out_time as moveOutTime, s.move_in_time as moveInTime, s.ware_id as wareId,
+        s.ware_name as wareName, s.create_time as createTime,s.in_user_name as inUserName,s.out_user_name as outUserName,
+        i.in_stock_time as inStockTime,i.location_no_out as locationNoOut,i.out_num as outNum,i.in_num as inNum,i.validity_time as validityTime,i.goods_code as goodsCode,i.goods_bar_code as goodsBarCode,
+        o.location_id as locationId,o.location_no as locationNo,o.grounding_no as groundingNo,o.grounding_num as groundingNum
+        from t_movement s
+        left join t_movement_info i on s.id=i.move_id
+        left join t_location_goods_bind_in o on i.id=o.ginfo_id
+        <include refid="Base_Where_ClauseEx"/>
+    </select>
+    <sql id="Base_Where_ClauseEx">
+        <where>
+            <trim prefixOverrides="and|or">
+                <if test="Id != null"> and s.id = #{Id}</if>
+                <if test="status != null"> and s.status = #{status}</if>
+                <if test="wareId != null"> and s.ware_id = #{wareId}</if><!--仓库Id-->
+                <if test="type != null"> and s.type = #{type}</if><!--移库类型-->
+                <if test="breakType != null"> and s.break_type = #{breakType}</if><!--报损类型-->
+                <if test="inUser != null"> and s.in_user = #{inUser}</if><!--移入人员-->
+                <if test="outUser != null"> and s.out_user = #{outUser}</if><!--移除人员-->
+                <if test="inUserName != null"> and s.in_user_name = #{inUserName}</if><!--移入人员-->
+                <if test="outUserName != null"> and s.out_user_name = #{outUserName}</if><!--移除人员-->
+                <if test="moveInTime != null"> and s.move_in_time = #{moveInTime}</if><!--移入时间-->
+                <if test="moveOutTime != null"> and s.move_out_time = #{moveOutTime}</if><!--移除时间-->
+
+                <if test="wareGoodBad_search != null"> and s.break_type is not null and s.type!=3 </if><!--报损-->
+                <if test="wareGoodMove_search != null"> and s.break_type is null </if><!--移库-->
+                <if test="moveOutTime_gt != null"> and s.move_out_time >= #{moveOutTime_gt}</if><!-->=移除时间-->
+                <if test="moveOutTime_lt != null"> and s.move_out_time &lt;= #{moveOutTime_lt}</if><!--<=移除时间-->
+                <if test="moveInTime_gt != null"> and s.move_in_time >= #{moveInTime_gt}</if><!-->=移入时间-->
+                <if test="moveInTime_lt != null"> and s.move_in_time &lt;= #{moveInTime_lt}</if><!--<=移入时间-->
+                <if test="searchWhere != null">${searchWhere}</if>
+            </trim>
+        </where>
+        <if test="page != null">
+            limit ${page.First}, ${page.Pagesize}
+        </if>
+    </sql>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_movement
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.rmd.wms.bean.Movement">
+        insert into t_movement (order_no, in_user, out_user,
+          type, break_type, status, move_amount,
+          move_out_time, move_in_time, ware_id,
+          ware_name, create_time,in_user_name,out_user_name)
+        values (#{orderNo,jdbcType=VARCHAR}, #{inUser,jdbcType=INTEGER}, #{outUser,jdbcType=INTEGER},
+          #{type,jdbcType=INTEGER}, #{breakType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{moveAmount,jdbcType=INTEGER},
+          #{moveOutTime,jdbcType=TIMESTAMP}, #{moveInTime,jdbcType=TIMESTAMP}, #{wareId,jdbcType=INTEGER},
+          #{wareName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{inUserName,jdbcType=VARCHAR},#{outUserName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.Movement" useGeneratedKeys="true" keyProperty="id">
+        insert into t_movement
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="inUser != null">
+                in_user,
+            </if>
+            <if test="outUser != null">
+                out_user,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="breakType != null">
+                break_type,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="moveAmount != null">
+                move_amount,
+            </if>
+            <if test="moveOutTime != null">
+                move_out_time,
+            </if>
+            <if test="moveInTime != null">
+                move_in_time,
+            </if>
+            <if test="wareId != null">
+                ware_id,
+            </if>
+            <if test="wareName != null">
+                ware_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="inUserName != null">
+                in_user_name,
+            </if>
+            <if test="outUserName != null">
+                out_user_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="inUser != null">
+                #{inUser,jdbcType=INTEGER},
+            </if>
+            <if test="outUser != null">
+                #{outUser,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="breakType != null">
+                #{breakType,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="moveAmount != null">
+                #{moveAmount,jdbcType=INTEGER},
+            </if>
+            <if test="moveOutTime != null">
+                #{moveOutTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="moveInTime != null">
+                #{moveInTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="wareId != null">
+                #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="inUserName != null">
+                #{inUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="outUserName != null">
+                #{outUserName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.Movement">
+        update t_movement
+        <set>
+            <if test="orderNo != null">
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="inUser != null">
+                in_user = #{inUser,jdbcType=INTEGER},
+            </if>
+            <if test="outUser != null">
+                out_user = #{outUser,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="breakType != null">
+                break_type = #{breakType,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="moveAmount != null">
+                move_amount = #{moveAmount,jdbcType=INTEGER},
+            </if>
+            <if test="moveOutTime != null">
+                move_out_time = #{moveOutTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="moveInTime != null">
+                move_in_time = #{moveInTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="inUserName != null">
+                in_user_name = #{inUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="outUserName != null">
+                out_user_name = #{outUserName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.Movement">
+        update t_movement
+        set
+          order_no = #{orderNo,jdbcType=VARCHAR},
+          in_user = #{inUser,jdbcType=INTEGER},
+          out_user = #{outUser,jdbcType=INTEGER},
+          type = #{type,jdbcType=INTEGER},
+          break_type = #{breakType,jdbcType=INTEGER},
+          status = #{status,jdbcType=INTEGER},
+          move_amount = #{moveAmount,jdbcType=INTEGER},
+          move_out_time = #{moveOutTime,jdbcType=TIMESTAMP},
+          move_in_time = #{moveInTime,jdbcType=TIMESTAMP},
+          ware_id = #{wareId,jdbcType=INTEGER},
+          ware_name = #{wareName,jdbcType=VARCHAR},
+          create_time = #{createTime,jdbcType=TIMESTAMP},
+          in_user_name = #{inUserName,jdbcType=VARCHAR},
+          out_user_name = #{outUserName,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

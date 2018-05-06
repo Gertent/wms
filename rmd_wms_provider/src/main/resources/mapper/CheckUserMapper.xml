@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.CheckUserMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.CheckUser">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="check_no" property="checkNo" jdbcType="VARCHAR"/>
+        <result column="check_times" property="checkTimes" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+        <sql id="Base_Column_List">
+        id, check_no, check_times, user_id, user_name, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_check_user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCheckNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_check_user
+        where check_no = #{checkNo,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_check_user
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="checkNo != null">
+                check_no = #{checkNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="searchWhere != null">${searchWhere}</if>
+        </trim>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_check_user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.rmd.wms.bean.CheckUser">
+        insert into t_check_user (id, check_no, check_times,
+          user_id, user_name, create_time
+          )
+        values (#{id,jdbcType=INTEGER}, #{checkNo,jdbcType=VARCHAR}, #{checkTimes,jdbcType=INTEGER},
+          #{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+          )
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.CheckUser">
+        insert into t_check_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="checkNo != null">
+                check_no,
+            </if>
+            <if test="checkTimes != null">
+                check_times,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="checkNo != null">
+                #{checkNo,jdbcType=VARCHAR},
+            </if>
+            <if test="checkTimes != null">
+                #{checkTimes,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.CheckUser">
+        update t_check_user
+        <set>
+            <if test="checkNo != null">
+                check_no = #{checkNo,jdbcType=VARCHAR},
+            </if>
+            <if test="checkTimes != null">
+                check_times = #{checkTimes,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.CheckUser">
+        update t_check_user
+        set check_no = #{checkNo,jdbcType=VARCHAR},
+          check_times = #{checkTimes,jdbcType=INTEGER},
+          user_id = #{userId,jdbcType=INTEGER},
+          user_name = #{userName,jdbcType=VARCHAR},
+          create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

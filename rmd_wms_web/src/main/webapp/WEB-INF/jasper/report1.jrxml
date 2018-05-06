@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report4" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e8d1738e-e783-48f8-a16d-473b60a31edd">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zh_CN" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+	<parameter name="name" class="java.lang.String"/>
+	<parameter name="age" class="java.lang.String"/>
+	<field name="deliveryNo" class="java.lang.String"/>
+	<field name="logisComName" class="java.lang.String"/>
+	<field name="orderSum" class="java.lang.Integer"/>
+	<field name="goodsName" class="java.lang.String"/>
+	<field name="spec" class="java.lang.String"/>
+	<field name="salesPrice" class="java.math.BigDecimal"/>
+	<field name="goodsAmount" class="java.lang.Integer"/>
+	<field name="parcelWeight" class="java.lang.Double"/>
+	<field name="goodsSum" class="java.math.BigDecimal"/>
+	<field name="logisticsNo" class="java.lang.String"/>
+	<field name="stockOutSum" class="java.math.BigDecimal"/>
+	<field name="stockOutNum" class="java.lang.String"/>
+	<variable name="index" class="java.lang.String">
+		<variableExpression><![CDATA[$V{index}.valueOf(1)]]></variableExpression>
+		<initialValueExpression><![CDATA[1]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement style="zh_CN" x="225" y="43" width="72" height="18" uuid="18e0c95b-6e45-40ae-ad0e-9c15fff37453"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[商品名称]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="zh_CN" x="94" y="43" width="25" height="18" uuid="1b15febf-7a76-4669-951b-905fe1d336d4"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[序号]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement style="zh_CN" x="225" y="0" width="72" height="18" uuid="c08b2f8b-ff4e-4cce-aec2-133c80fc8809"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{goodsName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="94" y="0" width="25" height="18" uuid="b1699ed4-d72f-4b7f-a42e-9783728723e5"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{index}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="19" y="25" width="100" height="20" uuid="e89affb0-23e6-490f-8849-6e0b392f4de9"/>
+				<text><![CDATA[name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="297" y="25" width="100" height="20" uuid="5744d692-a90e-4bb3-b89e-c6dd4e6606b0"/>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="151" y="25" width="100" height="20" uuid="750669b6-f1b4-4e25-915c-d237a4acfdce"/>
+				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="475" y="25" width="100" height="20" uuid="8cde1e35-23e7-474a-b34f-ce6e2bb1b246"/>
+				<textFieldExpression><![CDATA[$P{age}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

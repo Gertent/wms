@@ -1,0 +1,81 @@
+.marTit{
+    vertical-align: text-top;
+    margin-top: -6px;
+}
+.marTit input{
+    width: 363px;
+}
+.addMarket .inBox li>input{
+    width: 172px;
+}
+.addMarket .inBox li a.check {
+    display: block;
+    margin-top: 10px;
+}
+.addMarket .inBox li .radioBox a{
+    display: inline-block;
+}
+.addMarket .inBox li .radioBox a+a{
+    margin-left: 40px;
+}
+.addMarket .inBox li a{
+    font-size: 13px;
+    margin-left: inherit;
+}
+.addMarket .inBox li ul{
+    padding-top: 12px;
+}
+.addMarket .inBox li ul li{
+    height: 28px;
+}
+.addMarket .inBox .edBox a+a{
+    margin-left: 40px;
+}
+.queryBox{
+    width: 68%;
+    padding: 20px 0 0 10px;
+    background: #edebeb;
+}
+.queryBox table{
+    width: 100%;
+}
+.queryBox td{
+    width: 55%;
+    height: 42px;
+}
+.queryBox td.th{
+    width: 33%;
+}
+.queryBox td label{
+    width: 76px;
+    font-size: 15px;
+}
+.queryBox td input{
+    width: 145px;
+    height: 28px;
+    padding-left: 10px;
+}
+.salesBox{
+    width: calc(68% + 10px);
+}
+.addMarket .inBox li .edBox{
+    padding: 20px 0;
+}
+.edBox a i{
+    width: 14px;
+    margin-right: 5px;
+    display: inline-block;
+}
+.edBox a i.iconDele,.edBox a i.iconAdd{
+    height: 11px;
+    background: url("../images/delAll.png") no-repeat center;
+}
+.edBox a i.iconAddO,.edBox a i.iconDeleO{
+    height: 7px;
+}
+.edBox a i.iconAddO{
+    background: url("../images/addo.png") no-repeat center;
+}
+.edBox a i.iconDeleO{
+    background: url("../images/del.png") no-repeat center;
+}

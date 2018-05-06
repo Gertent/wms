@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="684" pageHeight="396" orientation="Landscape" columnWidth="644" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="ed1be4c0-cb55-4de7-9719-58fb3a19d9d9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="zh_CN" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1_1" uuid="54033614-597a-4d5f-9255-943abe1266f0">
+		<parameter name="para1" class="java.util.List">
+			<defaultValueExpression><![CDATA[$F{deliveryGoodsBaseList}.size()]]></defaultValueExpression>
+		</parameter>
+		<field name="deliveryNo" class="java.lang.String"/>
+		<field name="logisComName" class="java.lang.String"/>
+		<field name="orderSum" class="java.lang.Integer"/>
+		<field name="goodsAmount" class="java.lang.Integer"/>
+		<field name="parcelWeight" class="java.lang.Double"/>
+		<field name="goodsSum" class="java.math.BigDecimal"/>
+		<field name="logisticsNo" class="java.lang.String"/>
+		<field name="stockOutSum" class="java.math.BigDecimal"/>
+		<field name="stockOutNum" class="java.lang.String"/>
+		<field name="orderNo" class="java.lang.String"/>
+		<field name="deliveryGoodsBaseList" class="java.util.List"/>
+		<field name="goodsName" class="java.lang.String"/>
+		<field name="spec" class="java.lang.String"/>
+		<field name="salesPrice" class="java.lang.String"/>
+		<field name="index" class="java.lang.String"/>
+		<variable name="index" class="java.lang.Integer" calculation="Count">
+			<variableExpression><![CDATA[$V{index}.valueOf(1)]]></variableExpression>
+			<initialValueExpression><![CDATA[1]]></initialValueExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="dataset1_1" uuid="57e55ab6-5378-4888-98af-581721fd21d9">
+		<field name="goodsName" class="java.lang.String"/>
+		<field name="spec" class="java.lang.String"/>
+		<field name="salesPrice" class="java.lang.String"/>
+		<field name="stockOutNum" class="java.lang.String"/>
+		<variable name="variable1" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="New Dataset 1" uuid="96291e18-7e3c-4718-920a-c8c1f6cb56e1"/>
+	<field name="deliveryNo" class="java.lang.String"/>
+	<field name="logisComName" class="java.lang.String"/>
+	<field name="orderSum" class="java.lang.Integer"/>
+	<field name="goodsAmount" class="java.lang.Integer"/>
+	<field name="parcelWeight" class="java.lang.Double"/>
+	<field name="goodsSum" class="java.math.BigDecimal"/>
+	<field name="logisticsNo" class="java.lang.String"/>
+	<field name="stockOutSum" class="java.math.BigDecimal"/>
+	<field name="deliveryGoodsInfoList" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<field name="deliveryGoodsSum" class="java.lang.String"/>
+	<field name="deliveryGoodsAmount" class="java.lang.String"/>
+	<variable name="index" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$V{index}.valueOf(1)]]></variableExpression>
+		<initialValueExpression><![CDATA[1]]></initialValueExpression>
+	</variable>
+	<group name="deliveryNoGroup" isStartNewPage="true" isResetPageNumber="true">
+		<groupExpression><![CDATA[$F{deliveryNo}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="376" splitType="Immediate">
+			<staticText>
+				<reportElement style="zh_CN" x="276" y="0" width="111" height="23" uuid="6f7d3192-745b-4c68-9aac-22c927968bd3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[发货交接单]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="584" y="21" width="56" height="18" uuid="ae2a74b3-6be6-471b-a2c8-a7c9abb8f212"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{orderSum}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="zh_CN" x="538" y="21" width="46" height="18" uuid="b497d6ad-19a1-4b73-a7c1-50e0ce3edee6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[运单件数：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="zh_CN" x="213" y="21" width="50" height="18" uuid="6192d052-f583-4755-8f5a-d93697bf5e2a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[承运商名称：]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="zh_CN" x="62" y="21" width="87" height="18" uuid="6f9dd531-f9a6-477a-bde2-684b39e21236"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deliveryNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="zh_CN" x="22" y="21" width="40" height="18" uuid="c676866a-1384-4733-93a4-597e00ebbec1"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[发货单号：]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="zh_CN" x="442" y="21" width="53" height="18" uuid="bfb70c34-257b-4c6b-94fb-0c101709f97b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deliveryGoodsSum}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="zh_CN" x="264" y="21" width="48" height="18" uuid="714eeb17-c502-496a-b907-c6b60c2bba48"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{logisComName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="zh_CN" x="398" y="21" width="44" height="18" uuid="74d28158-03f5-44f9-94cb-4b6b08a8c1f5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[合计金额：]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table 2" style="table 2" x="0" y="56" width="644" height="300" uuid="ca92257f-519c-4667-a935-cc55a284c6a1"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="Table Dataset 1_1" uuid="91839f16-a8cb-43aa-9ca2-fe51a29a0a3a">
+						<dataSourceExpression><![CDATA[$F{deliveryGoodsInfoList}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="35" uuid="340f3501-fc92-49b3-8fd3-bbe091dfd50d">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="zh_CN" x="0" y="0" width="35" height="20" uuid="1be83109-1623-47f5-ab35-fc82b4968eea"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[NO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement isPrintRepeatedValues="false" x="0" y="0" width="35" height="20" uuid="88eb3403-3f1d-4bd0-86d9-ade2e6571540"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{index}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement x="0" y="0" width="35" height="1" uuid="af00da7c-2416-403b-8518-668770e1510b">
+									<printWhenExpression><![CDATA[new Boolean($F{logisticsNo}==null)]]></printWhenExpression>
+								</reportElement>
+							</line>
+							<line>
+								<reportElement x="0" y="19" width="35" height="1" uuid="e40f6c43-190e-47ce-b3c9-af368ed55a34">
+									<printWhenExpression><![CDATA[new Boolean($F{logisticsNo}==null)]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="72" uuid="6598ba45-bd77-45e6-afe8-9275e1b16198">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="zh_CN" x="0" y="0" width="72" height="20" uuid="05c3cc8c-aac8-4240-9d0e-5c05f0da433e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[运单号]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="0" y="0" width="72" height="20" isPrintWhenDetailOverflows="true" uuid="7e65ec86-c025-48a5-87b0-28a20b5b5af3"/>
+								<box>
+									<leftPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{logisticsNo}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement x="0" y="0" width="72" height="1" uuid="53adecc3-bd74-465f-8a63-47c4827dcd88">
+									<printWhenExpression><![CDATA[new Boolean($F{logisticsNo}==null)]]></printWhenExpression>
+								</reportElement>
+							</line>
+							<line>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="20" uuid="3d0f4683-e639-4889-bd3d-79de5a7ce62f"/>
+							</line>
+							<line>
+								<reportElement x="0" y="19" width="72" height="1" uuid="27301e1b-7d9d-44ed-af12-d8f356591eb6">
+									<printWhenExpression><![CDATA[new Boolean($F{logisticsNo}==null)]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="81" uuid="c1c5ff69-ee95-4c40-a650-879472ac882c">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="zh_CN" x="0" y="0" width="81" height="20" uuid="1dd13474-6f45-4e89-b1ec-101cf140ddfc"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[订单号]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="0" y="0" width="81" height="20" isPrintWhenDetailOverflows="true" uuid="c7d76a7c-1f59-40e0-ad00-ef131d5d75e1"/>
+								<box>
+									<leftPen lineWidth="0.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{orderNo}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="20" uuid="11b0e627-1968-451d-9f30-328e25dc3d25"/>
+							</line>
+							<line>
+								<reportElement x="0" y="0" width="81" height="1" uuid="01bf3cc1-8634-4839-888d-edf7818c890b">
+									<printWhenExpression><![CDATA[new Boolean($F{logisticsNo}==null)]]></printWhenExpression>
+								</reportElement>
+							</line>
+							<line>
+								<reportElement x="0" y="19" width="81" height="1" uuid="784cd938-5c5c-48a1-873d-c369a2dc4346">
+									<printWhenExpression><![CDATA[new Boolean($F{logisticsNo}==null)]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="145" uuid="abf66c5a-b587-42b0-9c78-cd91e6f10ed4">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="zh_CN" x="0" y="0" width="145" height="20" uuid="046137c7-68bf-4163-a136-abd01f091a96"/>
+								<box>
+									<rightPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[商品名称]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="145" height="20" isPrintWhenDetailOverflows="true" uuid="5975c4f2-3344-4bca-af58-1e07eba9a288"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{goodsName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="75" uuid="234b384a-18e6-42d8-8807-a9e18891623f">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="zh_CN" x="0" y="0" width="75" height="20" uuid="1321f441-a930-4824-b1b0-9ed685494907"/>
+								<box>
+									<rightPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[规格型号]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="75" height="20" uuid="43245c13-a4f3-4989-80e2-484cf89e98c8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{spec}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="55" uuid="16657660-4aa4-4929-adee-2298798facfe">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="zh_CN" x="0" y="0" width="55" height="20" uuid="906a5c91-cbb0-40bc-ae20-feb37786833c"/>
+								<box>
+									<rightPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[单品数量]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="55" height="20" uuid="c5027013-8812-46df-9f9a-aeb61df2607c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{stockOutNum}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="55" uuid="385a3cc8-1a46-488b-b9f6-f26128f331ab">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="zh_CN" x="0" y="0" width="55" height="20" uuid="2bb1786c-556f-43e8-ba9f-37bd5f10a429"/>
+								<box>
+									<rightPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[单价(元)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="55" height="20" uuid="9206b78a-77e9-4192-9ce9-c593d60a9720"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{salesPrice}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="65" uuid="798ea0ee-0464-4a47-acd2-4e197c4ab5d9">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="zh_CN" x="0" y="0" width="65" height="20" uuid="b363a4ca-9494-4b50-9b95-2643db63c4be"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[订单总金额(元)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="0" y="0" width="65" height="20" isPrintWhenDetailOverflows="true" uuid="ef93fde8-f78d-4546-8b60-08b09ef6e867"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{goodsSum}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement x="0" y="0" width="65" height="1" uuid="74206c23-749c-403c-8873-107e47d3213b">
+									<printWhenExpression><![CDATA[new Boolean($F{logisticsNo}==null)]]></printWhenExpression>
+								</reportElement>
+							</line>
+							<line>
+								<reportElement x="0" y="19" width="65" height="1" uuid="3bf9d068-5f11-4200-8532-de4dddf03629">
+									<printWhenExpression><![CDATA[new Boolean($F{logisticsNo}==null)]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="1594556d-1a6a-4cab-8241-7527eaed0a80">
+						<jr:columnHeader style="table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="zh_CN" x="0" y="0" width="60" height="20" uuid="55e3aab0-53a0-443f-be0b-775d2b9225cb"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[订单总重量(kg)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="0" y="0" width="60" height="20" isPrintWhenDetailOverflows="true" uuid="39f1bce8-bed2-4de8-b4b8-4eee39c2fe68"/>
+								<box>
+									<leftPen lineWidth="0.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{parcelWeight}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement x="0" y="0" width="60" height="1" uuid="eccdff26-2437-4ba4-8735-f1faf382e7ea">
+									<printWhenExpression><![CDATA[new Boolean($F{logisticsNo}==null)]]></printWhenExpression>
+								</reportElement>
+							</line>
+							<line>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="20" uuid="f06e61c0-12f1-4973-9409-7603fc7d0188"/>
+							</line>
+							<line>
+								<reportElement x="0" y="19" width="60" height="1" uuid="b0ffa0de-2189-4dc1-89b1-9929038ea943">
+									<printWhenExpression><![CDATA[new Boolean($F{logisticsNo}==null)]]></printWhenExpression>
+								</reportElement>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement style="zh_CN" positionType="Float" x="5" y="356" width="61" height="15" uuid="6524b0cf-e0b1-4930-9b4f-6eb57de7bb0b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[承运商签字:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="zh_CN" positionType="Float" x="523" y="356" width="61" height="15" uuid="dafd0f84-5d52-4d42-aebd-0622d85837a6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[发货员签字：]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Immediate">
+			<textField evaluationTime="Group" evaluationGroup="deliveryNoGroup">
+				<reportElement x="602" y="0" width="39" height="15" uuid="0fbb9a62-28e8-4e2f-a1c7-77bc501fdf18"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["共"+$V{PAGE_NUMBER}+"页"]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd HH:mm:ss">
+				<reportElement x="5" y="0" width="100" height="15" uuid="3ff3db39-a637-417c-8ae7-d9b05fb80850"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[java.util.Calendar.getInstance().getTime()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="zh_CN" x="525" y="0" width="76" height="15" uuid="c5b93e0e-6468-4a3b-94a3-7b9f40b9a197"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="false" pdfFontName="STSong-Light" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["第"+$V{PAGE_NUMBER}+"页,"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

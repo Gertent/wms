@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rmd.wms.dao.LogisticsCompanyMapper">
+    <resultMap id="BaseResultMap" type="com.rmd.wms.bean.LogisticsCompany">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="min_weight" property="minWeight" jdbcType="INTEGER"/>
+        <result column="max_weight" property="maxWeight" jdbcType="INTEGER"/>
+        <result column="unit" property="unit" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="payondelivery" property="payondelivery" jdbcType="INTEGER"/>
+        <result column="updateuser" property="updateuser" jdbcType="INTEGER"/>
+        <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="ware_id" property="wareId" jdbcType="INTEGER"/>
+        <result column="ware_name" property="wareName" jdbcType="VARCHAR"/>
+        <result column="contact_name" property="contactName" jdbcType="VARCHAR"/>
+        <result column="delivery_name" property="deliveryName" jdbcType="VARCHAR"/>
+        <result column="delivery_code" property="deliveryCode" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, code, phone, min_weight, max_weight, unit, url, status, payondelivery,
+        updateuser, updatetime, remark, ware_id, ware_name,contact_name,delivery_name,delivery_code
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_logistics_company
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+     <select id="selectAllByWhere" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_logistics_company
+        <include refid="Base_Where_Clause"/>
+    </select>
+    <sql id="Base_Where_Clause">
+        <where>
+            <trim prefixOverrides="and|or">
+                <if test="Id != null"> and id = #{Id}</if>
+                <if test="status != null"> and status = #{status}</if>
+				<if test="wareId != null"> and ware_id = #{wareId}</if><!--仓库Id-->	
+				<if test="searchWhere != null">${searchWhere}</if>
+            </trim>
+        </where>
+    </sql>
+    <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.rmd.wms.bean.LogisticsCompany">
+        select
+        <include refid="Base_Column_List"/>
+        from t_logistics_company
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                id=#{id,jdbcType=INTEGER} and
+            </if>
+            <if test="name != null">
+                name=#{name,jdbcType=VARCHAR} and
+            </if>
+            <if test="code != null">
+                code=#{code,jdbcType=VARCHAR} and
+            </if>
+            <if test="phone != null">
+                phone=#{phone,jdbcType=VARCHAR} and
+            </if>
+            <if test="minWeight != null">
+                min_weight=#{minWeight,jdbcType=INTEGER} and
+            </if>
+            <if test="maxWeight != null">
+                min_weight= #{maxWeight,jdbcType=INTEGER} and
+            </if>
+            <if test="unit != null">
+                unit=#{unit,jdbcType=VARCHAR} and
+            </if>
+            <if test="url != null">
+                url= #{url,jdbcType=VARCHAR} and
+            </if>
+            <if test="status != null">
+                status=#{status,jdbcType=INTEGER} and
+            </if>
+            <if test="payondelivery != null">
+                payondelivery=#{payondelivery,jdbcType=INTEGER} and
+            </if>
+            <if test="updateuser != null">
+                updateuser= #{updateuser,jdbcType=INTEGER} and
+            </if>
+            <if test="updatetime != null">
+                updatetime= #{updatetime,jdbcType=TIMESTAMP} and
+            </if>
+            <if test="remark != null">
+                remark= #{remark,jdbcType=VARCHAR} and
+            </if>
+            <if test="wareId != null">
+               ware_id= #{wareId,jdbcType=INTEGER} and
+            </if>
+            <if test="wareName != null">
+               ware_name= #{wareName,jdbcType=VARCHAR} and
+            </if>
+            <if test="contactName != null">
+                contact_name= #{contactName,jdbcType=VARCHAR} and
+            </if>
+        </trim>
+    </select>
+    <select id="selectByProvCodeAndWeight" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        lc.id, lc.NAME, lc.CODE, lc.phone, lc.min_weight, lc.max_weight, lc.unit, lc.url,
+        lc.STATUS, lc.payondelivery, lc.updateuser, lc.updatetime, lc.remark, lc.ware_id, lc.ware_name,lc.contact_name,lc.delivery_name,lc.delivery_code
+        FROM
+        t_logistics_company lc,
+        t_delivery_range dr
+        WHERE
+        lc.id = dr.logistics_id
+        AND dr.`status` = #{status}
+        AND dr.ware_id = #{wareId}
+        AND dr.prov_code = #{provCode}
+        AND lc.min_weight <![CDATA[ < ]]> #{parcelWeight}
+        AND lc.max_weight <![CDATA[ > ]]> #{parcelWeight}
+        AND lc.ware_id = #{wareId}
+        GROUP BY lc.id
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_logistics_company
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <select id="selectMaxId" resultType="java.lang.Integer">
+    	SELECT MAX(id) FROM t_logistics_company
+    </select>
+    <insert id="insert" parameterType="com.rmd.wms.bean.LogisticsCompany" useGeneratedKeys="true" keyProperty="id">
+        insert into t_logistics_company (id, name, code,
+          phone, min_weight, max_weight,
+          unit, url, status,
+          payondelivery, updateuser, updatetime,
+          remark, ware_id, ware_name,contact_name,delivery_name,delivery_code)
+        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+          #{phone,jdbcType=VARCHAR}, #{minWeight,jdbcType=INTEGER}, #{maxWeight,jdbcType=INTEGER},
+          #{unit,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+          #{payondelivery,jdbcType=INTEGER}, #{updateuser,jdbcType=INTEGER}, #{updatetime,jdbcType=TIMESTAMP},
+          #{remark,jdbcType=VARCHAR}, #{wareId,jdbcType=INTEGER}, #{wareName,jdbcType=VARCHAR},#{contactName,jdbcType=VARCHAR},#{deliveryName,jdbcType=VARCHAR},#{deliveryCode,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.rmd.wms.bean.LogisticsCompany" useGeneratedKeys="true" keyProperty="id">
+        insert into t_logistics_company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="minWeight != null">
+                min_weight,
+            </if>
+            <if test="maxWeight != null">
+                max_weight,
+            </if>
+            <if test="unit != null">
+                unit,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="payondelivery != null">
+                payondelivery,
+            </if>
+            <if test="updateuser != null">
+                updateuser,
+            </if>
+            <if test="updatetime != null">
+                updatetime,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="wareId != null">
+                ware_id,
+            </if>
+            <if test="wareName != null">
+                ware_name,
+            </if>
+            <if test="contactName != null">
+                contact_name,
+            </if>
+            <if test="deliveryName != null">
+                delivery_name,
+            </if>
+            <if test="deliveryCode != null">
+                delivery_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="minWeight != null">
+                #{minWeight,jdbcType=INTEGER},
+            </if>
+            <if test="maxWeight != null">
+                #{maxWeight,jdbcType=INTEGER},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="payondelivery != null">
+                #{payondelivery,jdbcType=INTEGER},
+            </if>
+            <if test="updateuser != null">
+                #{updateuser,jdbcType=INTEGER},
+            </if>
+            <if test="updatetime != null">
+                #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="wareId != null">
+                #{wareId,jdbcType=INTEGER},
+            </if>
+            <if test="wareName != null">
+                #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="contactName != null">
+                #{contactName,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryName != null">
+                #{deliveryName,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryCode != null">
+                #{deliveryCode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rmd.wms.bean.LogisticsCompany">
+        update t_logistics_company
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="minWeight != null">
+                min_weight = #{minWeight,jdbcType=INTEGER},
+            </if>
+            <if test="maxWeight != null">
+                max_weight = #{maxWeight,jdbcType=INTEGER},
+            </if>
+            <if test="unit != null">
+                unit = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="payondelivery != null">
+                payondelivery = #{payondelivery,jdbcType=INTEGER},
+            </if>
+            <if test="updateuser != null">
+                updateuser = #{updateuser,jdbcType=INTEGER},
+            </if>
+            <if test="updatetime != null">
+                updatetime = #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="wareId != null">
+                ware_id = #{wareId,jdbcType=VARCHAR},
+            </if>
+            <if test="wareName != null">
+                ware_name = #{wareName,jdbcType=VARCHAR},
+            </if>
+            <if test="contactName != null">
+                contact_name = #{contactName,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryName != null">
+                delivery_name = #{deliveryName,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryCode != null">
+                delivery_code = #{deliveryCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rmd.wms.bean.LogisticsCompany">
+        update t_logistics_company
+        set name = #{name,jdbcType=VARCHAR},
+          code = #{code,jdbcType=VARCHAR},
+          phone = #{phone,jdbcType=VARCHAR},
+          min_weight = #{minWeight,jdbcType=INTEGER},
+          max_weight = #{maxWeight,jdbcType=INTEGER},
+          unit = #{unit,jdbcType=VARCHAR},
+          url = #{url,jdbcType=VARCHAR},
+          status = #{status,jdbcType=INTEGER},
+          payondelivery = #{payondelivery,jdbcType=INTEGER},
+          updateuser = #{updateuser,jdbcType=INTEGER},
+          updatetime = #{updatetime,jdbcType=TIMESTAMP},
+          remark = #{remark,jdbcType=VARCHAR},
+          ware_id = #{wareId,jdbcType=INTEGER},
+          ware_name = #{wareName,jdbcType=VARCHAR},
+          contact_name = #{contactName,jdbcType=VARCHAR},
+          delivery_name = #{deliveryName,jdbcType=VARCHAR},
+          delivery_code = #{deliveryCode,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

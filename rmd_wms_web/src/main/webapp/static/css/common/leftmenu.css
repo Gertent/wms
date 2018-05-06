@@ -1,0 +1,206 @@
+/*
+* 2016/09/23
+*/
+.bgBox_en{
+    width:100%;
+    height: 100%;
+    overflow-x: hidden;
+    background: #f5f5f5;
+}
+.aside{
+    position: fixed;
+    width: 210px;
+    z-index: 2001;
+    height: 100%;
+    background: #292e3b;
+    border-left: 8px solid #08ccdd;
+}
+.nav{
+    width: auto;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+.nav_bar{
+    overflow: hidden;
+}
+.aside,.aside a{
+    color:#687691;
+}
+.menuN>li h3{
+    display: block;
+    text-align: center;
+    line-height: 34px;
+
+}
+.menuN{margin-bottom: 0;}
+.menu_header{
+    height: 184px;
+    background-color: #292e3b;
+    padding:0 0 6px;
+
+}
+.icon_en{
+    color: #687691;
+    font-size: 22px;
+    margin-right: 16px;
+}
+.icon_z{
+    width: 6px;
+    height: 6px;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align:middle;
+    background: url("../../images/spot.png") no-repeat;
+    background-position: left;
+} 
+.menuN>li>a:hover,
+.menuN>li.active>a{
+    color: #ff8624;
+    background: #212530;
+}
+.nav_left li a:hover,
+.nav_left li.active>a,
+.menuN>li.active>a>i,
+.menuN>li>a:hover .icon_en{
+    color: #ff8624;
+}
+.menuN>li.active{
+    border-left: 8px solid #ff8624;
+}
+.nav_left li.active>a>i,
+.nav_left li a:hover .icon_z{
+    background-position: right;
+}
+.menuN>li,.nav_left>li{
+    /*text-align: center;*/
+    border-left: 8px solid #08ccdd;
+}
+.nav_left>li{
+    border-left:0 none;
+}
+.menuN>li .nav_left{
+    display: none;
+}
+.menuN>li.active>.nav_left{
+    display: block;
+}
+.nav_left li a{
+    width: 141px;
+    font-size: 14px;
+    background: #212530;
+    padding: 5px 0 5px 69px;
+}
+.menuN>li>a{
+    width: 151px;
+    font-size: 16px;
+    background: #292e3b;
+    padding: 17px 0 17px 59px;
+}
+.menuN>li>a,.nav_left li a{
+    display: inline-block;
+}
+.section{
+    width: auto;
+    height: 100%;
+    margin-left: 218px;
+}
+.section .header{
+    width: 100%;
+    background: #08ccdd;
+}
+.nav_header{
+    height: 42px;
+    cursor: pointer;
+    margin-right: 22px;
+    line-height: 42px;
+}
+.nav_header .icon_adm,
+.nav_header .icon_dow{
+    display: inline-block;
+}
+.nav_header .icon_adm{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    vertical-align: text-bottom;
+    background: url("../../images/account.png") no-repeat center;
+}
+.nav_header .icon_dow{
+    width: 14px;
+    height: 7px;
+    margin: 0 16px;
+    vertical-align: middle;
+    background: url("../../images/downa.png") no-repeat center;
+}
+.nav_header a{
+    font-size: 16px;
+    color: #ffffff;
+    line-height: 42px;
+    display: inline-block;
+}
+.nav_header .downBox{
+    display: none;
+    position: relative;
+    z-index: 99;
+    float: right;
+    top: 8px;
+    right: 0;
+}
+.nav_header .downBox span{
+	display: block;
+	height: 8px;
+	position: absolute;
+    top: -8px;
+    width: 100%;
+}
+.nav_header .downBox em{
+    width: 0;
+    height: 0;
+    display: block;
+    line-height: 0;
+    border: 10px solid transparent;
+    border-bottom-color: #08ccdd;
+    border-top: 0;
+    position: absolute;
+    right: 12px;
+    top: -2px;
+}
+.nav_header .downBox a{
+    width: 142px;
+    height: 42px;
+    color: rgba(255,255,255,0.6);
+    font-size:14px;
+    display:block;
+    text-align: center;
+    background: #08ccdd;
+
+}
+.nav_header .downBox i{
+    width: 6px;
+    height: 6px;
+    opacity: 0.5;
+    -moz-opacity:0.5;
+    -khtml-opacity: 0.5;
+    filter:alpha(opacity=50);
+    margin-right: 16px;
+    background: #ffffff;
+    vertical-align: middle;
+    display: inline-block;
+
+}
+.nav_header .downBox a:hover{
+    background: #00bdce;
+    color: rgba(255,255,255,1);
+
+}
+.nav_header .downBox a:hover span em{
+	border-bottom-color: #00bdce;
+}
+.nav_header .downBox a:hover i{
+    opacity: 1;
+    -moz-opacity:1;
+    -khtml-opacity: 1;
+    filter:alpha(opacity=100);
+}

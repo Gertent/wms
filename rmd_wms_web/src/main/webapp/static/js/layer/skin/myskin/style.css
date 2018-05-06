@@ -1,0 +1,115 @@
+/* ѡ������ʽΪ��html #layui_layer_skin�ļ�����stylecss����һ��ǳ���Ҫ */
+html #layui_layer_skinmyskinstylecss{display:none; position: absolute; width:1989px;}
+body .layer-ext-myskin .layui-layer-title{
+    color: #333;
+    font-size: 14px;
+    padding-left:24px;
+    text-align: left;
+}
+body .layer-ext-myskin .layui-layer-content{
+	z-index: 19891020;
+}
+body .layer-ext-myskin .layui-layer-btn{
+    padding: 0;
+    position: absolute;
+    top: 208px;
+    left: 50%;
+    margin-left: -70px;
+    z-index: 19891025;
+}
+body .layer-ext-myskin .layui-layer-btn .layui-layer-btn0 {
+    background: #fe6000;
+}
+body .layer-ext-myskin .layui-layer-btn a {
+    background: #fe6000;
+    border: 1px solid #fe6000;
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: normal;
+    height: 35px;
+    line-height: 35px;
+    margin: 0 10px;
+    outline: medium none;
+    border-radius: 0;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    width:140px;
+    float:left;
+}
+body .layer-ext-uniPay .layui-layer-title{
+    color: #333;
+    font-size: 14px;
+    padding-left:24px;
+    text-align: left;
+}
+body .layer-ext-uniPay .layui-layer-content{
+	z-index: 19891020;
+}
+body .layer-ext-uniPay .layui-layer-btn{
+    padding: 0;
+    position: absolute;
+    top: 154px;
+    left: 50%;
+    margin-left: -160px;
+    z-index: 19891025;
+}
+
+body .layer-ext-uniPay .layui-layer-btn .layui-layer-btn0{
+    background: #fe6000;
+}
+body .layer-ext-uniPay .layui-layer-btn a{
+    background: #fe6000;
+    border: 1px solid #fe6000;
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: normal;
+    height: 35px;
+    line-height: 35px;
+    margin: 0 10px;
+    outline: medium none;
+    border-radius: 0;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    width:140px;
+    float:left;
+}
+body .layer-ext-register .layui-layer-btn{
+    padding: 20px 0;
+    position: absolute;
+    left: 50%;
+    margin-left: -70px;
+    z-index: 19891025;
+}
+body .layer-ext-register .layui-layer-btn .layui-layer-btn0{
+    background: #fe6000;
+}
+body .layer-ext-register .layui-layer-btn .layui-layer-btn1,
+body .layer-ext-uniPay .layui-layer-btn .layui-layer-btn1{
+   	background: #acacac;
+    border: 1px #acacac solid;
+}
+body .layer-ext-register .layui-layer-btn a {
+    background: #fe6000;
+    border: 1px solid #fe6000;
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: normal;
+    height: 35px;
+    line-height: 35px;
+    margin: 0 10px;
+    outline: medium none;
+    border-radius: 0;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    width:140px;
+    float:left;
+}
